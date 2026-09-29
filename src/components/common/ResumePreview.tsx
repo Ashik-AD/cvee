@@ -6,6 +6,7 @@ import useGetResume from "@/hooks/useGetResume";
 import { useCommonActions, useResumePreviewState } from "@/store";
 import { Activity } from "react";
 import usePrintResume from "@/hooks/usePrintResume";
+import { DEFAULT_TEMPLATE } from "@/constants/preview";
 
 function PreviewContent({ previewId }: { previewId: string | null }) {
   const { resume } = useGetResume(previewId);
@@ -18,6 +19,7 @@ function PreviewContent({ previewId }: { previewId: string | null }) {
     clearPreviewId();
     togglePreview();
   }
+  const resumeTemplate = resume.meta?.template ?? DEFAULT_TEMPLATE;
 
   return (
     <>
@@ -28,6 +30,7 @@ function PreviewContent({ previewId }: { previewId: string | null }) {
         projects={resume?.projects}
         educations={resume?.educations}
         skills={resume?.skills}
+        template={resumeTemplate}
       />
 
       <Flex className="absolute bottom-1 bg-neutral-111111 rounded-full shadow-lg overflow-hidden shadow-emerald-700 p-1 hidden-on-print">

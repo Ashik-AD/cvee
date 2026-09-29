@@ -104,7 +104,7 @@ export function Linear({
             )}
 
             {/* Education */}
-            {educations?.length > 0 && (
+            {educations && educations?.length > 0 && (
               <div className="mt-6">
                 <SectionTitle>Education</SectionTitle>
 

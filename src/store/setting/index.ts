@@ -28,7 +28,9 @@ export const useSettingStore = create<State>()(
           setViewSetting(payload) {
             set((state) => {
               Object.keys(payload).forEach((key) => {
-                state[key] = payload[key];
+                const typedKey = key as keyof ViewSetting;
+                //@ts-ignore-next-line
+                state[typedKey] = payload[typedKey];
               });
             });
           },
@@ -66,4 +68,3 @@ export const useViewSettingState = () =>
       mode: state.editorMode,
     })),
   );
-

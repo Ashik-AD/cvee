@@ -90,7 +90,8 @@ export class EditorService {
       };
 
       request.onsuccess = (event) => {
-        resolve(event.target?.result);
+        const target = event.target as IDBRequest;
+        resolve(target?.result);
       };
     });
   }
@@ -106,7 +107,8 @@ export class EditorService {
 
       request.onsuccess = (event) => {
         console.log("Found resume with ID: ", id);
-        resolve(event.target?.result);
+        const target = event.target as IDBRequest;
+        resolve(target?.result);
       };
     });
   }
@@ -150,7 +152,8 @@ export class EditorService {
         };
 
         request.onsuccess = (event) => {
-          const resumes = event.target.result?.map((resume) => ({
+          const target = event.target as IDBRequest;
+          const resumes = target.result?.map((resume: ResumePopulate) => ({
             label: resume?.meta?.title,
             id: resume.id,
           }));
@@ -171,13 +174,16 @@ export class EditorService {
         };
 
         request.onsuccess = (event) => {
-          resolve(event.target.result);
+          const target = event.target as IDBRequest;
+          resolve(target.result);
         };
       },
     );
   }
 
-  async getResumesName(): Promise<Array<{ name: string; id: string } | null>> {
+  async getResumesName(): Promise<
+    Array<{ name: string | null; id: string } | null>
+  > {
     try {
       const resumes = await this.getResumes();
       if (!resumes?.length) return [];

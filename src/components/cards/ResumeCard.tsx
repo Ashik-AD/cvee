@@ -61,6 +61,8 @@ export function ResumeCard({
   status,
 }: ResumeCardProps) {
   const mapStatus = Status?.[status];
+  const docDate = updatedAt || createdAt;
+  const modifiedDate = docDate ? new Date(docDate).toLocaleDateString() : null;
 
   return (
     <Card className="w-full rounded-sm border-border bg-card py-0 shadow-none">
@@ -143,10 +145,9 @@ export function ResumeCard({
           </FlexColumn>
 
           <Flex>
-            {(createdAt || updatedAt) && (
+            {modifiedDate && (
               <span className="text-muted-foreground">
-                Modified {new Date(updatedAt ?? createdAt).toLocaleDateString()}{" "}
-                ago
+                Modified {modifiedDate} ago
               </span>
             )}
           </Flex>

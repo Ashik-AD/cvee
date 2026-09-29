@@ -4,6 +4,7 @@ import { devtools, persist } from "zustand/middleware";
 import type { Resume } from "../types";
 import type { ResumePopulate } from "@/lib/service/editor";
 import { useShallow } from "zustand/shallow";
+import { DEFAULT_TEMPLATE } from "@/constants/preview";
 
 type EditorSettings = {
   zoomLevel: number;
@@ -74,9 +75,7 @@ const useEditorStore = create<State>()(
           linkedin: "",
           role: "",
         },
-
         aboutMe: "",
-
         experiences: [
           {
             companyName: "",
@@ -85,9 +84,7 @@ const useEditorStore = create<State>()(
             description: [""],
           },
         ],
-
         skills: [],
-
         projects: [
           {
             name: "",
@@ -96,7 +93,6 @@ const useEditorStore = create<State>()(
             description: [""],
           },
         ],
-
         educations: [
           {
             institute: "",
@@ -105,11 +101,15 @@ const useEditorStore = create<State>()(
             grade: "",
           },
         ],
-
         addons: {},
-        meta: {},
+        meta: {
+          title: "",
+          createdAt: "",
+          updatedAt: "",
+          description: "",
+          template: DEFAULT_TEMPLATE,
+        },
         id: "",
-
         settings: {
           zoomLevel: 100,
         },

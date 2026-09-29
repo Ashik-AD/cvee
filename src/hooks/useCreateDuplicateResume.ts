@@ -1,16 +1,19 @@
 import useServices from "./useServices";
 import { useResumeActions } from "@/store";
 
-function generateNewName(oldName: string | null, oldNames: string[]) {
+function generateNewName(
+  oldName: string | null,
+  oldNames: (string | null | undefined)[],
+) {
   // if no name, provide default name
   if (!oldName?.trim()) return "New resume";
 
-  const matchingNames = oldNames.filter((name) => name.startsWith(oldName));
+  const matchingNames = oldNames.filter((name) => name?.startsWith(oldName));
 
   // Extract number from the names
   const fileNameNumber = matchingNames
-    .reduce((ac, cur) => {
-      const matching = cur.match(/\d+/g)?.pop();
+    .reduce<number[]>((ac, cur) => {
+      const matching = cur?.match(/\d+/g)?.pop()?.trim();
       if (matching) {
         return ac.concat(Number(matching));
       }
@@ -54,11 +57,9 @@ export default function useCreateDuplicateResume(id: string | null) {
       if (!resume) {
         return;
       }
-      const resumesName = await services?.editor.getResumesName();
-      const newName = generateNewName(
-        resume.meta?.title ?? "",
-        resumesName?.map((resume) => resume?.name),
-      );
+      const getResumeNames = await services?.editor.getResumesName();
+      const resumeNames = getResumeNames?.map((resume) => resume?.name) ?? [];
+      const newName = generateNewName(resume.meta?.title ?? "", resumeNames);
 
       const res = await services?.editor.createNewResume(resume, newName);
       if (res) {

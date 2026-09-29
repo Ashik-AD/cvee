@@ -1,5 +1,5 @@
 import { Flex, FlexColumn, Grid } from "@/components/common/layout";
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import type { Experience } from "../../types";
@@ -106,18 +106,18 @@ function Experiences() {
 
   return (
     <FlexColumn className="gap-4">
-        {experiences?.map((experience, idx) => {
-          return (
-            <ExperienceField
-              companyName={experience.companyName}
-              role={experience.role}
-              duration={experience.duration}
-              description={experience.description}
-              onChange={(newExperience) => handleChange(idx, newExperience)}
-              key={idx}
-            />
-          );
-        })}
+      {experiences?.map((experience, idx) => {
+        return (
+          <ExperienceField
+            companyName={experience.companyName}
+            role={experience.role}
+            duration={experience.duration}
+            description={experience.description}
+            onChange={(newExperience) => handleChange(idx, newExperience)}
+            key={idx}
+          />
+        );
+      })}
       <Button
         variant="outline"
         className="border-dashed"

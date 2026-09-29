@@ -1,5 +1,5 @@
 import { FlexColumn, Grid } from "@/components/common/layout";
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import type { Project } from "../../types";
@@ -98,19 +98,23 @@ function Projects() {
   }
   return (
     <FlexColumn className="gap-4">
-        {projects?.map((project, idx) => {
-          return (
-            <ProjectField
-              name={project.name}
-              description={project.description}
-              link={project.link}
-              repoLink={project.repoLink}
-              onChange={(newExperience) => handleChange(idx, newExperience)}
-              key={idx}
-            />
-          );
-        })}
-      <Button variant="outline" className="border-dashed" onClick={handleAddProject}>
+      {projects?.map((project, idx) => {
+        return (
+          <ProjectField
+            name={project.name}
+            description={project.description}
+            link={project.link}
+            repoLink={project.repoLink}
+            onChange={(newExperience) => handleChange(idx, newExperience)}
+            key={idx}
+          />
+        );
+      })}
+      <Button
+        variant="outline"
+        className="border-dashed"
+        onClick={handleAddProject}
+      >
         <Plus />
         Add Project
       </Button>

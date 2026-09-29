@@ -15,7 +15,7 @@ import { useResumeActions } from "@/store";
 import useServices from "@/hooks/useServices";
 import type { ResumePopulate } from "@/lib/service/editor";
 import { useEditorActions } from "@/features/editor/store";
-import { useLocation, useRouter } from "wouter";
+import { useLocation } from "wouter";
 
 type ImportDestination = "createNew" | "override";
 
@@ -34,14 +34,14 @@ function ResumeImport() {
   const { addResume, setResumes } = useResumeActions();
   const { services } = useServices();
   const { setEditor } = useEditorActions();
-  const [_, navigate] = useLocation();
+  const [_] = useLocation();
 
   async function handleFileImport(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.item(0);
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        const json = JSON.parse(reader.result);
+        const json = JSON.parse(reader.result?.toString() ?? "");
 
         // Set resume name for create as new
         const resumeName =
