@@ -5,7 +5,13 @@ import type { Resume } from "../types";
 import type { ResumePopulate } from "@/lib/service/editor";
 import { useShallow } from "zustand/shallow";
 
+type EditorSettings = {
+  zoomLevel: number;
+};
 interface State extends ResumePopulate {
+  // Editor settings
+  settings: EditorSettings;
+
   actions: {
     setEditor: (payload: ResumePopulate) => void;
     setPersonalInfo: (payload: Partial<Resume["personalInfo"]>) => void;
@@ -44,13 +50,21 @@ interface State extends ResumePopulate {
       payload: Partial<Resume["addons"]>,
     ) => void;
     deleteAddons: (key: keyof State["addons"]) => void;
+
+    updateMeta: (payload: Partial<Record<string, unknown>>) => void;
+
+    // Setting action
+    setEditorSettings: (payload: Partial<EditorSettings>) => void;
+
+    // Reset state
+    resetEditor: () => void;
   };
 }
 
 const useEditorStore = create<State>()(
   devtools(
     persist(
-      immer((set) => ({
+      immer((set, _, store) => ({
         personalInfo: {
           name: "",
           email: "",
@@ -95,6 +109,10 @@ const useEditorStore = create<State>()(
         addons: {},
         meta: {},
         id: "",
+
+        settings: {
+          zoomLevel: 100,
+        },
 
         actions: {
           setEditor(payload) {
@@ -227,6 +245,22 @@ const useEditorStore = create<State>()(
               delete state.addons[key];
             });
           },
+
+          updateMeta(payload) {
+            set((state) => {
+              state.meta = { ...state.meta, ...payload };
+            });
+          },
+
+          setEditorSettings(payload) {
+            set((state) => {
+              state.settings = { ...state.settings, ...payload };
+            });
+          },
+
+          resetEditor() {
+            set(store.getInitialState());
+          },
         },
       })),
       {
@@ -267,15 +301,23 @@ export const useEditorActions = () => useEditorStore((state) => state.actions);
 export const useEditorPersonalInfo = () =>
   useEditorStore((state) => state.personalInfo);
 
-export const useEditorAboutMe = () => useEditorStore((state) => state.aboutMe);
+export const useEditorAboutMe = () =>
+  useEditorStore(useShallow((state) => state.aboutMe));
 
 export const useEditorExperiences = () =>
-  useEditorStore((state) => state.experiences);
+  useEditorStore(useShallow((state) => state.experiences));
 
-export const useEditorSkills = () => useEditorStore((state) => state.skills);
+export const useEditorSkills = () =>
+  useEditorStore(useShallow((state) => state.skills));
 
 export const useEditorProjects = () =>
-  useEditorStore((state) => state.projects);
+  useEditorStore(useShallow((state) => state.projects));
 
 export const useEditorEducations = () =>
-  useEditorStore((state) => state.educations);
+  useEditorStore(useShallow((state) => state.educations));
+
+export const useEditorMeta = () =>
+  useEditorStore(useShallow((state) => ({ id: state.id, ...state.meta })));
+
+export const useEditorSettings = () =>
+  useEditorStore(useShallow((state) => state.settings));

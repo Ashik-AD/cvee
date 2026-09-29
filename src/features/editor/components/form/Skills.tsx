@@ -40,7 +40,7 @@ function Skills() {
     <Field>
       <FieldLabel>Technical Stack</FieldLabel>
       <Flex className="gap-2 flex-wrap">
-        {skills.map((skill, idx) => {
+        {skills?.map((skill, idx) => {
           return (
             <Badge
               variant="secondary"

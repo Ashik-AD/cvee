@@ -5,10 +5,15 @@ import { useShallow } from "zustand/shallow";
 
 type State = {
   lastOpendId: string | null;
-  editorRef: HTMLDivElement | null;
+  previewId: string | null;
+  showPreview: boolean;
+  renameResume: boolean;
   actions: {
     setLastOpendId: (id: string) => void;
-    setEditorRef: (payload: HTMLDivElement | null) => void;
+    setPreviewId: (payload: string) => void;
+    clearPreviewId: () => void;
+    togglePreview: () => void;
+    toggleRenameResume: () => void;
   };
 };
 
@@ -18,6 +23,9 @@ export const useCommonStore = create<State>()(
       immer((set) => ({
         lastOpendId: null,
         editorRef: null,
+        previewId: null,
+        showPreview: false,
+        renameResume: false,
 
         actions: {
           setLastOpendId: (id) => {
@@ -25,9 +33,25 @@ export const useCommonStore = create<State>()(
               state.lastOpendId = id;
             });
           },
-          setEditorRef: (payload) => {
+          setPreviewId(payload) {
             set((state) => {
-              state.editorRef = payload;
+              state.previewId = payload;
+            });
+          },
+          clearPreviewId() {
+            set((state) => {
+              state.previewId = null;
+            });
+          },
+          togglePreview() {
+            set((state) => {
+              state.showPreview = !state.showPreview;
+            });
+          },
+
+          toggleRenameResume() {
+            set((state) => {
+              state.renameResume = !state.renameResume;
             });
           },
         },
@@ -46,10 +70,25 @@ export const useCommonStore = create<State>()(
 );
 
 export const useCommonActions = () => useCommonStore((state) => state.actions);
+
 export const useCommonState = () =>
   useCommonStore(
     useShallow((state) => ({
       lastOpendId: state.lastOpendId,
-      editorRef: state.editorRef,
+      previewId: state.previewId,
+      isShowPreview: state.showPreview,
     })),
+  );
+
+export const useResumePreviewState = () =>
+  useCommonStore(
+    useShallow((state) => ({
+      previewId: state.previewId,
+      isShowPreview: state.showPreview,
+    })),
+  );
+
+export const useRenameResumeState = () =>
+  useCommonStore(
+    useShallow((state) => ({ isRenameResume: state.renameResume })),
   );

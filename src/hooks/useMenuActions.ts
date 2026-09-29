@@ -1,0 +1,116 @@
+import type { ActionKey } from "@/constants/menubar";
+import { useModalActions } from "@/store/modal";
+import usePrintResume from "./usePrintResume";
+import useDeleteResume from "./useDeleteResume";
+import { useLocation, useSearchParams } from "wouter";
+import { useEditorActions } from "@/features/editor/store";
+import { useCommonActions, useResumeActions } from "@/store";
+import useCreateDuplicateResume from "./useCreateDuplicateResume";
+import useCreateResume from "./useCreateResume";
+import { useSettingActions } from "@/store/setting";
+
+export default function useMenuActions() {
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");
+  const [_, navigate] = useLocation();
+
+  const { resetEditor } = useEditorActions();
+  const { setModalOpen } = useModalActions();
+  const { toggleRenameResume, togglePreview, setPreviewId } =
+    useCommonActions();
+  const { updateResume } = useResumeActions();
+  const { setViewSetting } = useSettingActions();
+  const createResume = useCreateResume();
+  const printResume = usePrintResume();
+  const deleteResume = useDeleteResume();
+  const handleCreateDuplicateResume = useCreateDuplicateResume(id);
+
+  async function execMenuAction(actionKey: ActionKey) {
+    switch (actionKey) {
+      // Create new resume
+      case "new-cv":
+        try {
+          const res = await createResume({});
+          if (res) {
+            updateResume(res);
+            navigate(`/editor?id=${res.id}`);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        return;
+
+      // Rename current open resume
+      case "rename-cv":
+        toggleRenameResume();
+        return;
+
+      // import json
+      case "import-json":
+        return setModalOpen("import-json");
+
+      // Print resume
+      case "print-pdf":
+      case "print-cv":
+        printResume();
+        return;
+
+      // Open preview modal
+      case "print-preview":
+        if (id) {
+          setPreviewId(id);
+      togglePreview();
+    }
+        return;
+
+      case "view-editor":
+      case "view-split":
+      case "view-preview":
+        if (id) {
+          if (actionKey === "view-editor") {
+            setViewSetting({
+              editorMode: "editor",
+            });
+          } else if (actionKey === "view-split") {
+            setViewSetting({
+              editorMode: "split",
+            });
+          } else if (actionKey === "view-preview") {
+            setViewSetting({
+              editorMode: "preview",
+            });
+          }
+        }
+        return;
+
+      // create duplicate resume
+      case "duplicate-cv":
+        try {
+          const resume = await handleCreateDuplicateResume();
+          if (resume) {
+            navigate(`/editor?id=${resume.id}`);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        return;
+
+      // Delete Resume
+      case "delete-cv":
+        if (id?.trim()) {
+          try {
+            await deleteResume(id);
+            // Reset editor
+            resetEditor();
+            // Redirect to dashboard
+            navigate("/");
+          } catch (error) {}
+        }
+        return;
+
+      default:
+    }
+  }
+
+  return { execMenuAction } as const;
+}

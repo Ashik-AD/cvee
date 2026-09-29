@@ -98,8 +98,7 @@ function Projects() {
   }
   return (
     <FlexColumn className="gap-4">
-      <FieldSet>
-        {projects.map((project, idx) => {
+        {projects?.map((project, idx) => {
           return (
             <ProjectField
               name={project.name}
@@ -107,10 +106,10 @@ function Projects() {
               link={project.link}
               repoLink={project.repoLink}
               onChange={(newExperience) => handleChange(idx, newExperience)}
+              key={idx}
             />
           );
         })}
-      </FieldSet>
       <Button variant="outline" className="border-dashed" onClick={handleAddProject}>
         <Plus />
         Add Project

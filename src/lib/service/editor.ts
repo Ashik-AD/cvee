@@ -1,14 +1,15 @@
+import type { CVTemplates } from "@/components/templates";
 import type { Resume } from "@/features/editor/types";
-import type { RegexRouteParams } from "wouter";
 const STORE_NAME = "resumes";
 
 export interface ResumePopulate extends Resume {
   id: string;
   meta: {
-    title: string;
-    description: string;
+    title: string | null;
+    description: string | null;
     createdAt: string | null;
     updatedAt: string | null;
+    template?: CVTemplates | null;
   };
 }
 
@@ -29,7 +30,6 @@ export class EditorService {
     objectStore.createIndex("email", "personalInfo.email", {
       unique: false,
     });
-
     // Create an index to search by role
     objectStore.createIndex("role", "personalInfo.role", {
       unique: false,
@@ -45,28 +45,37 @@ export class EditorService {
     this.db = db;
   }
 
-  async createNewResume(resume: Resume) {
+  async createNewResume(resume: Resume, title?: string) {
     return new Promise<ResumePopulate>((resolve, reject) => {
       const trn = this.db.transaction([STORE_NAME], "readwrite");
 
       const id = crypto.randomUUID();
       const createdAt = new Date().toISOString();
       const updatedAt = new Date().toISOString();
+
+      let resumeName = title ?? `Untitled - ${new Date().toLocaleString()}`;
+
       const meta = {
         createdAt,
         updatedAt,
-        title: `Untitled - ${new Date().toLocaleString()}`,
+        title: resumeName,
         description: "",
+      } satisfies ResumePopulate["meta"];
+
+      const payload = {
+        ...resume,
+        id,
+        meta,
       };
 
-      const request = trn.objectStore(STORE_NAME).add({ ...resume, id, meta });
+      const request = trn.objectStore(STORE_NAME).add(payload);
 
       request.onerror = (error) => {
         reject(error);
       };
 
-      request.onsuccess = (event) => {
-        resolve(event.target?.result);
+      request.onsuccess = () => {
+        resolve(payload);
       };
     });
   }
@@ -97,7 +106,6 @@ export class EditorService {
 
       request.onsuccess = (event) => {
         console.log("Found resume with ID: ", id);
-        console.log("Resume: ", event.target.result);
         resolve(event.target?.result);
       };
     });
@@ -106,20 +114,79 @@ export class EditorService {
   async update(id: string, resume: Partial<ResumePopulate>) {
     return new Promise<ResumePopulate>((resolve, reject) => {
       const trn = this.db.transaction([STORE_NAME], "readwrite");
-      const meta: ResumePopulate["meta"] = {
-        ...(resume.meta ?? {}),
-        updatedAt: new Date().toISOString(),
+
+      const payload: Partial<ResumePopulate> = {
+        ...resume,
+        id,
+        meta: {
+          title: resume.meta?.title ?? "",
+          createdAt: resume.meta?.createdAt ?? null,
+          description: resume.meta?.title ?? "",
+          updatedAt: new Date().toISOString(),
+          template: resume?.meta?.template,
+        },
       };
 
-      const request = trn.objectStore(STORE_NAME).put({ ...resume, id, meta });
+      const request = trn.objectStore(STORE_NAME).put(payload);
 
       request.onerror = (error) => {
         reject(error);
       };
 
-      request.onsuccess = (event) => {
-        resolve(event.target.value);
+      request.onsuccess = () => {
+        resolve(payload as ResumePopulate);
       };
     });
+  }
+
+  async resumeLookup() {
+    return new Promise<Array<{ label: string; id: string }>>(
+      (resolve, reject) => {
+        const trn = this.db.transaction([STORE_NAME], "readonly");
+        const request = trn.objectStore(STORE_NAME).getAll();
+
+        request.onerror = (error) => {
+          reject(error);
+        };
+
+        request.onsuccess = (event) => {
+          const resumes = event.target.result?.map((resume) => ({
+            label: resume?.meta?.title,
+            id: resume.id,
+          }));
+          resolve(resumes);
+        };
+      },
+    );
+  }
+
+  async deleteResume(id: string) {
+    return new Promise<Array<{ label: string; id: string }>>(
+      (resolve, reject) => {
+        const trn = this.db.transaction([STORE_NAME], "readwrite");
+        const request = trn.objectStore(STORE_NAME).delete(id);
+
+        request.onerror = (error) => {
+          reject(error);
+        };
+
+        request.onsuccess = (event) => {
+          resolve(event.target.result);
+        };
+      },
+    );
+  }
+
+  async getResumesName(): Promise<Array<{ name: string; id: string } | null>> {
+    try {
+      const resumes = await this.getResumes();
+      if (!resumes?.length) return [];
+      return resumes.map((resume) => ({
+        name: resume.meta?.title,
+        id: resume.id,
+      }));
+    } catch (error) {
+      throw error as Error;
+    }
   }
 }

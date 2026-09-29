@@ -12,7 +12,7 @@ import useServices from "@/hooks/useServices";
 import { Accordion } from "@/components/ui/accordion";
 import EditorSection from "@/components/common/EditorSection";
 
-const SAVE_INTERVAL_MIL = 10_000; // 10 seconds
+const SAVE_INTERVAL_MIL = 2_000; // 2 seconds
 
 function EditorForm() {
   const timerRef = useRef<number | null>(null);
@@ -35,19 +35,43 @@ function EditorForm() {
 
   // Save resume on every  `SAVE_INTERVAL_MIL` interval
   useEffect(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
     if (resumeId) {
-      timerRef.current = setInterval(onSave, SAVE_INTERVAL_MIL);
+      timerRef.current = setTimeout(onSave, SAVE_INTERVAL_MIL);
     }
 
     return () => {
       if (timerRef.current) {
-        clearInterval(timerRef.current);
+        clearTimeout(timerRef.current);
       }
     };
   }, [resumeId, editorState]);
 
+  // Save final snap shot instantly before closing the editor form
+  // useEffect(() => {
+  //   return () => {
+  //     if (timerRef.current) {
+  //       clearInterval(timerRef.current);
+  //     }
+  //
+  //     // Save last state of the editor before
+  //     // closing the form
+  //     console.log("Saving final changes before closing....");
+  //     onSave()
+  //       .then(() => {
+  //         console.log("Changes saved successfully....");
+  //       })
+  //       .catch((err) => {
+  //         console.error("Failed to save final changes: ", err);
+  //       });
+  //   };
+  // }, []);
+
   return (
-    <FlexColumn className="overflow-y-auto max-h-[calc(100dvh-4rem)] scrollbar-thin">
+    <FlexColumn className="overflow-y-auto max-h-[calc(100dvh-5rem)] scrollbar-thin">
       <Accordion
         multiple
         defaultValue={["personalInfo", "summary", "exp", "pro", "skill", "edu"]}

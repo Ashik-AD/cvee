@@ -1,4 +1,4 @@
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useEditorActions, useEditorEducations } from "../../store";
 import type { Education } from "../../types";
@@ -105,21 +105,24 @@ function EducationSection() {
 
   return (
     <FlexColumn className="gap-4">
-      <FieldSet>
-        {educations.map((education, idx) => {
-          return (
-            <EducationField
-              institute={education.institute}
-              course={education.course}
-              duration={education.duration}
-              grade={education.grade}
-              onChange={(newExperience) => handleChange(idx, newExperience)}
-            />
-          );
-        })}
-      </FieldSet>
+      {educations?.map((education, idx) => {
+        return (
+          <EducationField
+            institute={education.institute}
+            course={education.course}
+            duration={education.duration}
+            grade={education.grade}
+            onChange={(newExperience) => handleChange(idx, newExperience)}
+            key={`${education.institute}${education.duration}_${idx}`}
+          />
+        );
+      })}
 
-      <Button variant="outline" className="border-dashed" onClick={handleAddNewEducation}>
+      <Button
+        variant="outline"
+        className="border-dashed"
+        onClick={handleAddNewEducation}
+      >
         <Plus />
         Add Education
       </Button>

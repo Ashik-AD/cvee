@@ -239,10 +239,11 @@
 #root {
   margin: 0 auto;
   border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 body {
@@ -251,21 +252,6 @@ body {
 
 p {
   margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }
 
 @theme inline {
@@ -350,7 +336,7 @@ code {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-hidden;
   }
   html {
     @apply font-sans;
@@ -359,6 +345,7 @@ code {
 
 #preview {
   min-width: 210mm;
+  max-width: 210mm;
   min-height: 297mm;
 }
 
@@ -367,8 +354,10 @@ code {
     size: A4;
     margin: 0 !important;
   }
-  
-  html, body, #root {
+
+  html,
+  body,
+  #root {
     height: auto !important;
     min-height: auto !important;
     overflow: visible !important;
@@ -376,7 +365,7 @@ code {
     padding: 0 !important;
     background: white !important;
   }
-  
+
   /* Force background colors to print on Chromium browsers */
   * {
     -webkit-print-color-adjust: exact !important;
@@ -384,9 +373,11 @@ code {
   }
 
   /* Hide irrelevant UI parts */
-  .app-navbar, 
-  .editor-form-panel, 
-  .editor-toolbar {
+  .app-navbar,
+  .editor-form-panel,
+  .editor-toolbar,
+  div[data-slot="menubar-content"],
+  .hidden-on-print {
     display: none !important;
   }
 
@@ -395,7 +386,7 @@ code {
     height: auto !important;
     overflow: visible !important;
   }
-  
+
   /* Disable grid layouts so that hidden elements don't leave empty columns */
   .grid-cols-2 {
     display: block !important;
@@ -419,5 +410,6 @@ code {
     min-height: 297mm !important;
     border: none !important;
     margin: 0 !important;
+    transform: scale(1) !important;
   }
 }

@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import useServices from "./hooks/useServices";
 import { useResumeActions } from "./store";
 import { Route } from "wouter";
+import ModalRender from "./components/modals";
+import ResumePreview from "./components/common/ResumePreview";
 
 function Layout() {
   const { services } = useServices();
@@ -34,6 +36,8 @@ function Layout() {
         </Route>
         <Route path="/editor" component={Editor} />
       </div>
+      <ModalRender />
+      <ResumePreview />
     </FlexColumn>
   );
 }

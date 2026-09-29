@@ -16,23 +16,29 @@ export default function ServicesProvider({
   children: ReactNode;
 }) {
   const [services, setServices] = useState<Services | null>(null);
+  const [isInitializing, setInitializing] = useState(false);
 
   // initialize DB & Services
   useEffect(() => {
+    if (isInitializing) return;
+    setInitializing(true);
     const initDB = new Database(DB_NAME);
     initDB
       .connect()
       .then((conn) => {
         const srv = new Services(conn);
         setServices(srv);
+        setInitializing(false);
       })
-      .catch(console.error);
-    return () => {};
+      .catch((err) => {
+        console.error("Failed initialize db: ", err);
+        setInitializing(false);
+      });
   }, []);
 
   return (
     <ServicesContext.Provider value={{ services }}>
-      {children}
+      {isInitializing ? `loading...` : children}
     </ServicesContext.Provider>
   );
 }

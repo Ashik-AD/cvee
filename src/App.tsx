@@ -5,11 +5,11 @@ import { Switch } from "wouter";
 
 function App() {
   return (
-    <Switch>
-      <ServicesProvider>
+    <ServicesProvider>
+      <Switch>
         <Layout />
-      </ServicesProvider>
-    </Switch>
+      </Switch>
+    </ServicesProvider>
   );
 }
 

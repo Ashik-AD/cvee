@@ -28,7 +28,9 @@ function EditorSection({ children, title, id }: EditorSectionProps) {
           </Flex>
         </Flex>
       </AccordionTrigger>
-      <AccordionContent className="p-3 bg-neutral-1C1B1B">{children}</AccordionContent>
+      <AccordionContent className="p-3 bg-neutral-1C1B1B">
+        {children}
+      </AccordionContent>
     </AccordionItem>
   );
 }

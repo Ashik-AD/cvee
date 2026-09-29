@@ -106,8 +106,7 @@ function Experiences() {
 
   return (
     <FlexColumn className="gap-4">
-      <FieldSet>
-        {experiences.map((experience, idx) => {
+        {experiences?.map((experience, idx) => {
           return (
             <ExperienceField
               companyName={experience.companyName}
@@ -115,10 +114,10 @@ function Experiences() {
               duration={experience.duration}
               description={experience.description}
               onChange={(newExperience) => handleChange(idx, newExperience)}
+              key={idx}
             />
           );
         })}
-      </FieldSet>
       <Button
         variant="outline"
         className="border-dashed"

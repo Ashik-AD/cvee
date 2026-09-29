@@ -20,7 +20,7 @@ function PersonalInfoSection() {
         <FieldLabel htmlFor="name">Full Name</FieldLabel>
         <Input
           id="name"
-          value={info.name}
+          value={info?.name}
           name="name"
           type="text"
           placeholder="John Doe"
@@ -35,7 +35,7 @@ function PersonalInfoSection() {
         <Input
           id="role"
           name="role"
-          value={info.role}
+          value={info?.role}
           type="text"
           onChange={handleChangePersonalFields}
           placeholder="Front-end Developer"
@@ -50,7 +50,7 @@ function PersonalInfoSection() {
           id="email"
           name="email"
           type="email"
-          value={info.email}
+          value={info?.email}
           onChange={handleChangePersonalFields}
           placeholder="dev.ashikdhimal@gmail.com"
           className="bg-neutral-0E0E0E"
@@ -64,7 +64,7 @@ function PersonalInfoSection() {
           id="contactNo"
           name="contactNo"
           type="text"
-          value={info.contactNo}
+          value={info?.contactNo}
           onChange={handleChangePersonalFields}
           placeholder="+977-9824965817"
           className="bg-neutral-0E0E0E"
@@ -80,7 +80,7 @@ function PersonalInfoSection() {
             id="address"
             name="address"
             type="text"
-            value={info.address}
+            value={info?.address}
             onChange={handleChangePersonalFields}
             placeholder="Kathmandu, Nepal"
             className="bg-neutral-0E0E0E"
@@ -94,7 +94,7 @@ function PersonalInfoSection() {
             id="github"
             name="github"
             type="text"
-            value={info.github}
+            value={info?.github}
             onChange={handleChangePersonalFields}
             placeholder="@ashik-ad"
             className="bg-neutral-0E0E0E"
@@ -108,7 +108,7 @@ function PersonalInfoSection() {
             id="linkedin"
             name="linkedin"
             type="text"
-            value={info.linkedin}
+            value={info?.linkedin}
             onChange={handleChangePersonalFields}
             placeholder="ashikdhimal"
             className="bg-neutral-0E0E0E"
