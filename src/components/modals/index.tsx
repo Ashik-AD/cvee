@@ -19,7 +19,10 @@ function ModalRender() {
 
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
-      <DialogContent className={cn(modal.className)}>
+      <DialogContent
+        className={cn(modal.className)}
+        showCloseButton={modal.showCloseBtn}
+      >
         <DialogHeader>
           {modal.title && <DialogTitle>{modal.title}</DialogTitle>}
           {modal.description && (
