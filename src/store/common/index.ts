@@ -8,12 +8,15 @@ type State = {
   previewId: string | null;
   showPreview: boolean;
   renameResume: boolean;
+  showCommandCenter: boolean;
   actions: {
     setLastOpendId: (id: string) => void;
     setPreviewId: (payload: string) => void;
     clearPreviewId: () => void;
     togglePreview: () => void;
     toggleRenameResume: () => void;
+    toggleCommandCenter: () => void;
+    setShowCommandCenter: (val: boolean) => void;
   };
 };
 
@@ -26,6 +29,7 @@ export const useCommonStore = create<State>()(
         previewId: null,
         showPreview: false,
         renameResume: false,
+        showCommandCenter: false,
 
         actions: {
           setLastOpendId: (id) => {
@@ -54,6 +58,16 @@ export const useCommonStore = create<State>()(
               state.renameResume = !state.renameResume;
             });
           },
+          toggleCommandCenter() {
+            set((state) => {
+              state.showCommandCenter = !state.showCommandCenter;
+            });
+          },
+          setShowCommandCenter(payload) {
+            set((state) => {
+              state.showCommandCenter = payload;
+            });
+          },
         },
       })),
       {
@@ -77,6 +91,13 @@ export const useCommonState = () =>
       lastOpendId: state.lastOpendId,
       previewId: state.previewId,
       isShowPreview: state.showPreview,
+    })),
+  );
+
+export const useCommandCenterState = () =>
+  useCommonStore(
+    useShallow((state) => ({
+      showCommandCenter: state.showCommandCenter,
     })),
   );
 
