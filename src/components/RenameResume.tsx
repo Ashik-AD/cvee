@@ -14,6 +14,7 @@ import { AlertCircleIcon } from "lucide-react";
 import { useCommonActions, useResumeActions } from "@/store";
 import { useEditorActions } from "@/features/editor/store";
 import useGetResume from "@/hooks/useGetResume";
+import { Textarea } from "./ui/textarea";
 
 type RenameResumeProps = {
   id: string | null;
@@ -27,6 +28,7 @@ type Error = {
 function RenameResume({ id }: RenameResumeProps) {
   const [error, setError] = useState<Error | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const descRef = useRef<HTMLTextAreaElement | null>(null);
 
   const { services } = useServices();
   const { updateResume } = useResumeActions();
@@ -43,8 +45,13 @@ function RenameResume({ id }: RenameResumeProps) {
   // Pre-fill the rename input
   useEffect(() => {
     if (!id || isLoading) return;
-    if (resume && inputRef.current) {
-      inputRef.current.value = resume.meta.title ?? "";
+    if (resume) {
+      if (inputRef.current) {
+        inputRef.current.value = resume.meta.title ?? "";
+      }
+      if (descRef.current) {
+        descRef.current.value = resume.meta.description ?? "";
+      }
     }
   }, [id, isLoading, resume]);
 
@@ -67,6 +74,7 @@ function RenameResume({ id }: RenameResumeProps) {
 
     const formData = new FormData(eve.target);
     const resumeName = formData.get("resumeName")?.toString();
+    const resumeDesc = formData.get("resumeDescription")?.toString();
 
     if (!id || !resumeName || !resumeName?.trim()) return;
 
@@ -93,6 +101,9 @@ function RenameResume({ id }: RenameResumeProps) {
         }
 
         resume.meta.title = resumeName;
+        if (resumeDesc?.trim()) {
+          resume.meta.description = resumeDesc;
+        }
 
         // Update db
         const updatedResume = await services?.editor.update(id, resume);
@@ -124,17 +135,33 @@ function RenameResume({ id }: RenameResumeProps) {
 
   return (
     <Flex className="fixed h-screen w-screen inset-0 justify-center p-4 md:p-10">
-      <FlexColumn className="flex z-1 bg-neutral-1C1B1B/50 h-fit p-4 shadow-md backdrop-blur-xl rounded-lg mt-4 gap-2">
-        <form onSubmit={handleSubmit} className="flex flex-row gap-1">
+      <FlexColumn className="flex z-1 bg-neutral-1C1B1B h-fit p-4 shadow-md gap-4 rounded-sm max-w-sm w-full border">
+        <h2 className="text-sm">Rename</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
             name="resumeName"
             placeholder="Resume name and press enter..."
-            className="bg-neutral-000000"
+            className="bg-neutral-131313"
             ref={inputRef}
           />
-          <Button type="reset" variant="outline" onClick={toggleRenameResume}>
-            Cancel
-          </Button>
+          <Textarea
+            placeholder="Description..."
+            rows={5}
+            className="bg-neutral-131313"
+            name="resumeDescription"
+            ref={descRef}
+          />
+
+          <div>
+            <Button
+              type="reset"
+              variant="secondary"
+              onClick={toggleRenameResume}
+            >
+              Cancel
+            </Button>
+            <Button type="submit">Save</Button>
+          </div>
         </form>
 
         {error && (
