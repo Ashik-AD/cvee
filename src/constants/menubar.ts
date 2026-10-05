@@ -40,6 +40,8 @@ export const ACTION_KEYS = {
 
   PRINT_PDF: "print-pdf",
 
+  CHANGE_TEMPLATE: "change-template",
+
   ADD_SECTION: "add-section",
   EDIT_SECTION: "edit-section",
   DUPLICATE_SECTION: "duplicate-section",
@@ -70,7 +72,7 @@ export const ACTION_KEYS = {
 
 export type ActionKey = (typeof ACTION_KEYS)[keyof typeof ACTION_KEYS];
 
-type MenuAction = {
+export type MenuAction = {
   type: "action";
   key: ActionKey;
   label: string;
@@ -123,6 +125,7 @@ export const menu: Menu[] = [
         key: "delete-cv",
         label: "Delete CV",
         icon: Trash2,
+        cmd: "Delete",
       },
 
       { type: "separator" },
@@ -132,6 +135,7 @@ export const menu: Menu[] = [
         key: "import-json",
         label: "Import JSON",
         icon: Import,
+        cmd: "Ctrl+I",
       },
       {
         type: "action",
@@ -152,72 +156,6 @@ export const menu: Menu[] = [
     ],
   },
 
-  // {
-  //   name: "Edit",
-  //   cmd: "Alt+E",
-  //   icon: FilePenLine,
-  //   actions: [
-  //     {
-  //       type: "action",
-  //       key: "add-section",
-  //       label: "Add section",
-  //       icon: Plus,
-  //     },
-  //     {
-  //       type: "action",
-  //       key: "edit-section",
-  //       label: "Edit section",
-  //       icon: SquarePen,
-  //     },
-  //     {
-  //       type: "action",
-  //       key: "duplicate-section",
-  //       label: "Duplicate section",
-  //       icon: CopyPlus,
-  //     },
-  //     {
-  //       type: "action",
-  //       key: "delete-section",
-  //       label: "Delete section",
-  //       icon: Trash2,
-  //       cmd: "Delete",
-  //     },
-  //
-  //     { type: "separator" },
-  //
-  //     {
-  //       type: "action",
-  //       key: "move-section-up",
-  //       label: "Move Up",
-  //       icon: ArrowUp,
-  //       cmd: "Alt+↑",
-  //     },
-  //     {
-  //       type: "action",
-  //       key: "move-section-down",
-  //       label: "Move Down",
-  //       icon: ArrowDown,
-  //       cmd: "Alt+↓",
-  //     },
-  //
-  //     { type: "separator" },
-  //
-  //     {
-  //       type: "action",
-  //       key: "toggle-section-visibility",
-  //       label: "Show/Hide",
-  //       icon: Eye,
-  //     },
-  //     {
-  //       type: "action",
-  //       key: "save",
-  //       label: "Save now",
-  //       icon: Save,
-  //       cmd: "Ctrl+S",
-  //     },
-  //   ],
-  // },
-
   {
     name: "View",
     cmd: "Alt+V",
@@ -228,34 +166,22 @@ export const menu: Menu[] = [
         key: "view-editor",
         label: "Editor",
         icon: SquarePen,
+        cmd: "Ctrl+[",
       },
       {
         type: "action",
         key: "view-preview",
         label: "Preview",
         icon: Eye,
+        cmd: "Ctrl+]",
       },
       {
         type: "action",
         key: "view-split",
         label: "Split View",
         icon: PanelLeft,
+        cmd: "Ctrl+\\",
       },
-
-      // { type: "separator" },
-      //
-      // {
-      //   type: "action",
-      //   key: "view-desktop",
-      //   label: "Desktop view",
-      //   icon: Monitor,
-      // },
-      // {
-      //   type: "action",
-      //   key: "view-mobile",
-      //   label: "Mobile view",
-      //   icon: Smartphone,
-      // },
     ],
   },
 
