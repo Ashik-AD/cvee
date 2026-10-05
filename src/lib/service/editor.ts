@@ -45,7 +45,10 @@ export class EditorService {
     this.db = db;
   }
 
-  async createNewResume(resume: Resume, title?: string) {
+  async createNewResume(
+    resume: Resume,
+    metaDetail?: Partial<ResumePopulate["meta"]>,
+  ) {
     return new Promise<ResumePopulate>((resolve, reject) => {
       const trn = this.db.transaction([STORE_NAME], "readwrite");
 
@@ -53,13 +56,15 @@ export class EditorService {
       const createdAt = new Date().toISOString();
       const updatedAt = new Date().toISOString();
 
-      let resumeName = title ?? `Untitled - ${new Date().toLocaleString()}`;
+      let resumeName =
+        metaDetail?.title ?? `Untitled - ${new Date().toLocaleString()}`;
 
       const meta = {
         createdAt,
         updatedAt,
         title: resumeName,
-        description: "",
+        description: metaDetail?.description ?? "",
+        template: metaDetail?.template ?? undefined,
       } satisfies ResumePopulate["meta"];
 
       const payload = {
@@ -123,7 +128,7 @@ export class EditorService {
         meta: {
           title: resume.meta?.title ?? "",
           createdAt: resume.meta?.createdAt ?? null,
-          description: resume.meta?.title ?? "",
+          description: resume?.meta?.description ?? resume.meta?.title ?? "",
           updatedAt: new Date().toISOString(),
           template: resume?.meta?.template,
         },
