@@ -28,7 +28,7 @@ export default function useCreateResume() {
         addons: {},
         ...resume,
       };
-      const res = await services?.editor.createNewResume(payload, title);
+      const res = await services?.editor.createNewResume(payload, { title });
       return res;
     } catch (err) {
       console.log(err);
