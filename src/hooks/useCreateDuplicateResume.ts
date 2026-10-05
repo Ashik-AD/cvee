@@ -61,7 +61,10 @@ export default function useCreateDuplicateResume(id: string | null) {
       const resumeNames = getResumeNames?.map((resume) => resume?.name) ?? [];
       const newName = generateNewName(resume.meta?.title ?? "", resumeNames);
 
-      const res = await services?.editor.createNewResume(resume, newName);
+      const res = await services?.editor.createNewResume(resume, {
+        ...resume.meta,
+        title: newName,
+      });
       if (res) {
         addResume(res);
         return res;
