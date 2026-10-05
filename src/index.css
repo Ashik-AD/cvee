@@ -238,7 +238,7 @@
 
 #root {
   margin: 0 auto;
-  border-inline: 1px solid var(--border);
+  padding: 0;
   height: 100svh;
   display: flex;
   flex-direction: column;
