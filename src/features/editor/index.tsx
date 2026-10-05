@@ -10,6 +10,10 @@ import RenameResume from "@/components/RenameResume";
 import { useRenameResumeState } from "@/store/common";
 import { useViewSettingState } from "@/store/setting";
 import { cn } from "cn";
+import MobileQuickActions from "./components/MobileQuickActions";
+import { useWindowResize } from "@/hooks/useWindowResize";
+import useMenuActions from "@/hooks/useMenuActions";
+import ResumeTemplatePicker from "./components/TemplatePicker";
 
 function EditorPreview() {
   const {
@@ -47,8 +51,8 @@ function EditorLayout() {
   return (
     <Grid
       className={cn(
-        mode === "split" ? "grid-cols-2" : "grid-cols-1",
-        "justify-center",
+        mode === "split" ? "md:grid-cols-2" : "md:grid-cols-1",
+        "grid-cols-1 justify-center h-[calc(100svh-4rem)] overflow-y-auto scrollbar-thin pb-16 md:pb-0 print:h-auto! print:scrollbar-none!",
       )}
     >
       <Activity
@@ -64,6 +68,26 @@ function EditorLayout() {
         <EditorPreview />
       </Activity>
     </Grid>
+  );
+}
+
+function QuickActions() {
+  const { execMenuAction } = useMenuActions();
+  const { width } = useWindowResize();
+  const isMobile = width && width < 678;
+
+  useEffect(() => {
+    if (isMobile) {
+      execMenuAction("view-editor");
+    } else {
+      execMenuAction("view-split");
+    }
+  }, [isMobile]);
+
+  return (
+    <Activity mode={isMobile ? "visible" : "hidden"}>
+      <MobileQuickActions />
+    </Activity>
   );
 }
 
@@ -104,6 +128,8 @@ function Editor() {
       <Toolbar />
       <EditorLayout />
       <ChangeResumeName id={resumeId} />
+      <QuickActions />
+      <ResumeTemplatePicker />
     </FlexColumn>
   );
 }

@@ -8,7 +8,9 @@ import { DEFAULT_TEMPLATE } from "@/constants/preview";
 
 type EditorSettings = {
   zoomLevel: number;
+  showTemplatePicker: boolean;
 };
+
 interface State extends ResumePopulate {
   // Editor settings
   settings: EditorSettings;
@@ -112,6 +114,7 @@ const useEditorStore = create<State>()(
         id: "",
         settings: {
           zoomLevel: 100,
+          showTemplatePicker: false,
         },
 
         actions: {

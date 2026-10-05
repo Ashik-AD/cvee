@@ -47,7 +47,7 @@ function Toolbar() {
   }
 
   return (
-    <Grid className="editor-toolbar grid-cols-1 sm:grid-cols-2 px-1 border-b border-t p-1">
+    <Grid className="editor-toolbar grid-cols-2 px-1 border-b border-t p-1 print:hidden!">
       <Flex>
         {meta.title && (
           <Flex className="gap-1 items-center">
@@ -59,27 +59,29 @@ function Toolbar() {
 
       {/* Preview toolbar */}
       <Flex className="justify-end items-center gap-3">
-        <Select
-          items={TemplateSelectOptions}
-          value={meta.template}
-          onValueChange={handleChangeTemplate}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select Template" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Templates</SelectLabel>
-              {TemplateSelectOptions.map((option) => {
-                return (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                );
-              })}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="hidden md:inline-block">
+          <Select
+            items={TemplateSelectOptions}
+            value={meta.template}
+            onValueChange={handleChangeTemplate}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Template" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Templates</SelectLabel>
+                {TemplateSelectOptions.map((option) => {
+                  return (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  );
+                })}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
         <Flex className="items-center gap-1">
           <span className="text-xs">{zoomLevel}%</span>
           <Slider
@@ -95,7 +97,7 @@ function Toolbar() {
           onClick={onPrint}
           variant="outline"
           size="sm"
-          className="rounded-none"
+          className="rounded-none hidden md:flex"
         >
           Export
           <Printer />

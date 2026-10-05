@@ -71,7 +71,7 @@ function EditorForm() {
   // }, []);
 
   return (
-    <FlexColumn className="overflow-y-auto max-h-[calc(100dvh-5rem)] scrollbar-thin">
+    <FlexColumn className="overflow-y-auto h-full md:max-h-[calc(100dvh-5rem)] scrollbar-thin">
       <Accordion
         multiple
         defaultValue={["personalInfo", "summary", "exp", "pro", "skill", "edu"]}

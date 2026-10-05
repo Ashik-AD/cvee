@@ -42,7 +42,7 @@ export default function Dashbord() {
   }
 
   return (
-    <div className="w-full px-12 py-4 inline-flex flex-col justify-start items-start gap-4">
+    <div className="w-full px-4 lg:px-12 py-4 inline-flex flex-col justify-start items-start gap-4">
       <div className="sticky top-0 bg-neutral-0E0E0E w-full">
         <Toolbar />
       </div>
