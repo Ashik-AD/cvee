@@ -1,13 +1,16 @@
 import { Search } from "lucide-react";
 import { Flex } from "./layout";
 import { Input } from "../ui/input";
-import { useRef, type ChangeEvent } from "react";
+import { useEffect, useRef, type ChangeEvent } from "react";
+import { cn } from "cn";
 
 type SearchbarProps = {
   onChange: (value: string) => void;
   name?: string;
   value?: string;
   placeholder?: string;
+  focus?: boolean;
+  className?: string;
 };
 
 function Searchbar({
@@ -15,8 +18,16 @@ function Searchbar({
   onChange,
   name = "searchbar",
   placeholder = "Search...",
+  className,
+  focus,
 }: SearchbarProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (focus) {
+      inputRef.current?.focus();
+    }
+  }, [focus]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
@@ -25,7 +36,10 @@ function Searchbar({
 
   return (
     <Flex
-      className="items-center gap-2 bg-muted-foreground/20 rounded-xl overflow-hidden px-3 focus-within:ring"
+      className={cn(
+        "items-center gap-2 bg-muted-foreground/20 rounded-xl overflow-hidden px-3 focus-within:ring",
+        className,
+      )}
       role="searchbox"
       onClick={() => {
         inputRef.current?.focus();
