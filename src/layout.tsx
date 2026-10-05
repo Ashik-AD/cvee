@@ -8,10 +8,16 @@ import { useResumeActions } from "./store";
 import { Route } from "wouter";
 import ModalRender from "./components/modals";
 import ResumePreview from "./components/common/ResumePreview";
+import CommandCenter from "./components/common/CommandCenter";
+import useHandleActionsGlobal from "./hooks/useHandleActionsGlobal";
+import AlertDialogsRender from "./components/dialogs";
 
 function Layout() {
   const { services } = useServices();
   const { setResumes } = useResumeActions();
+
+  // Handle global keyboard shortcuts
+  useHandleActionsGlobal();
 
   // Fetch all resumes from the database for dashboard to show
   useEffect(() => {
@@ -30,14 +36,16 @@ function Layout() {
   return (
     <FlexColumn className="overflow-hidden">
       <Navbar />
-      <div className="h-[calc(100svh-46px)] main-content overflow-y-auto scrollbar-thin">
+      <div className="max-h-[calc(100svh-40px)] md:max-h-[calc(100svh-44px)] main-content overflow-y-auto scrollbar-thin">
         <Route path="/">
           <Dashbord />
         </Route>
         <Route path="/editor" component={Editor} />
       </div>
       <ModalRender />
+      <AlertDialogsRender />
       <ResumePreview />
+      <CommandCenter />
     </FlexColumn>
   );
 }
