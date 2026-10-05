@@ -32,13 +32,38 @@ export interface TemplateProps {
 export const TemplateSelectOptions: {
   label: string;
   value: CVTemplates;
+  description: string;
 }[] = [
-  { label: "Obsidian", value: "obsidian" },
-  { label: "Classic", value: "classic" },
-  { label: "Linear", value: "linear" },
-  { label: "Editorial", value: "editorial" },
-  { label: "Terminal", value: "terminal" },
-  { label: "Compact", value: "compact" },
+  {
+    label: "Obsidian",
+    value: "obsidian",
+    description: "Clean and minimal",
+  },
+  {
+    label: "Classic",
+    value: "classic",
+    description: "Timeless and professional",
+  },
+  {
+    label: "Editorial",
+    value: "editorial",
+    description: "Refined and expressive",
+  },
+  {
+    label: "Compact",
+    value: "compact",
+    description: "More content, less space",
+  },
+  {
+    label: "Linear",
+    value: "linear",
+    description: "Structured and organized",
+  },
+  {
+    label: "Terminal",
+    value: "terminal",
+    description: "Built for developers",
+  },
 ];
 
 export interface CvTemplateProps extends TemplateProps {
