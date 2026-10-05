@@ -14,7 +14,8 @@ export default function useMenuActions() {
   const id = searchParams.get("id");
   const [_, navigate] = useLocation();
 
-  const { resetEditor } = useEditorActions();
+  const { toggleCommandCenter } = useCommonActions();
+  const { resetEditor, setEditorSettings } = useEditorActions();
   const { setModalOpen } = useModalActions();
   const { toggleRenameResume, togglePreview, setPreviewId } =
     useCommonActions();
@@ -59,8 +60,8 @@ export default function useMenuActions() {
       case "print-preview":
         if (id) {
           setPreviewId(id);
-      togglePreview();
-    }
+          togglePreview();
+        }
         return;
 
       case "view-editor":
@@ -95,6 +96,11 @@ export default function useMenuActions() {
         }
         return;
 
+      // Change resume template
+      case "change-template":
+        setEditorSettings({ showTemplatePicker: true });
+        return;
+
       // Delete Resume
       case "delete-cv":
         if (id?.trim()) {
@@ -108,6 +114,22 @@ export default function useMenuActions() {
         }
         return;
 
+      // Help section
+      case "keyboard-shortcuts":
+        setModalOpen("keyboardShortcut");
+        return;
+
+      case "command-palette":
+        toggleCommandCenter();
+        return;
+
+      case "getting-started":
+        setModalOpen("quickGuides");
+        return;
+
+      case "about":
+        setModalOpen("about");
+        return;
       default:
     }
   }
