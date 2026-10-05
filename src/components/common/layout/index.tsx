@@ -4,6 +4,17 @@ import type { ComponentPropsWithRef } from "react";
 export function Flex({ className, ...rest }: ComponentPropsWithRef<"div">) {
   return <div className={cn("flex", className)} {...rest} />;
 }
+export function FlexCenter({
+  className,
+  ...rest
+}: ComponentPropsWithRef<"div">) {
+  return (
+    <div
+      className={cn("flex items-center justify-center", className)}
+      {...rest}
+    />
+  );
+}
 
 export function FlexColumn({
   className,
