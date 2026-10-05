@@ -11,7 +11,6 @@ export function Obsidian({
   educations,
   skills,
 }: TemplateProps) {
-    console.log(experiences)
   return (
     <table className="w-full border-collapse text-neutral-900">
       <tbody>
