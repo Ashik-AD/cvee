@@ -16,9 +16,22 @@ import useServices from "@/hooks/useServices";
 import type { ResumePopulate } from "@/lib/service/editor";
 import { useEditorActions } from "@/features/editor/store";
 import { useLocation } from "wouter";
+import { cn } from "cn";
 
 type ImportDestination = "createNew" | "override";
 
+const tabs = [
+  {
+    icon: FileUp,
+    label: "File Upload",
+    key: "filePicker",
+  },
+  {
+    icon: FileCode,
+    label: "Raw JSON",
+    key: "rawJson",
+  },
+];
 function ResumeImport() {
   const [mode, setMode] = useState<"filePicker" | "rawJson">("filePicker");
   const [importAction, setImportAction] =
@@ -134,14 +147,24 @@ function ResumeImport() {
       {/* File picker & Raw json*/}
       <FlexColumn className="w-full gap-2">
         <Flex className="border-b">
-          <Button variant="ghost" onClick={() => setMode("filePicker")}>
-            <FileUp />
-            File Upload
-          </Button>
-          <Button variant="ghost" onClick={() => setMode("rawJson")}>
-            <FileCode />
-            Raw JSON
-          </Button>
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = mode === tab.key;
+            return (
+              <Button
+                key={tab.key}
+                variant="ghost"
+                onClick={() => setMode(tab.key as typeof mode)}
+                className={cn(
+                  isActive && "text-emerald-500 border-b! border-b-emerald-700",
+                  "border-b",
+                )}
+              >
+                <Icon />
+                {tab.label}
+              </Button>
+            );
+          })}
         </Flex>
         <Activity mode={mode === "filePicker" ? "visible" : "hidden"}>
           <Label>
@@ -158,7 +181,8 @@ function ResumeImport() {
           <Textarea
             rows={20}
             placeholder="Paste or edit json"
-            value={JSON.stringify(importedCv) ?? ""}
+            className="max-h-132 min-h-41 scrollbar-thin"
+            value={JSON.stringify(importedCv, null, 2)?.trim() || ""}
           />
         </Activity>
       </FlexColumn>
