@@ -78,7 +78,7 @@ export default function Dashbord() {
           resumeCount={resumeCount}
         />
       </div>
-      <div className="px-4">
+      <div className="px-4 w-full">
         {sortedResumes?.length > 0 &&
           (dataView === "grid" ? (
             <GridView
