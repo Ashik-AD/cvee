@@ -3,12 +3,14 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { useShallow } from "zustand/shallow";
 
+type DashboardDataView = "grid" | "list";
 type State = {
   lastOpendId: string | null;
   previewId: string | null;
   showPreview: boolean;
   renameResume: boolean;
   showCommandCenter: boolean;
+  dashboardDataView: DashboardDataView;
   actions: {
     setLastOpendId: (id: string) => void;
     setPreviewId: (payload: string) => void;
@@ -17,6 +19,7 @@ type State = {
     toggleRenameResume: () => void;
     toggleCommandCenter: () => void;
     setShowCommandCenter: (val: boolean) => void;
+    setDashboardDataView: (view: DashboardDataView) => void;
   };
 };
 
@@ -30,6 +33,7 @@ export const useCommonStore = create<State>()(
         showPreview: false,
         renameResume: false,
         showCommandCenter: false,
+        dashboardDataView: "grid",
 
         actions: {
           setLastOpendId: (id) => {
@@ -68,12 +72,18 @@ export const useCommonStore = create<State>()(
               state.showCommandCenter = payload;
             });
           },
+          setDashboardDataView(view) {
+            set((state) => {
+              state.dashboardDataView = view;
+            });
+          },
         },
       })),
       {
         name: "cvee-storage",
         partialize: (state) => ({
           lastOpendId: state.lastOpendId,
+          dashboardDataView: state.dashboardDataView,
         }),
       },
     ),
@@ -112,4 +122,9 @@ export const useResumePreviewState = () =>
 export const useRenameResumeState = () =>
   useCommonStore(
     useShallow((state) => ({ isRenameResume: state.renameResume })),
+  );
+
+export const useDashboardDataView = () =>
+  useCommonStore(
+    useShallow((state) => ({ dataView: state.dashboardDataView })),
   );

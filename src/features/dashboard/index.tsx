@@ -1,17 +1,40 @@
 import AddNewResumeCard from "@/components/cards/AddNewResumeCard";
-import { ResumeCard } from "@/components/cards/ResumeCard";
-import { FlexColumn, Grid } from "@/components/common/layout";
+import { FlexColumn } from "@/components/common/layout";
 import Toolbar from "./components/Toolbar";
 import { useCommonActions, useResumeState } from "@/store";
 import useDeleteResume from "@/hooks/useDeleteResume";
 import usePrintResume from "@/hooks/usePrintResume";
-import { getResumeStatus } from "@/utils/getResumeStatus";
+import { useMemo } from "react";
+import GridView from "./components/GridView";
+import ListView from "./components/ListView";
+import { useDashboardDataView } from "@/store/common";
+
+export type ViewMode = "grid" | "list";
 
 export default function Dashbord() {
   const { resumes } = useResumeState();
   const { setPreviewId, togglePreview } = useCommonActions();
+  const { dataView } = useDashboardDataView();
+  const { setDashboardDataView } = useCommonActions();
   const deleteResume = useDeleteResume();
   const print = usePrintResume();
+
+  // sort resume by last modified newest --> oldest
+  const sortedResumes = useMemo(() => {
+    if (!resumes?.length) return [];
+
+    return [...resumes].sort((a, b) => {
+      const dateA = new Date(
+        a.meta?.updatedAt ?? a.meta?.createdAt ?? 0,
+      ).getTime();
+
+      const dateB = new Date(
+        b.meta?.updatedAt ?? b.meta?.createdAt ?? 0,
+      ).getTime();
+
+      return dateB - dateA;
+    });
+  }, [resumes]);
 
   async function handleDeleteResume(id: string) {
     try {
@@ -31,42 +54,48 @@ export default function Dashbord() {
     setTimeout(print, 1000);
   }
 
+  function handleChangeViewMode(mode: ViewMode) {
+    setDashboardDataView(mode);
+  }
+
   if (!resumes?.length) {
     return (
-      <FlexColumn className="h-full w-full items-center justify-center">
+      <FlexColumn className="h-full w-full items-center justify-center pt-10">
         <FlexColumn>
           <AddNewResumeCard />
         </FlexColumn>
       </FlexColumn>
     );
   }
+  const resumeCount = sortedResumes?.length;
 
   return (
-    <div className="w-full px-4 lg:px-12 py-4 inline-flex flex-col justify-start items-start gap-4">
-      <div className="sticky top-0 bg-neutral-0E0E0E w-full">
-        <Toolbar />
+    <div className="w-full lg:px-12 pb-4 inline-flex flex-col justify-start items-start gap-4">
+      <div className="sticky top-0 bg-neutral-0E0E0E w-full py-2 shadow-lg px-4">
+        <Toolbar
+          viewMode={dataView}
+          onViewChange={handleChangeViewMode}
+          resumeCount={resumeCount}
+        />
       </div>
-
-      <Grid className="sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
-        <AddNewResumeCard />
-        {resumes?.map((resume) => {
-          const resumeStatus = getResumeStatus(resume);
-          return (
-            <ResumeCard
-              key={resume.id}
-              id={resume.id}
-              title={resume.meta.title ?? ""}
-              description={resume.meta.description ?? ""}
-              createdAt={resume.meta.createdAt}
-              updatedAt={resume.meta.updatedAt}
+      <div className="px-4">
+        {sortedResumes?.length > 0 &&
+          (dataView === "grid" ? (
+            <GridView
+              resumes={sortedResumes}
               onDelete={handleDeleteResume}
-              onPreview={handlePreviewResume}
               onPrint={handlePrint}
-              status={resumeStatus}
+              onPreview={handlePreviewResume}
             />
-          );
-        })}
-      </Grid>
+          ) : (
+            <ListView
+              resumes={sortedResumes}
+              onDelete={handleDeleteResume}
+              onPrint={handlePrint}
+              onPreview={handlePreviewResume}
+            />
+          ))}
+      </div>
     </div>
   );
 }

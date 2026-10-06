@@ -1,26 +1,14 @@
-import {
-  Copy,
-  Eye,
-  FileText,
-  MoreHorizontal,
-  Pencil,
-  Printer,
-  Trash2,
-} from "lucide-react";
+import { FileText, Pencil } from "lucide-react";
 
 import { cn } from "cn";
-import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Link } from "wouter";
 import { Flex, FlexColumn } from "../common/layout";
 import { Badge } from "../ui/badge";
+import { resumeStatusStyles } from "@/features/dashboard/constant";
+import ResumeDropdownMenu from "@/features/dashboard/components/ResumeDropdownMenu";
+import { getLastModifiedTime } from "@/utils/getLastModifiedTime";
 
 type ResumeCardProps = {
   title: string;
@@ -34,21 +22,6 @@ type ResumeCardProps = {
   status: "draft" | "inProgress" | "complete";
 };
 
-const Status = {
-  draft: {
-    label: "Draft",
-    className: "bg-violet-600/10 text-violet-700",
-  },
-  inProgress: {
-    label: "In Progress",
-    className: "bg-blue-600/10 text-blue-700",
-  },
-  complete: {
-    label: "Complete",
-    className: "bg-emerald-500/10 text-emerald-400",
-  },
-};
-
 export function ResumeCard({
   title,
   description,
@@ -60,9 +33,8 @@ export function ResumeCard({
   onPrint,
   status,
 }: ResumeCardProps) {
-  const mapStatus = Status?.[status];
-  const docDate = updatedAt || createdAt;
-  const modifiedDate = docDate ? new Date(docDate).toLocaleDateString() : null;
+  const mapStatus = resumeStatusStyles?.[status];
+  const lastModified = getLastModifiedTime(updatedAt ?? createdAt ?? "");
 
   return (
     <Card className="w-full rounded-sm border-border bg-card py-0 shadow-none">
@@ -84,39 +56,12 @@ export function ResumeCard({
               </Button>
             </Link>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "icon" }),
-                  "size-7 rounded-xs text-muted-foreground hover:bg-muted hover:text-foreground",
-                )}
-              >
-                <MoreHorizontal className="size-4" />
-                <span className="sr-only">More options</span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => onPreview(id)}>
-                  <Eye className="mr-2 size-4" />
-                  Preview
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onPrint(id)}>
-                  <Printer className="mr-2 size-4" />
-                  Print
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Copy className="mr-2 size-4" />
-                  Duplicate
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  onClick={() => onDelete(id)}
-                >
-                  <Trash2 className="mr-2 size-4" />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <ResumeDropdownMenu
+              id={id}
+              onPreview={onPreview}
+              onPrint={onPrint}
+              onDelete={onDelete}
+            />
           </div>
         </div>
         {/* Title */}
@@ -135,7 +80,7 @@ export function ResumeCard({
         </div>
         <FlexColumn className="gap-4 justify-between flex-1 h-full">
           <FlexColumn className="gap-2">
-            <h3 className="text-base leading-6 font-medium text-foreground">
+            <h3 className="text-sm leading-6 font-medium text-foreground">
               {title}
             </h3>
 
@@ -144,13 +89,7 @@ export function ResumeCard({
             </p>
           </FlexColumn>
 
-          <Flex>
-            {modifiedDate && (
-              <span className="text-muted-foreground">
-                Modified {modifiedDate} ago
-              </span>
-            )}
-          </Flex>
+          <span className="text-xs text-muted-foreground">{lastModified}</span>
         </FlexColumn>
         {/* Metadata */}
       </CardContent>
