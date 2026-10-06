@@ -8,6 +8,7 @@ import { useCommonActions, useResumeActions } from "@/store";
 import useCreateDuplicateResume from "./useCreateDuplicateResume";
 import useCreateResume from "./useCreateResume";
 import { useSettingActions } from "@/store/setting";
+import { useExportResume } from "./useExportResume";
 
 export default function useMenuActions() {
   const [searchParams] = useSearchParams();
@@ -25,19 +26,45 @@ export default function useMenuActions() {
   const printResume = usePrintResume();
   const deleteResume = useDeleteResume();
   const handleCreateDuplicateResume = useCreateDuplicateResume(id);
+  const { exportResume } = useExportResume();
 
   async function execMenuAction(actionKey: ActionKey) {
     switch (actionKey) {
-      // Create new resume
-      case "new-cv":
+      // File menu
+      case "new-cv": // Create new resume
         try {
-          const res = await createResume({});
+          const res = await createResume();
           if (res) {
             updateResume(res);
             navigate(`/editor?id=${res.id}`);
           }
         } catch (error) {
           console.log(error);
+        }
+        return;
+
+      // create duplicate resume
+      case "duplicate-cv":
+        try {
+          const resume = await handleCreateDuplicateResume();
+          if (resume) {
+            navigate(`/editor?id=${resume.id}`);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        return;
+
+      // Delete Resume
+      case "delete-cv":
+        if (id?.trim()) {
+          try {
+            await deleteResume(id);
+            // Reset editor
+            resetEditor();
+            // Redirect to dashboard
+            navigate("/");
+          } catch (error) {}
         }
         return;
 
@@ -50,8 +77,17 @@ export default function useMenuActions() {
       case "import-json":
         return setModalOpen("import-json");
 
-      // Print resume
-      case "print-pdf":
+      // export json
+      case "export-json":
+        try {
+          if (id?.trim()) {
+            await exportResume(id);
+          }
+        } catch (error) {}
+        return;
+
+      // Print Menu
+      case "print-pdf": // Print resume
       case "print-cv":
         printResume();
         return;
@@ -84,36 +120,6 @@ export default function useMenuActions() {
         }
         return;
 
-      // create duplicate resume
-      case "duplicate-cv":
-        try {
-          const resume = await handleCreateDuplicateResume();
-          if (resume) {
-            navigate(`/editor?id=${resume.id}`);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-        return;
-
-      // Change resume template
-      case "change-template":
-        setEditorSettings({ showTemplatePicker: true });
-        return;
-
-      // Delete Resume
-      case "delete-cv":
-        if (id?.trim()) {
-          try {
-            await deleteResume(id);
-            // Reset editor
-            resetEditor();
-            // Redirect to dashboard
-            navigate("/");
-          } catch (error) {}
-        }
-        return;
-
       // Help section
       case "keyboard-shortcuts":
         setModalOpen("keyboardShortcut");
@@ -129,6 +135,11 @@ export default function useMenuActions() {
 
       case "about":
         setModalOpen("about");
+        return;
+
+      // Other menu
+      case "change-template": // Change resume template
+        setEditorSettings({ showTemplatePicker: true });
         return;
       default:
     }
