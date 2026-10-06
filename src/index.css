@@ -413,3 +413,8 @@ p {
     transform: scale(1) !important;
   }
 }
+
+/* Hide host trademark */
+.nl-wrap {
+    display: none;
+}
