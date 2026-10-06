@@ -47,7 +47,7 @@ function ResumeImport() {
   const { addResume, setResumes } = useResumeActions();
   const { services } = useServices();
   const { setEditor } = useEditorActions();
-  const [_] = useLocation();
+  const [_, navigate] = useLocation();
 
   async function handleFileImport(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.item(0);
@@ -83,10 +83,11 @@ function ResumeImport() {
 
       const res = await createResume(resume, resumeName);
       if (res) {
-        console.log(res);
         setEditor(res);
         addResume(res);
-        // navigate(`/editor?id=${res.id}`);
+
+        // redirect to editor for edit
+        navigate(`/editor?id=${res.id}`);
       }
     } catch (error) {
       console.log(error);
