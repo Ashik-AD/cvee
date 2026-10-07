@@ -7,9 +7,11 @@ import { useEditorActions, useEditorExperiences } from "../../store";
 import { Button } from "@/components/ui/button";
 import type { ChangeEvent } from "react";
 import { Plus } from "lucide-react";
+import SectionItemActions from "./SectionItemActions";
 
 type ExperienceFieldProps = Experience & {
   onChange: (values: Partial<Experience>) => void;
+  onDelete: () => void;
 };
 
 function ExperienceField({
@@ -18,6 +20,7 @@ function ExperienceField({
   duration,
   description,
   onChange,
+  onDelete,
 }: ExperienceFieldProps) {
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -84,12 +87,14 @@ function ExperienceField({
           className="bg-neutral-1C1B1B"
         />
       </Field>
+      <SectionItemActions onDelete={onDelete} />
     </FieldGroup>
   );
 }
 function Experiences() {
   const experiences = useEditorExperiences();
-  const { updateExperience, addNewExperience } = useEditorActions();
+  const { updateExperience, addNewExperience, deleteExperiences } =
+    useEditorActions();
 
   function handleChange(index: number, experience: Partial<Experience>) {
     updateExperience(index, experience);
@@ -114,6 +119,7 @@ function Experiences() {
             duration={experience.duration}
             description={experience.description}
             onChange={(newExperience) => handleChange(idx, newExperience)}
+            onDelete={() => deleteExperiences(idx)}
             key={idx}
           />
         );

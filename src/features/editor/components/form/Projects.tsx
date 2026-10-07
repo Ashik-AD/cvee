@@ -7,9 +7,11 @@ import { useEditorActions, useEditorProjects } from "../../store";
 import type { ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import SectionItemActions from "./SectionItemActions";
 
 interface ProjectFieldProps extends Project {
   onChange: (values: Partial<Project>) => void;
+  onDelete: () => void;
 }
 
 function ProjectField({
@@ -18,6 +20,7 @@ function ProjectField({
   repoLink,
   link,
   onChange,
+  onDelete,
 }: ProjectFieldProps) {
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -77,12 +80,13 @@ function ProjectField({
           className="bg-neutral-1C1B1B"
         />
       </Field>
+      <SectionItemActions onDelete={onDelete} />
     </FieldGroup>
   );
 }
 function Projects() {
   const projects = useEditorProjects();
-  const { updateProject, addNewProject } = useEditorActions();
+  const { updateProject, addNewProject, deleteProjects } = useEditorActions();
 
   function handleChange(index: number, project: Partial<Project>) {
     updateProject(index, project);
@@ -101,12 +105,13 @@ function Projects() {
       {projects?.map((project, idx) => {
         return (
           <ProjectField
+            key={idx}
             name={project.name}
             description={project.description}
             link={project.link}
             repoLink={project.repoLink}
             onChange={(newExperience) => handleChange(idx, newExperience)}
-            key={idx}
+            onDelete={() => deleteProjects(idx)}
           />
         );
       })}

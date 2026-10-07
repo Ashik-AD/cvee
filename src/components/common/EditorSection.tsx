@@ -5,27 +5,24 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { Flex } from "./layout";
-import { Button } from "../ui/button";
-import { Eye } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 type EditorSectionProps = {
   title: string;
   id: string;
+  icon?: LucideIcon;
   children: ReactNode;
 };
 
-function EditorSection({ children, title, id }: EditorSectionProps) {
+function EditorSection({ children, title, id, icon }: EditorSectionProps) {
+  const Icon = icon;
+
   return (
     <AccordionItem value={id} className="bg-neutral-201F1F">
       <AccordionTrigger className="border border-border rounded-none border-x-0 px-1.5">
-        <Flex className="justify-between items-center gap-4 w-full">
-          <h2>{title}</h2>
-
-          <Flex className="items-center gap-2">
-            <Button variant="ghost">
-              <Eye />
-            </Button>
-          </Flex>
+        <Flex className="items-center gap-2 w-full">
+          {Icon && <Icon className="text-muted-foreground size-5" />}
+          <h2 className="text-base text-gray-300">{title}</h2>
         </Flex>
       </AccordionTrigger>
       <AccordionContent className="p-3 bg-neutral-1C1B1B">

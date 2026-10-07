@@ -11,6 +11,14 @@ import { useEditorState } from "../store";
 import useServices from "@/hooks/useServices";
 import { Accordion } from "@/components/ui/accordion";
 import EditorSection from "@/components/common/EditorSection";
+import {
+  BriefcaseBusiness,
+  GraduationCap,
+  IdCard,
+  ListMinus,
+  SquareTerminal,
+  Target,
+} from "lucide-react";
 
 const SAVE_INTERVAL_MIL = 2_000; // 2 seconds
 
@@ -76,27 +84,27 @@ function EditorForm() {
         multiple
         defaultValue={["personalInfo", "summary", "exp", "pro", "skill", "edu"]}
       >
-        <EditorSection title="Personal Info" id="personalInfo">
+        <EditorSection title="Personal Info" id="personalInfo" icon={IdCard}>
           <PersonalInfoSection />
         </EditorSection>
 
-        <EditorSection title="Summary" id="summary">
+        <EditorSection title="Summary" id="summary" icon={ListMinus}>
           <Summary />
         </EditorSection>
 
-        <EditorSection title="Experiences" id="exp">
+        <EditorSection title="Experiences" id="exp" icon={BriefcaseBusiness}>
           <Experiences />
         </EditorSection>
 
-        <EditorSection title="Projects" id="pro">
+        <EditorSection title="Projects" id="pro" icon={Target}>
           <Projects />
         </EditorSection>
 
-        <EditorSection title="Skills" id="skill">
+        <EditorSection title="Skills" id="skill" icon={SquareTerminal}>
           <Skills />
         </EditorSection>
 
-        <EditorSection title="Education" id="edu">
+        <EditorSection title="Education" id="edu" icon={GraduationCap}>
           <EducationSection />
         </EditorSection>
       </Accordion>

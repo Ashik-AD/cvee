@@ -6,9 +6,11 @@ import type { ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { FlexColumn } from "@/components/common/layout";
 import { Plus } from "lucide-react";
+import SectionItemActions from "./SectionItemActions";
 
 interface EducationFieldProps extends Education {
   onChange: (values: Partial<Education>) => void;
+  onDelete: () => void;
 }
 
 function EducationField({
@@ -17,6 +19,7 @@ function EducationField({
   grade,
   duration,
   onChange,
+  onDelete,
 }: EducationFieldProps) {
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -82,13 +85,19 @@ function EducationField({
           className="bg-neutral-1C1B1B"
         />
       </Field>
+      <div className="sm:col-span-2">
+        <SectionItemActions onDelete={onDelete} />
+      </div>
     </FieldGroup>
   );
 }
 function EducationSection() {
   const educations = useEditorEducations();
-  const { updateEducation: updateEducations, addNewEducation } =
-    useEditorActions();
+  const {
+    updateEducation: updateEducations,
+    addNewEducation,
+    deleteEducations,
+  } = useEditorActions();
 
   function handleChange(index: number, education: Partial<Education>) {
     updateEducations(index, education);
@@ -114,6 +123,7 @@ function EducationSection() {
             grade={education.grade}
             onChange={(newExperience) => handleChange(idx, newExperience)}
             key={`${education.institute}${education.duration}_${idx}`}
+            onDelete={() => deleteEducations(idx)}
           />
         );
       })}
