@@ -85,7 +85,7 @@ export function Terminal({
               <table className="w-full">
                 <tbody>
                   <tr>
-                    <td className="w-[22%] align-top">
+                    <td className="w-[10%] align-top">
                       <span className="text-[9px] font-mono">$ about</span>
                     </td>
 
@@ -159,24 +159,30 @@ export function Terminal({
                         {projects?.map((project, index) => (
                           <tr key={index}>
                             <td className="pb-5">
-                              <div className="flex items-center justify-between">
+                              <div className="flex flex-col justify-between">
                                 <h3 className="text-xs font-bold">
                                   {project.name}
                                 </h3>
 
                                 <div className="flex gap-2 text-[8px]">
                                   {project.link && (
-                                    <span className="inline-flex items-center gap-1">
+                                    <a
+                                      href={project.link}
+                                      className="inline-flex items-center gap-1 underline"
+                                    >
                                       <Globe className="size-3" />
-                                      Website
-                                    </span>
+                                      {project.link}
+                                    </a>
                                   )}
 
                                   {project.repoLink && (
-                                    <span className="inline-flex items-center gap-1">
+                                    <a
+                                      href={project.repoLink}
+                                      className="inline-flex items-center gap-1 underline"
+                                    >
                                       <Code className="size-3" />
-                                      Source
-                                    </span>
+                                      {project.repoLink}
+                                    </a>
                                   )}
                                 </div>
                               </div>
@@ -204,12 +210,9 @@ export function Terminal({
                   <td className="border-r border-neutral-300 pr-5 pt-3 align-top">
                     <span className="text-[9px] font-mono">$ echo $SKILLS</span>
 
-                    <div className="mt-3 flex flex-wrap gap-1.5">
+                    <div className="mt-3 flex flex-wrap gap-1">
                       {skills?.map((skill) => (
-                        <span
-                          key={skill}
-                          className="border border-neutral-300 px-2 py-1 text-[8px]"
-                        >
+                        <span key={skill} className="px-0.5 py-0.5 text-[8px]">
                           {skill}
                         </span>
                       ))}

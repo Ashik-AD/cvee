@@ -136,17 +136,23 @@ export function Compact({
 
                           <div className="flex gap-2 text-[8px]">
                             {project.link && (
-                              <span className="inline-flex items-center gap-1">
+                              <a
+                                href={project.link}
+                                className="inline-flex items-center gap-1 underline"
+                              >
                                 <Globe className="size-3" />
-                                Website
-                              </span>
+                                {project.link}
+                              </a>
                             )}
 
                             {project.repoLink && (
-                              <span className="inline-flex items-center gap-1">
+                              <a
+                                href={project.repoLink}
+                                className="inline-flex items-center gap-1 underline"
+                              >
                                 <Code className="size-3" />
-                                Source
-                              </span>
+                                {project.repoLink}
+                              </a>
                             )}
                           </div>
                         </div>
@@ -172,12 +178,9 @@ export function Compact({
           <td className="w-[32%] pl-5 pt-5 align-top">
             <SectionTitle>Skills</SectionTitle>
 
-            <div className="mt-3 flex flex-wrap gap-1.5">
+            <div className="mt-3 flex flex-wrap gap-1">
               {skills?.map((skill) => (
-                <span
-                  key={skill}
-                  className="border border-neutral-300 px-2 py-1 text-[8px]"
-                >
+                <span key={skill} className="px-0.5 py-0.5 text-[8px]">
                   {skill}
                 </span>
               ))}

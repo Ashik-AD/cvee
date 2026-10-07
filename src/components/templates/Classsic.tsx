@@ -112,7 +112,72 @@ export function Classic({
             </table>
           </td>
         </tr>
+        {/* Skills */}
+        <tr>
+          <td className="pt-2">
+            <SectionTitle>Skills</SectionTitle>
 
+            <div className="mt-3 flex flex-wrap gap-1">
+              {skills?.map((skill) => (
+                <span key={skill} className="px-0.5 py-0.5 text-[8px]">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </td>
+        </tr>
+        {/* Projects */}
+        <tr>
+          <td className="pt-2">
+            <SectionTitle>Projects</SectionTitle>
+
+            <table className="mt-3 w-full">
+              <tbody>
+                {projects?.map((project, index) => (
+                  <tr key={index}>
+                    <td className="pb-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xs font-bold">{project.name}</h3>
+
+                        <div className="flex gap-2 text-[8px]">
+                          {project.link && (
+                            <a
+                              href={project.link}
+                              className="inline-flex items-center gap-1 underline"
+                            >
+                              <Globe className="size-3" />
+                              {project.link}
+                            </a>
+                          )}
+
+                          {project.repoLink && (
+                            <a
+                              href={project.repoLink}
+                              className="inline-flex items-center gap-1 underline"
+                            >
+                              <Code className="size-3" />
+                              {project.repoLink}
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
+                      <ul className="mt-2 space-y-1 pl-3 text-[9px] leading-4">
+                        {splitDescription(project.description?.toString()).map(
+                          (item, i) => (
+                            <li key={i} className="list-disc">
+                              {item}
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </td>
+        </tr>
         {/* Education */}
         {educations && educations?.length > 0 && (
           <tr>
@@ -147,71 +212,6 @@ export function Classic({
             </td>
           </tr>
         )}
-
-        {/* Skills */}
-        <tr>
-          <td className="pt-2">
-            <SectionTitle>Skills</SectionTitle>
-
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {skills?.map((skill) => (
-                <span
-                  key={skill}
-                  className="border border-neutral-300 px-2 py-1 text-[8px]"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </td>
-        </tr>
-
-        {/* Projects */}
-        <tr>
-          <td className="pt-2">
-            <SectionTitle>Projects</SectionTitle>
-
-            <table className="mt-3 w-full">
-              <tbody>
-                {projects?.map((project, index) => (
-                  <tr key={index}>
-                    <td className="pb-4">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-xs font-bold">{project.name}</h3>
-
-                        <div className="flex gap-2 text-[8px]">
-                          {project.link && (
-                            <span className="inline-flex items-center gap-1">
-                              <Globe className="size-3" />
-                              Website
-                            </span>
-                          )}
-
-                          {project.repoLink && (
-                            <span className="inline-flex items-center gap-1">
-                              <Code className="size-3" />
-                              Source
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <ul className="mt-2 space-y-1 pl-3 text-[9px] leading-4">
-                        {splitDescription(project.description?.toString()).map(
-                          (item, i) => (
-                            <li key={i} className="list-disc">
-                              {item}
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </td>
-        </tr>
       </tbody>
     </table>
   );
