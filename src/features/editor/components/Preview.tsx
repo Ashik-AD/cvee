@@ -29,10 +29,10 @@ function Preview({
   const scale = calcPreviewDocsScaleLevel(zoomLevel);
 
   return (
-    <Flex className="p-8 overflow-auto max-h-[calc(100dvh-5rem)] scrollbar-none justify-center preview-wrapper">
+    <Flex className="p-8 overflow-auto max-h-[calc(100dvh-5rem)] scrollbar-none preview-wrapper">
       <AspectRatio
         ratio={1 / 1.4142}
-        className="bg-document h-fit w-full preview-content p-8"
+        className="bg-document h-fit w-full preview-content p-8 mx-auto"
         id="preview"
         style={{
           transform: `scale(${scale})`,
