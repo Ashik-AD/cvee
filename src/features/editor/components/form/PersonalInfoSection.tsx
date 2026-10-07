@@ -14,7 +14,7 @@ function PersonalInfoSection() {
   }
 
   return (
-    <FieldGroup className="grid grid-cols-1 sm:grid-cols-2">
+    <FieldGroup className="sm:grid grid-cols-1 sm:grid-cols-2">
       {/* Fullname field */}
       <Field>
         <FieldLabel htmlFor="name">Full Name</FieldLabel>
