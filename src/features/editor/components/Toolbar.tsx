@@ -87,8 +87,8 @@ function Toolbar() {
           <Slider
             defaultValue={[zoomLevel]}
             step={1}
-            max={200}
-            min={50}
+            max={100}
+            min={10}
             className="min-w-20 max-w-36 w-full!"
             onValueChange={(val) => handleZoomLevelChange(val)}
           />

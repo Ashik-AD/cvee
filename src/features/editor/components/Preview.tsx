@@ -1,9 +1,9 @@
+import type { ReactNode } from "react";
 import { Flex } from "@/components/common/layout";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import CVTemplate, { type CVTemplates } from "@/components/templates";
 import { useEditorSettings } from "../store";
 import { calcPreviewDocsScaleLevel } from "@/utils/calcPreviewDocsScaleLevel";
-
 import type { Education, Experience, PersonalInfo, Project } from "../types";
 
 interface PreviewProps {
@@ -16,7 +16,7 @@ interface PreviewProps {
   template: CVTemplates;
 }
 
-function Preview({
+export default function Preview({
   personalInfo,
   aboutMe,
   experiences,
@@ -25,20 +25,9 @@ function Preview({
   skills,
   template,
 }: PreviewProps) {
-  const { zoomLevel } = useEditorSettings();
-  const scale = calcPreviewDocsScaleLevel(zoomLevel);
-
   return (
     <Flex className="p-8 overflow-auto max-h-[calc(100dvh-5rem)] scrollbar-none preview-wrapper">
-      <AspectRatio
-        ratio={1 / 1.4142}
-        className="bg-document h-fit w-full preview-content p-8 mx-auto"
-        id="preview"
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: "center",
-        }}
-      >
+      <PreviewCanvas>
         <CVTemplate
           type={template}
           personalInfo={personalInfo}
@@ -48,9 +37,25 @@ function Preview({
           educations={educations}
           skills={skills}
         />
-      </AspectRatio>
+      </PreviewCanvas>
     </Flex>
   );
 }
 
-export default Preview;
+function PreviewCanvas({ children }: { children: ReactNode }) {
+  const { zoomLevel } = useEditorSettings();
+  const scale = calcPreviewDocsScaleLevel(zoomLevel);
+  return (
+    <AspectRatio
+      ratio={1 / 1.4142}
+      className="bg-document h-fit w-full preview-content p-8 mx-auto"
+      id="preview"
+      style={{
+        transform: `scale(${scale})`,
+        transformOrigin: "center",
+      }}
+    >
+      {children}
+    </AspectRatio>
+  );
+}
