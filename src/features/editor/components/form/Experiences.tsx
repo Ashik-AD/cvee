@@ -2,7 +2,7 @@ import { Flex, FlexColumn, Grid } from "@/components/common/layout";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { Experience } from "../../types";
+import type { Experience } from "@/lib/model/resume";
 import { useEditorActions, useEditorExperiences } from "../../store";
 import { Button } from "@/components/ui/button";
 import type { ChangeEvent } from "react";

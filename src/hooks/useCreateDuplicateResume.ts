@@ -1,3 +1,4 @@
+import { AppError, getErrorMessage } from "@/utils/error";
 import useServices from "./useServices";
 import { useResumeActions } from "@/store";
 
@@ -53,15 +54,16 @@ export default function useCreateDuplicateResume(id: string | null) {
     if (!id?.trim()) return;
 
     try {
-      const resume = await services?.editor.getResumeById(id);
+      const resume = await services?.resumeSrv.getResumeById(id);
       if (!resume) {
         return;
       }
-      const getResumeNames = await services?.editor.getResumesName();
-      const resumeNames = getResumeNames?.map((resume) => resume?.name) ?? [];
+      const getResumeNames = await services?.resumeSrv.getResumesName();
+      const resumeNames =
+        getResumeNames?.map((resume: any) => resume?.name) ?? [];
       const newName = generateNewName(resume.meta?.title ?? "", resumeNames);
 
-      const res = await services?.editor.createNewResume(resume, {
+      const res = await services?.resumeSrv.createNewResume(resume, {
         ...resume.meta,
         title: newName,
       });
@@ -70,7 +72,15 @@ export default function useCreateDuplicateResume(id: string | null) {
         return res;
       }
     } catch (error) {
-      throw error;
+      if (error instanceof AppError) {
+        throw error;
+      }
+
+      const msg = getErrorMessage(
+        error,
+        "Failed to duplicate resume. Please try again.",
+      );
+      throw new AppError(msg);
     }
   };
 }

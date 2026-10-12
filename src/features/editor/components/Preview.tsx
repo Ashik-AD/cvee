@@ -4,7 +4,12 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import CVTemplate, { type CVTemplates } from "@/components/templates";
 import { useEditorSettings } from "../store";
 import { calcPreviewDocsScaleLevel } from "@/utils/calcPreviewDocsScaleLevel";
-import type { Education, Experience, PersonalInfo, Project } from "../types";
+import type {
+  Education,
+  Experience,
+  PersonalInfo,
+  Project,
+} from "@/lib/model/resume";
 
 interface PreviewProps {
   personalInfo: PersonalInfo;
@@ -25,20 +30,25 @@ export default function Preview({
   skills,
   template,
 }: PreviewProps) {
+  const documentTitle = `${personalInfo?.name?.trim()}'s-resume`;
+
   return (
-    <Flex className="p-8 overflow-auto max-h-[calc(100dvh-5rem)] scrollbar-none preview-wrapper">
-      <PreviewCanvas>
-        <CVTemplate
-          type={template}
-          personalInfo={personalInfo}
-          aboutMe={aboutMe}
-          experiences={experiences}
-          projects={projects}
-          educations={educations}
-          skills={skills}
-        />
-      </PreviewCanvas>
-    </Flex>
+    <>
+      <title>{documentTitle}</title>
+      <Flex className="p-8 overflow-auto max-h-[calc(100dvh-5rem)] scrollbar-none preview-wrapper">
+        <PreviewCanvas>
+          <CVTemplate
+            type={template}
+            personalInfo={personalInfo}
+            aboutMe={aboutMe}
+            experiences={experiences}
+            projects={projects}
+            educations={educations}
+            skills={skills}
+          />
+        </PreviewCanvas>
+      </Flex>
+    </>
   );
 }
 

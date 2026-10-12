@@ -10,6 +10,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useViewSettingState } from "@/store/setting";
+import { toast } from "@/components/ui/toast";
+import { getErrorMessage } from "@/utils/error";
 
 const ACTIONS: { label: string; icon: LucideIcon; actionKey: ActionKey }[] = [
   {
@@ -34,14 +36,21 @@ function MobileQuickActions() {
   const { mode } = useViewSettingState();
 
   async function handleQuickAction(key: ActionKey) {
-    if ((key === "print-cv" || key === "print-pdf") && mode === "editor") {
-      await execMenuAction("view-preview");
+    try {
+      if ((key === "print-cv" || key === "print-pdf") && mode === "editor") {
+        await execMenuAction("view-preview");
+      }
+      await execMenuAction(key);
+    } catch (error) {
+      toast.add({
+        type: "error",
+        title: getErrorMessage(error),
+      });
     }
-    await execMenuAction(key);
   }
 
   return (
-    <Flex className="items-center gap-2 bg-neutral-1C1B1B p-1 border absolute bottom-2 -translate-x-1/2 left-1/2 rounded-full hidden-on-print">
+    <Flex className="items-center gap-2 bg-neutral-1C1B1B p-0.5 border absolute bottom-2 -translate-x-1/2 left-1/2 rounded-full hidden-on-print">
       <button
         type="button"
         className="flex items-center justify-center gap-2 flex-1 focus-visible:ring cursor-pointer hover:bg-neutral-0E0E0E p-2 rounded-full"
@@ -49,7 +58,7 @@ function MobileQuickActions() {
           handleQuickAction(mode === "editor" ? "view-preview" : "view-editor")
         }
       >
-        {mode === "editor" ? <Eye /> : <Keyboard />}
+        {mode === "editor" ? <Eye size={18} /> : <Keyboard size={18} />}
         <span className="text-sm">
           {mode === "editor" ? "Preview" : "Editor"}
         </span>

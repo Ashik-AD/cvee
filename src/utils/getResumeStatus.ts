@@ -3,8 +3,8 @@ import type {
   PersonalInfo,
   Project,
   Resume,
-} from "@/features/editor/types";
-import type { ResumePopulate } from "@/lib/service/editor";
+} from "@/lib/model/resume";
+import type { ResumePopulate } from "@/lib/model/resume";
 
 /**
  * Check resume completeness

@@ -20,7 +20,10 @@ import {
   Target,
 } from "lucide-react";
 
-const SAVE_INTERVAL_MIL = 2_000; // 2 seconds
+/**
+ * Timeout for saving after change of form values
+ */
+const SAVE_TIME = 1000;
 
 function EditorForm() {
   const timerRef = useRef<number | null>(null);
@@ -33,7 +36,7 @@ function EditorForm() {
   const onSave = useEffectEvent(async () => {
     if (resumeId) {
       try {
-        await services?.editor.update(resumeId, editorState);
+        await services?.resumeSrv.updateResume(resumeId, editorState);
         console.log("Saved data", editorState);
       } catch (error) {
         console.error("Failed save resume", error);
@@ -48,7 +51,7 @@ function EditorForm() {
     }
 
     if (resumeId) {
-      timerRef.current = setTimeout(onSave, SAVE_INTERVAL_MIL);
+      timerRef.current = setTimeout(onSave, SAVE_TIME);
     }
 
     return () => {

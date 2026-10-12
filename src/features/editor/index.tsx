@@ -14,6 +14,58 @@ import MobileQuickActions from "./components/MobileQuickActions";
 import { useWindowResize } from "@/hooks/useWindowResize";
 import useMenuActions from "@/hooks/useMenuActions";
 import ResumeTemplatePicker from "./components/TemplatePicker";
+import { toast } from "@/components/ui/toast";
+
+export default function Editor() {
+  const [params] = useSearchParams();
+  const resumeId = params.get("id");
+
+  const { services } = useServices();
+  const { resetEditor, setEditor } = useEditorActions();
+
+  // fetch opened resume from database
+  // and populate editor store
+  useEffect(() => {
+    if (resumeId) {
+      services?.resumeSrv
+        .getResumeById(resumeId)
+        .then((resume: any) => {
+          // Populate resume in the editor
+          if (resume) {
+            setEditor(resume);
+          } else {
+            toast.add({
+              type: "warning",
+              title: `Resume not found for ID: ${resumeId}`,
+            });
+          }
+        })
+        .catch((error) => {
+          toast.add({
+            title: error?.message,
+            type: "error",
+          });
+        });
+    }
+  }, [resumeId]);
+
+  // Rest editor state on unmount
+  useEffect(() => {
+    return () => {
+      resetEditor();
+    };
+  }, []);
+
+  return (
+    <FlexColumn>
+      <Toolbar />
+      <EditorLayout />
+      <ChangeResumeName id={resumeId} />
+      <QuickActions />
+      <ResumeTemplatePicker />
+    </FlexColumn>
+  );
+}
 
 function EditorPreview() {
   const {
@@ -74,64 +126,19 @@ function EditorLayout() {
 function QuickActions() {
   const { execMenuAction } = useMenuActions();
   const { width } = useWindowResize();
-  const isMobile = width && width < 678;
+  const isMediumScreen = width && width < 768;
 
   useEffect(() => {
-    if (isMobile) {
+    if (isMediumScreen) {
       execMenuAction("view-editor");
     } else {
       execMenuAction("view-split");
     }
-  }, [isMobile]);
+  }, [isMediumScreen]);
 
   return (
-    <Activity mode={isMobile ? "visible" : "hidden"}>
+    <Activity mode={isMediumScreen ? "visible" : "hidden"}>
       <MobileQuickActions />
     </Activity>
   );
 }
-
-function Editor() {
-  const [params] = useSearchParams();
-  const resumeId = params.get("id");
-  const { services } = useServices();
-  const { resetEditor, setEditor } = useEditorActions();
-
-  // fetch opened resume from database
-  // and populate editor store
-  useEffect(() => {
-    if (resumeId) {
-      services?.editor
-        .getResumeById(resumeId)
-        .then((resume) => {
-          // Populate resume in the editor
-          if (resume) {
-            console.log("Setting editor state with resume");
-            setEditor(resume);
-          } else {
-            console.warn(`Resume not found for ID: ${resumeId}`);
-          }
-        })
-        .catch(console.error);
-    }
-  }, [resumeId]);
-
-  // Rest editor state on unmount
-  useEffect(() => {
-    return () => {
-      resetEditor();
-    };
-  }, []);
-
-  return (
-    <FlexColumn>
-      <Toolbar />
-      <EditorLayout />
-      <ChangeResumeName id={resumeId} />
-      <QuickActions />
-      <ResumeTemplatePicker />
-    </FlexColumn>
-  );
-}
-
-export default Editor;

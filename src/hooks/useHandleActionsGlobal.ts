@@ -1,9 +1,10 @@
-import { useCommonActions } from "@/store";
-import { useModalActions } from "@/store/modal";
 import { useEffect } from "react";
+import { useCommonActions } from "@/store";
 import { useLocation, useSearchParams } from "wouter";
 import useMenuActions from "./useMenuActions";
 import { useAlertDialogActions } from "@/store/alert-dialog";
+import { getErrorMessage } from "@/utils/error";
+import { toast } from "@/components/ui/toast";
 
 /**
  * Listen Global Keyboard Event Handling
@@ -11,97 +12,96 @@ import { useAlertDialogActions } from "@/store/alert-dialog";
 export default function useHandleActionsGlobal() {
   const { toggleCommandCenter } = useCommonActions();
   const { setAlertDialogOpen } = useAlertDialogActions();
-  const { setModalOpen } = useModalActions();
   const { execMenuAction } = useMenuActions();
   const [location] = useLocation();
   const [searchParams] = useSearchParams();
 
   const resumeId = searchParams.get("id")?.trim();
-  const isResumeBeingEditing = location.startsWith("/editor") && resumeId;
+  const isResumeBeingEditing = Boolean(
+    location.startsWith("/editor") && resumeId,
+  );
 
   async function handleKeyboard(e: KeyboardEvent) {
     const key = e.key?.toLowerCase();
 
-    console.log("Pressed key: ", key);
-
-    if (e.ctrlKey && !e.shiftKey) {
-      // toggle command center `K`
-      switch (key) {
-        case "k": // Show command center
-          interuptDown();
-          toggleCommandCenter();
-          return;
-
-        case "i": // Open import JSON modal
-          interuptDown();
-          setModalOpen("import-json");
-          return;
-
-        case "d": // Duplicate currently open/editing resume
-          if (isResumeBeingEditing) {
+    try {
+      if (e.ctrlKey && !e.shiftKey) {
+        // toggle command center `K`
+        switch (key) {
+          case "k": // Show command center
             interuptDown();
-            try {
-              setAlertDialogOpen("duplicateResume", { id: resumeId });
-            } catch (err) {}
-          }
-          return;
+            toggleCommandCenter();
+            break;
 
-        case "[": // Set editor view to `form` only
-          try {
+          case "i": // Open import JSON modal
+            interuptDown();
+            execMenuAction("import-json");
+            break;
+
+          case "d": // Duplicate currently open/editing resume
+            if (isResumeBeingEditing) {
+              interuptDown();
+              execMenuAction("duplicate-cv");
+            }
+            break;
+
+          case "[": // Set editor view to `form` only
+            interuptDown();
             await execMenuAction("view-editor");
-          } catch (err) {}
-          return;
-        case "]": // Set editor view to `preview` only
-          try {
+            break;
+
+          case "]": // Set editor view to `preview` only
+            interuptDown();
             await execMenuAction("view-preview");
-          } catch (err) {}
-          return;
-        case "\\": // split editor into form & preview
-          try {
+            break;
+
+          case "\\": // split editor into form & preview
+            interuptDown();
             await execMenuAction("view-split");
-          } catch (err) {}
-          return;
+            break;
 
-        default:
-        // No action is found for the key
+          default:
+          // No action is found for the key
+        }
       }
-    }
 
-    // Handle `editor` specifics shortcuts
-    if (isResumeBeingEditing) {
-      // Handle function key press actions
-      // Rename currently open resume
-      if (key === "f2") {
-        try {
+      // Handle `editor` specifics shortcuts
+      if (isResumeBeingEditing) {
+        // Handle function key press actions
+        // Rename currently open resume
+        if (key === "f2") {
           await execMenuAction("rename-cv");
           interuptDown();
-        } catch (err) {}
-        return;
-      }
+          return;
+        }
 
-      // Handle 'delete' and Ctl+Shift+D keys
-      if (key === "delete" || (e.ctrlKey && e.shiftKey && key === "d")) {
-        interuptDown();
-        try {
+        // Handle 'delete' and Ctl+Shift+D keys
+        if (key === "delete" || (e.ctrlKey && e.shiftKey && key === "d")) {
+          interuptDown();
           setAlertDialogOpen("deleteResume", { id: resumeId });
-        } catch (err) {}
-        return;
-      }
+          return;
+        }
 
-      // Split editor into form and preview
-      if (key === "|" && e.ctrlKey && e.shiftKey) {
-        try {
+        // Split editor into form and preview
+        if (key === "|" && e.ctrlKey && e.shiftKey) {
+          interuptDown();
           await execMenuAction("view-split");
-        } catch (err) {}
-        return;
+          return;
+        }
       }
 
       // Show keyboard shortcuts
       if (e.target && !isTypingTarget(e?.target) && key === "?") {
         interuptDown();
-        setModalOpen("keyboardShortcut");
+        execMenuAction("keyboard-shortcuts");
         return;
       }
+    } catch (error) {
+      const msg = getErrorMessage(error);
+      toast.add({
+        type: "error",
+        title: msg,
+      });
     }
 
     function interuptDown() {
@@ -114,7 +114,7 @@ export default function useHandleActionsGlobal() {
     document.addEventListener("keydown", handleKeyboard);
 
     return () => document.removeEventListener("keydown", handleKeyboard);
-  }, []);
+  }, [isResumeBeingEditing]);
 }
 
 function isTypingTarget(target: EventTarget) {

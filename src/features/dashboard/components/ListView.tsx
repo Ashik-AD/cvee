@@ -1,5 +1,5 @@
 import { Flex, FlexColumn } from "@/components/common/layout";
-import type { ResumePopulate } from "@/lib/service/editor";
+import type { ResumePopulate } from "@/lib/model/resume";
 import { getResumeStatus } from "@/utils/getResumeStatus";
 import { FileText } from "lucide-react";
 import { resumeStatusStyles } from "../constant";

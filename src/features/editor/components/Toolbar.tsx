@@ -89,7 +89,7 @@ function Toolbar() {
             step={1}
             max={100}
             min={10}
-            className="min-w-20 max-w-36 w-full!"
+            className="min-w-16 max-w-24 w-full"
             onValueChange={(val) => handleZoomLevelChange(val)}
           />
         </Flex>

@@ -32,65 +32,54 @@ export default function useMenuActions() {
     switch (actionKey) {
       // File menu
       case "new-cv": // Create new resume
-        try {
-          const res = await createResume();
-          if (res) {
-            updateResume(res);
-            navigate(`/editor?id=${res.id}`);
-          }
-        } catch (error) {
-          console.log(error);
+        const res = await createResume();
+        if (res) {
+          updateResume(res);
+          navigate(`/editor?id=${res.id}`);
         }
-        return;
+        break;
 
       // create duplicate resume
       case "duplicate-cv":
-        try {
-          const resume = await handleCreateDuplicateResume();
-          if (resume) {
-            navigate(`/editor?id=${resume.id}`);
-          }
-        } catch (error) {
-          console.log(error);
+        const resume = await handleCreateDuplicateResume();
+        if (resume) {
+          navigate(`/editor?id=${resume.id}`);
         }
-        return;
+        break;
 
       // Delete Resume
       case "delete-cv":
         if (id?.trim()) {
-          try {
-            await deleteResume(id);
-            // Reset editor
-            resetEditor();
-            // Redirect to dashboard
-            navigate("/");
-          } catch (error) {}
+          await deleteResume(id);
+          // Reset editor
+          resetEditor();
+          // Redirect to dashboard
+          navigate("/");
         }
-        return;
+        break;
 
       // Rename current open resume
       case "rename-cv":
         toggleRenameResume();
-        return;
+        break;
 
       // import json
       case "import-json":
-        return setModalOpen("import-json");
+        setModalOpen("import-json");
+        break;
 
       // export json
       case "export-json":
-        try {
-          if (id?.trim()) {
-            await exportResume(id);
-          }
-        } catch (error) {}
-        return;
+        if (id?.trim()) {
+          await exportResume(id);
+        }
+        break;
 
       // Print Menu
       case "print-pdf": // Print resume
       case "print-cv":
         printResume();
-        return;
+        break;
 
       // Open preview modal
       case "print-preview":
@@ -98,7 +87,7 @@ export default function useMenuActions() {
           setPreviewId(id);
           togglePreview();
         }
-        return;
+        break;
 
       case "view-editor":
       case "view-split":
@@ -118,24 +107,24 @@ export default function useMenuActions() {
             });
           }
         }
-        return;
+        break;
 
       // Help section
       case "keyboard-shortcuts":
         setModalOpen("keyboardShortcut");
-        return;
+        break;
 
       case "command-palette":
         toggleCommandCenter();
-        return;
+        break;
 
       case "getting-started":
         setModalOpen("quickGuides");
-        return;
+        break;
 
       case "about":
         setModalOpen("about");
-        return;
+        break;
 
       // Other menu
       case "change-template": // Change resume template

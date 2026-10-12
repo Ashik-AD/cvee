@@ -6,17 +6,9 @@ export default function useDeleteResume() {
   const { deleteResume } = useResumeActions();
 
   async function handleDelete(resumeId: string) {
-    try {
-      if (!resumeId?.trim()) {
-        throw new Error("Resume id missing");
-      }
-      await services?.editor?.deleteResume(resumeId);
-      // Also delete resume from the store
-      deleteResume(resumeId);
-    } catch (error) {
-      console.error("Failed to delete resume", error);
-      return error;
-    }
+    await services?.resumeSrv.deleteResume(resumeId);
+    // Also delete resume from the store
+    deleteResume(resumeId);
   }
 
   return handleDelete;

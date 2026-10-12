@@ -70,7 +70,7 @@ export default function Dashbord() {
   const resumeCount = sortedResumes?.length;
 
   return (
-    <div className="w-full lg:px-12 pb-4 inline-flex flex-col justify-start items-start gap-4">
+    <div className="w-full lg:px-12 pb-4 inline-flex flex-col justify-start items-start gap-4 h-full max-h-[100svh-40px] overflow-y-auto scrollbar-thin">
       <div className="sticky top-0 bg-neutral-0E0E0E w-full py-2 shadow-lg px-4">
         <Toolbar
           viewMode={dataView}

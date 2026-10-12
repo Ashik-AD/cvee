@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { devtools, persist } from "zustand/middleware";
-import type { Resume } from "../types";
-import type { ResumePopulate } from "@/lib/service/editor";
+import type { Resume } from "@/lib/model/resume";
+import type { ResumePopulate } from "@/lib/model/resume";
 import { useShallow } from "zustand/shallow";
 import { DEFAULT_TEMPLATE } from "@/constants/preview";
 

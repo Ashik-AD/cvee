@@ -1,7 +1,7 @@
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useEditorActions, useEditorEducations } from "../../store";
-import type { Education } from "../../types";
+import type { Education } from "@/lib/model/resume";
 import type { ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { FlexColumn } from "@/components/common/layout";

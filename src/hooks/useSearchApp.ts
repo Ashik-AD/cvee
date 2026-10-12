@@ -1,5 +1,5 @@
 import { menu, type MenuAction } from "@/constants/menubar";
-import type { ResumePopulate } from "@/lib/service/editor";
+import type { ResumePopulate } from "@/lib/model/resume";
 import { useResumeState } from "@/store";
 import { useState } from "react";
 import useDebounceCallback from "./useDebounceCallback";

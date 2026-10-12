@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useViewSettingState } from "@/store/setting";
 import { useEditorActions, useEditorMeta, useEditorSettings } from "../store";
 import useMenuActions from "@/hooks/useMenuActions";
+import { toast } from "@/components/ui/toast";
+import { getErrorMessage } from "@/utils/error";
 
 export default function ResumeTemplatePicker() {
   const { showTemplatePicker } = useEditorSettings();
@@ -35,12 +37,15 @@ function Picker() {
         await execMenuAction("view-preview");
       }
     } catch (error) {
-      console.log(error);
+        toast.add({
+            type: 'error',
+            title: getErrorMessage(error, "Failed to change template. Please try again.")
+        })
     } finally {
       updateMeta({
         template: value,
       });
-    }
+    } 
   }
 
   function handleClose() {

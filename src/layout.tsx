@@ -3,7 +3,6 @@ import Navbar from "@/components/common/navbar";
 import Editor from "./features/editor";
 import Dashbord from "./features/dashboard";
 import { useEffect } from "react";
-import useServices from "./hooks/useServices";
 import { useResumeActions } from "./store";
 import { Route } from "wouter";
 import ModalRender from "./components/modals";
@@ -11,32 +10,36 @@ import ResumePreview from "./components/common/ResumePreview";
 import CommandCenter from "./components/common/CommandCenter";
 import useHandleActionsGlobal from "./hooks/useHandleActionsGlobal";
 import AlertDialogsRender from "./components/dialogs";
+import { useFetchResumes } from "./api";
+import { toast } from "./components/ui/toast";
 
 function Layout() {
-  const { services } = useServices();
   const { setResumes } = useResumeActions();
+
+  // Fetch all resumes from the database for dashboard to show
+  const { data: resumes, isPending, error } = useFetchResumes();
 
   // Handle global keyboard shortcuts
   useHandleActionsGlobal();
 
-  // Fetch all resumes from the database for dashboard to show
   useEffect(() => {
-    if (services) {
-      services.editor
-        .getResumes()
-        .then((resumes) => {
-          setResumes(resumes);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    if (isPending || !resumes) return;
+    setResumes(resumes);
+  }, [resumes, isPending]);
+
+  useEffect(() => {
+    if (error) {
+      toast.add({
+        type: "error",
+        title: error,
+      });
     }
-  }, [services]);
+  }, [error]);
 
   return (
     <FlexColumn className="overflow-hidden">
       <Navbar />
-      <div className="max-h-[calc(100svh-40px)] md:max-h-[calc(100svh-44px)] main-content overflow-y-auto scrollbar-thin">
+      <div className="max-h-[calc(100svh-40px)] md:max-h-[calc(100svh-44px)] main-content overflow-hidden">
         <Route path="/">
           <Dashbord />
         </Route>

@@ -11,16 +11,33 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { menu } from "@/constants/menubar";
+import { toast } from "@/components/ui/toast";
+import { menu, type ActionKey } from "@/constants/menubar";
 import useMapMenuAactionStatus from "@/hooks/useMapMenuActionStatus";
 import useMenu from "@/hooks/useMenu";
 import useMenuActions from "@/hooks/useMenuActions";
+import { getErrorMessage } from "@/utils/error";
 import { AlignRight, Check } from "lucide-react";
+import type { MouseEvent } from "react";
 
 function MobileMenu() {
   const { isMenuActionEnabled } = useMenu();
   const { execMenuAction } = useMenuActions();
   const mapActionStatus = useMapMenuAactionStatus();
+
+  async function handleMenuClick(event: MouseEvent<HTMLDivElement>) {
+    //@TODO: fix the type
+    //@ts-ignore
+    const key = event.target.dataset.key as ActionKey;
+    try {
+      await execMenuAction(key);
+    } catch (error) {
+      toast.add({
+        type: "error",
+        title: getErrorMessage(error),
+      });
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -48,9 +65,8 @@ function MobileMenu() {
                         <DropdownMenuItem
                           key={action.label}
                           disabled={disabled}
-                          onClick={async () => {
-                            await execMenuAction(action.key);
-                          }}
+                          data-key={action.key}
+                          onClick={handleMenuClick}
                           className="gap-3 justify-between items-center-safe"
                         >
                           <span className="flex gap-1.5 items-center-safe">

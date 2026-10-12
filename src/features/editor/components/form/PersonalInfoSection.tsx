@@ -2,7 +2,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useEditorActions, useEditorPersonalInfo } from "../../store";
 import type { ChangeEvent } from "react";
-import type { PersonalInfo } from "../../types";
+import type { PersonalInfo } from "@/lib/model/resume";
 
 function PersonalInfoSection() {
   const { updatePersonalInfo } = useEditorActions();

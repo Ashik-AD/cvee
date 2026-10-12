@@ -2,7 +2,7 @@ import { FlexColumn, Grid } from "@/components/common/layout";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { Project } from "../../types";
+import type { Project } from "@/lib/model/resume";
 import { useEditorActions, useEditorProjects } from "../../store";
 import type { ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";

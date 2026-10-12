@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useServices from "./useServices";
+import { AppError, getErrorMessage } from "@/utils/error";
 
 export function useExportResume() {
   const [error, setError] = useState<string | null>(null);
@@ -8,12 +9,12 @@ export function useExportResume() {
   async function exportResumeAsJSON(id: string, name?: string) {
     try {
       if (!id?.trim()) {
-        return setError("ID is not provided");
+        throw new AppError("ID is not provided");
       }
 
-      const resume = await services?.editor.getResumeById(id);
+      const resume = await services?.resumeSrv.getResumeById(id);
       if (!resume) {
-        return setError("Resume not found to export");
+        throw new AppError("Resume not found to export");
       }
 
       const toJSON = JSON.stringify(resume, null, 2);
@@ -39,8 +40,10 @@ export function useExportResume() {
       document.body.removeChild(downloadLinkEl);
 
       URL.revokeObjectURL(fileUrl);
-    } catch (err: any) {
-      setError(err?.message || err);
+    } catch (err) {
+      setError(
+        getErrorMessage(err, "Failed to export resume. Please try again."),
+      );
     }
   }
 

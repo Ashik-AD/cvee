@@ -1,7 +1,7 @@
 import AddNewResumeCard from "@/components/cards/AddNewResumeCard";
 import { ResumeCard } from "@/components/cards/ResumeCard";
 import { Grid } from "@/components/common/layout";
-import type { ResumePopulate } from "@/lib/service/editor";
+import type { ResumePopulate } from "@/lib/model/resume";
 import { getResumeStatus } from "@/utils/getResumeStatus";
 
 type GridViewProps = {
