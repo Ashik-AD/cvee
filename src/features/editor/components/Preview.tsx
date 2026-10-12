@@ -10,6 +10,7 @@ import type {
   PersonalInfo,
   Project,
 } from "@/lib/model/resume";
+import { cn } from "cn";
 
 interface PreviewProps {
   personalInfo: PersonalInfo;
@@ -53,16 +54,18 @@ export default function Preview({
 }
 
 function PreviewCanvas({ children }: { children: ReactNode }) {
-  const { zoomLevel } = useEditorSettings();
+  const { zoomLevel, zoomToFit } = useEditorSettings();
   const scale = calcPreviewDocsScaleLevel(zoomLevel);
   return (
     <AspectRatio
       ratio={1 / 1.4142}
-      className="bg-document h-fit w-full preview-content p-8 mx-auto"
+      className={cn(
+        "bg-document h-fit w-full preview-content p-8 mx-auto origin-center",
+        zoomToFit && "transform-none! min-w-auto!",
+      )}
       id="preview"
       style={{
         transform: `scale(${scale})`,
-        transformOrigin: "center",
       }}
     >
       {children}

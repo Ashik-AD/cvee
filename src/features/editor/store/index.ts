@@ -8,6 +8,7 @@ import { DEFAULT_TEMPLATE } from "@/constants/preview";
 
 type EditorSettings = {
   zoomLevel: number;
+  zoomToFit: boolean;
   showTemplatePicker: boolean;
 };
 
@@ -115,6 +116,7 @@ const useEditorStore = create<State>()(
         settings: {
           zoomLevel: 100,
           showTemplatePicker: false,
+          zoomToFit: false,
         },
 
         actions: {

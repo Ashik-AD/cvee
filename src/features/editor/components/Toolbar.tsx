@@ -1,7 +1,7 @@
 import { Flex, Grid } from "@/components/common/layout";
 import { Button } from "@/components/ui/button";
 import usePrintResume from "@/hooks/usePrintResume";
-import { FileUser, Printer } from "lucide-react";
+import { Check, ChevronDown, FileUser, Printer } from "lucide-react";
 import { useEditorActions, useEditorMeta, useEditorSettings } from "../store";
 import {
   Select,
@@ -17,12 +17,39 @@ import {
   type CVTemplates,
 } from "@/components/templates";
 import { Slider } from "@/components/ui/slider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const zoomLevels = [
+  {
+    name: "25%",
+    value: 25,
+  },
+  {
+    name: "50%",
+    value: 50,
+  },
+  {
+    name: "75%",
+    value: 75,
+  },
+  {
+    name: "100%",
+    value: 100,
+  },
+];
 
 function Toolbar() {
   const onPrint = usePrintResume();
   const meta = useEditorMeta();
   const { updateMeta } = useEditorActions();
-  const { zoomLevel } = useEditorSettings();
+  const { zoomLevel, zoomToFit } = useEditorSettings();
   const { setEditorSettings } = useEditorActions();
 
   function handleChangeTemplate(template?: CVTemplates | null) {
@@ -59,13 +86,66 @@ function Toolbar() {
 
       {/* Preview toolbar */}
       <Flex className="justify-end items-center gap-3">
+        <Flex className="items-center gap-1">
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button variant="ghost" className="px-0.5 py-0 bg-transparent!">
+                  {zoomLevel}% <ChevronDown size={3} className="text-muted-foreground" />
+                </Button>
+              }
+            />
+            <DropdownMenuContent>
+              <DropdownMenuGroup>
+                {zoomLevels.map((level) => {
+                  return (
+                    <DropdownMenuItem
+                      key={level.name}
+                      className="justify-between"
+                      onClick={() =>
+                        setEditorSettings({ zoomLevel: level.value, zoomToFit: false })
+                      }
+                    >
+                      {level.name}
+                      {zoomLevel === level.value && !zoomToFit && (
+                        <Check size={18} className="text-muted-foreground" />
+                      )}
+                    </DropdownMenuItem>
+                  );
+                })}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() =>
+                    setEditorSettings({
+                      zoomToFit: !zoomToFit,
+                    })
+                  }
+                  className="justify-between"
+                >
+                  Zoom to fit
+                  {zoomToFit && (
+                    <Check size={18} className="text-muted-foreground" />
+                  )}
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Slider
+            value={[zoomLevel]}
+            step={1}
+            max={100}
+            min={10}
+            className="min-w-16 max-w-24 w-full"
+            onValueChange={(val) => handleZoomLevelChange(val)}
+          />
+        </Flex>
         <div className="hidden md:inline-block">
           <Select
             items={TemplateSelectOptions}
             value={meta.template}
             onValueChange={handleChangeTemplate}
           >
-            <SelectTrigger>
+            <SelectTrigger className="h-7!">
               <SelectValue placeholder="Select Template" />
             </SelectTrigger>
             <SelectContent>
@@ -82,17 +162,6 @@ function Toolbar() {
             </SelectContent>
           </Select>
         </div>
-        <Flex className="items-center gap-1">
-          <span className="text-xs">{zoomLevel}%</span>
-          <Slider
-            defaultValue={[zoomLevel]}
-            step={1}
-            max={100}
-            min={10}
-            className="min-w-16 max-w-24 w-full"
-            onValueChange={(val) => handleZoomLevelChange(val)}
-          />
-        </Flex>
         <Button
           onClick={onPrint}
           variant="outline"
