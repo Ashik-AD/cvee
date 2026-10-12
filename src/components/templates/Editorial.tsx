@@ -1,6 +1,6 @@
-import { Code, Globe, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import type { TemplateProps } from ".";
-import { Contact, SectionTitle, splitDescription } from "./Shared";
+import { Contact, ProjectLink, SectionTitle, splitDescription } from "./Shared";
 import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
 
 export function Editorial({
@@ -153,25 +153,10 @@ export function Editorial({
                                 </h3>
 
                                 <div className="flex gap-2 text-[8px]">
-                                  {project.link && (
-                                    <a
-                                      href={project.link}
-                                      className="inline-flex items-center gap-1 underline"
-                                    >
-                                      <Globe className="size-3" />
-                                      {project.link}
-                                    </a>
-                                  )}
-
-                                  {project.repoLink && (
-                                    <a
-                                      href={project.repoLink}
-                                      className="inline-flex items-center gap-1 underline"
-                                    >
-                                      <Code className="size-3" />
-                                      {project.repoLink}
-                                    </a>
-                                  )}
+                                  <ProjectLink
+                                    website={project.link}
+                                    repo={project.repoLink}
+                                  />
                                 </div>
                               </div>
 
