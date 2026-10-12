@@ -3,7 +3,7 @@ import type {
   Experience,
   PersonalInfo,
   Project,
-} from "@/features/editor/types";
+} from "@/lib/model/resume";
 import type { ComponentType } from "react";
 import { Obsidian } from "./Obsidian";
 import { Classic } from "./Classsic";

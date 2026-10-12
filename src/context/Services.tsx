@@ -1,6 +1,9 @@
-import { Database } from "@/lib/database";
-import { Services } from "@/lib/service";
 import { createContext, useEffect, useState, type ReactNode } from "react";
+import { Database } from "@/lib/database";
+import { Repositories } from "@/lib/repository/repositories";
+import { Services } from "@/lib/service/services";
+
+const DB_NAME = "cvee";
 
 type Context = {
   services: Services | null;
@@ -9,7 +12,6 @@ export const ServicesContext = createContext<Context>({
   services: null,
 });
 
-const DB_NAME = "cvee";
 export default function ServicesProvider({
   children,
 }: {
@@ -26,7 +28,12 @@ export default function ServicesProvider({
     initDB
       .connect()
       .then((conn) => {
-        const srv = new Services(conn);
+        // Initialize repositories
+        const repositories = new Repositories(conn);
+
+        // initialize services
+        const srv = new Services(repositories);
+
         setServices(srv);
         setInitializing(false);
       })

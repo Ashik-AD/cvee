@@ -80,9 +80,12 @@ export function ResumeCard({
         </div>
         <FlexColumn className="gap-4 justify-between flex-1 h-full">
           <FlexColumn className="gap-2">
-            <h3 className="text-sm leading-6 font-medium text-foreground">
+            <Link
+              href={`/editor?id=${id}`}
+              className="text-sm leading-6 font-medium text-foreground hover:underline"
+            >
               {title}
-            </h3>
+            </Link>
 
             <p className="text-xs leading-5 text-muted-foreground">
               {description}

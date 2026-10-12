@@ -79,7 +79,7 @@ function RenameResume({ id }: RenameResumeProps) {
     if (!id || !resumeName || !resumeName?.trim()) return;
 
     try {
-      const resumesName = await services?.editor?.getResumesName();
+      const resumesName = await services?.resumeSrv.getResumesName();
       if (resumesName) {
         const isNameExist = resumesName.some(
           (resume) => resume?.id !== id && resume?.name === resumeName,
@@ -106,7 +106,7 @@ function RenameResume({ id }: RenameResumeProps) {
         }
 
         // Update db
-        const updatedResume = await services?.editor.update(id, resume);
+        const updatedResume = await services?.resumeSrv.updateResume(id, resume);
         if (!updatedResume) {
           setError({
             title: "Couldn't update the name.",

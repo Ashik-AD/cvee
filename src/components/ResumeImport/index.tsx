@@ -10,13 +10,15 @@ import { Input } from "../ui/input";
 import ResumeLookup from "../common/ResumeLookup";
 import { useModalActions } from "@/store/modal";
 import useCreateResume from "@/hooks/useCreateResume";
-import type { Resume } from "@/features/editor/types";
+import type { Resume } from "@/lib/model/resume";
 import { useResumeActions } from "@/store";
 import useServices from "@/hooks/useServices";
-import type { ResumePopulate } from "@/lib/service/editor";
+import type { ResumePopulate } from "@/lib/model/resume";
 import { useEditorActions } from "@/features/editor/store";
 import { useLocation } from "wouter";
 import { cn } from "cn";
+import { toast } from "../ui/toast";
+import { AppError, getErrorMessage } from "@/utils/error";
 
 type ImportDestination = "createNew" | "override";
 
@@ -44,7 +46,7 @@ function ResumeImport() {
 
   const { closeModal } = useModalActions();
   const createResume = useCreateResume();
-  const { addResume, setResumes } = useResumeActions();
+  const { addResume, updateResume } = useResumeActions();
   const { services } = useServices();
   const { setEditor } = useEditorActions();
   const [_, navigate] = useLocation();
@@ -66,8 +68,11 @@ function ResumeImport() {
         setImportCv(json);
         setMode("rawJson");
       };
-      reader.onerror = () => {
-        console.error("failed to read file content: ", file.name);
+      reader.onerror = (error) => {
+        toast.add({
+          type: "error",
+          title: getErrorMessage(error, "Failed to read JSON file."),
+        });
       };
       reader.readAsText(file);
     }
@@ -75,7 +80,10 @@ function ResumeImport() {
 
   async function handleCreateNewFromImportedJson(resume: Partial<Resume>) {
     if (!resume) {
-      console.error("Resume not found");
+      toast.add({
+        type: "warning",
+        title: "File is empty. Please make sure you import right file",
+      });
       return;
     }
     try {
@@ -90,7 +98,13 @@ function ResumeImport() {
         navigate(`/editor?id=${res.id}`);
       }
     } catch (error) {
-      console.log(error);
+      toast.add({
+        type: "error",
+        title: getErrorMessage(
+          error,
+          "Failed to create a cv from imported JSON.",
+        ),
+      });
     }
   }
 
@@ -100,36 +114,41 @@ function ResumeImport() {
   ) {
     if (!resumeId || !importedCv) return;
     try {
-      const targetResume = await services?.editor.getResumeById(resumeId);
+      const targetResume = await services?.resumeSrv.getResumeById(resumeId);
       if (!targetResume) {
-        throw new Error("Target resume not found");
+        throw new AppError("Target resume not found.");
       }
 
       const normalize = { ...resume, meta: targetResume.meta, id: resumeId };
 
       // update target resume to override with exported resume
-      const res = await services?.editor.update(resumeId, { ...normalize });
+      const res = await services?.resumeSrv.updateResume(resumeId, {
+        ...normalize,
+      });
       if (res) {
         // populate/set editor
         setEditor(res);
 
         // Refetch all resumes
-        const resumes = await services?.editor.getResumes();
-        if (resumes) {
-          setResumes(resumes);
-        }
+        updateResume(res)
+        // const resumes = await services?.resumeSrv.getResumes();
+        // if (resumes) {
+        //   setResumes(resumes);
+        // }
       }
     } catch (error) {
-      console.error("Failed override resume: ", error);
+      toast.add({
+        type: "error",
+        title: getErrorMessage(error, "Failed override resume: "),
+      });
     }
   }
 
   async function handleImport() {
-    if (!importedCv) {
-      console.warn("No resume found to be import");
-      return;
-    }
     try {
+      if (!importedCv) {
+        throw new AppError("No resume found to be import");
+      }
       if (importAction === "createNew") {
         await handleCreateNewFromImportedJson(importedCv);
       }
@@ -138,8 +157,10 @@ function ResumeImport() {
       }
       closeModal();
     } catch (error) {
-      console.error("Failed to import json cv");
-      console.error(error);
+      toast.add({
+        type: "error",
+        title: getErrorMessage(error, "Failed to import json cv"),
+      });
     }
   }
 

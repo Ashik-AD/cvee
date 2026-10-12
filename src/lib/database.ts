@@ -1,4 +1,4 @@
-import { EditorService } from "./service/editor";
+import { ResumeRepository } from "./repository/resume";
 
 export class Database {
   private name: string;
@@ -22,12 +22,15 @@ export class Database {
 
         const oldVersion = event.oldVersion;
         const newVersion = event.newVersion;
+
+        // Initialize all repository schema
         if (oldVersion < 1) {
-          EditorService.createSchemaV1(db);
+          ResumeRepository.createSchemaV1(db);
         }
 
         // Migrate other version
-        if (newVersion && oldVersion < newVersion) {}
+        if (newVersion && oldVersion < newVersion) {
+        }
       };
 
       dbReq.onerror = (e) => {

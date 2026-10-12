@@ -1,18 +1,40 @@
 import { usePathname } from "wouter/use-browser-location";
 import { Button } from "../ui/button";
 import { Flex } from "./layout";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import Menu from "@/features/dashboard/components/Menu";
 import { cn } from "cn";
 import { ArrowLeft, Plus, Search } from "lucide-react";
 import MobileMenu from "@/features/editor/components/MobileMenu";
 import { useCommonActions } from "@/store";
 import { Kbd } from "../ui/kbd";
+import useCreateResume from "@/hooks/useCreateResume";
+import { toast } from "../ui/toast";
+import { getErrorMessage } from "@/utils/error";
 
 function Navbar() {
   const pathname = usePathname();
   const isEditorPath = pathname.startsWith("/editor");
   const { toggleCommandCenter } = useCommonActions();
+  const createNewResume = useCreateResume();
+  const [_, navigate] = useLocation();
+
+  async function handleCreateResume() {
+    try {
+      const res = await createNewResume();
+      if (res) {
+        navigate(`/editor?id=${res.id}`);
+      }
+    } catch (error) {
+      toast.add({
+        type: "error",
+        title: getErrorMessage(
+          error,
+          "Failed to create resume. Please try again.",
+        ),
+      });
+    }
+  }
 
   return (
     <Flex className="app-navbar py-2 px-1 max-h-10 h-10 justify-between items-center gap-6 border-b border-b-muted-foreground/10 relative">
@@ -46,15 +68,14 @@ function Navbar() {
 
       <Flex className="hidden gap-4 min-[26rem]:flex">
         {pathname === "/" ? (
-          <Link href="/editor">
-            <Button
-              className="bg-neutral-444748 text-white rounded-xs"
-              size="sm"
-            >
-              <Plus size={20} />
-              New CV
-            </Button>
-          </Link>
+          <Button
+            className="bg-neutral-444748 text-white rounded-xs"
+            size="sm"
+            onClick={handleCreateResume}
+          >
+            <Plus size={20} />
+            New CV
+          </Button>
         ) : (
           <>
             <Link href="/" className="hidden min-[26rem]:inline-flex">

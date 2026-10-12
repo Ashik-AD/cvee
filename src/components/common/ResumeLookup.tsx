@@ -26,9 +26,9 @@ function ResumeLookup({
   const id = params.get("id");
 
   useEffect(() => {
-    services?.editor
+    services?.resumeSrv
       .resumeLookup()
-      .then((result) => {
+      .then((result: { label: string; id: string }[]) => {
         setLookupResume(result);
       })
       .catch(console.error);

@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import type { ActionKey, MenuAction } from "@/constants/menubar";
 import { useSearchApp } from "@/hooks/useSearchApp";
-import type { ResumePopulate } from "@/lib/service/editor";
+import type { ResumePopulate } from "@/lib/model/resume";
 import { Link } from "wouter";
 import { Button } from "../ui/button";
 import { Kbd } from "../ui/kbd";

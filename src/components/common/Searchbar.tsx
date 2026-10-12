@@ -19,7 +19,7 @@ function Searchbar({
   name = "searchbar",
   placeholder = "Search...",
   className,
-  focus,
+  focus = false,
 }: SearchbarProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
