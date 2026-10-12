@@ -58,9 +58,9 @@ export default function Dashbord() {
     setDashboardDataView(mode);
   }
 
-  if (!resumes?.length) {
+  if (resumes && resumes?.length === 0) {
     return (
-      <FlexColumn className="h-full w-full items-center justify-center pt-10">
+      <FlexColumn className="h-full w-full items-center justify-center pt-16">
         <FlexColumn>
           <AddNewResumeCard />
         </FlexColumn>
