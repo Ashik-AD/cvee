@@ -7,7 +7,7 @@ import path from "path";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({ compiler: true }),
     tailwindcss(),
     babel({ presets: [reactCompilerPreset()] }),
   ],
