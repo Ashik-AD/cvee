@@ -231,6 +231,30 @@
   --color-neutral-E7E5E4: #e7e5e4;
   --color-neutral-EEEEEE: #eeeeee;
 
+  /* Solid alert backgrounds */
+  --color-alert-success: #15803d;
+  --color-alert-warning: #a16207;
+  --color-alert-danger: #dc2626;
+  --color-alert-info: #2563eb;
+
+  /* Muted alert backgrounds */
+  --color-alert-success-muted: #f0fdf4;
+  --color-alert-warning-muted: #fefce8;
+  --color-alert-danger-muted: #fef2f2;
+  --color-alert-info-muted: #eff6ff;
+
+  /* Muted alert text */
+  --color-alert-success-text: #166534;
+  --color-alert-warning-text: #854d0e;
+  --color-alert-danger-text: #b91c1c;
+  --color-alert-info-text: #1d4ed8;
+
+  /* Muted alert borders */
+  --color-alert-success-border: #bbf7d0;
+  --color-alert-warning-border: #fde68a;
+  --color-alert-danger-border: #fecaca;
+  --color-alert-info-border: #bfdbfe;
+
   /* Fonts */
   --font-sans: "Geist", sans-serif;
   --font-mono: "Geist Mono", "JetBrains Mono", monospace;
