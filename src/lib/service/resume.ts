@@ -18,10 +18,10 @@ export class ResumeService implements ResumeSrv {
    * */
   async createNewResume(
     resume: Resume,
-    metaDetail?: Partial<ResumePopulate["meta"]>,
+    metaDetail?: Partial<ResumePopulate["meta"] & {id: string}>,
   ) {
     if (!resume) {
-      throw new AppError("Resume data is missing", "RESUME_DATA_MISSING");
+      throw new AppError("Resume data is missing", "NOT_FOUND");
     }
 
     const res = await this.resumeRepo.createNewResume(resume, metaDetail);
@@ -43,7 +43,7 @@ export class ResumeService implements ResumeSrv {
 
     const resume = await this.resumeRepo.getResumeById(id);
     if (!resume) {
-      throw new AppError("Resume not found", "RESUME_NOT_FOUND");
+      throw new AppError("Resume not found", "NOT_FOUND");
     }
     return resume;
   }
@@ -59,7 +59,7 @@ export class ResumeService implements ResumeSrv {
 
     const checkResumeExist = await this.resumeRepo.getResumeById(id);
     if (!checkResumeExist) {
-      throw new AppError("Resume not found", "RESUME_NOT_FOUND");
+      throw new AppError("Resume not found", "NOT_FOUND");
     }
 
     return await this.resumeRepo.updateResume(id, resume);
@@ -78,11 +78,11 @@ export class ResumeService implements ResumeSrv {
 
   async deleteResume(id: string) {
     if (!id?.trim()) {
-      throw new AppError("Resume id is not provided", "RESUME_NOT_FOUND");
+      throw new AppError("Resume id is not provided", "NOT_FOUND");
     }
     const checkResumeExist = await this.resumeRepo.getResumeById(id);
     if (!checkResumeExist) {
-      throw new AppError("Resume not found", "RESUME_NOT_FOUND");
+      throw new AppError("Resume not found", "NOT_FOUND");
     }
 
     await this.resumeRepo.deleteResume(id);
