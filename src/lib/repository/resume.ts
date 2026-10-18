@@ -38,7 +38,7 @@ export class ResumeRepository {
 
   async createNewResume(
     resume: Resume,
-    metaDetail?: Partial<ResumePopulate["meta"]>,
+    metaDetail?: Partial<ResumePopulate["meta"] & { id: string }>,
   ) {
     return new Promise<ResumePopulate>((resolve, reject) => {
       const trn = this.db.transaction([STORE_NAME], "readwrite");
@@ -69,7 +69,12 @@ export class ResumeRepository {
 
       trn.onerror = () => {
         reject(
-          new DatabaseError(trn.error?.message ?? "Failed to create resume"),
+          new DatabaseError(
+            trn.error?.message || "Failed to create resume",
+            undefined,
+            { cause: trn.error },
+            { ...payload, id: metaDetail?.id ?? payload.id },
+          ),
         );
       };
 
@@ -78,9 +83,25 @@ export class ResumeRepository {
       };
 
       trn.onabort = () => {
+        // check quota exceed error
+        if (trn.error?.QUOTA_EXCEEDED_ERR) {
+          reject(
+            new DatabaseError(
+              "Browser storage is full. Free up space and try again.",
+              "STORAGE_FULL",
+              { cause: trn.error },
+              { ...payload, id: metaDetail?.id ?? payload.id },
+            ),
+          );
+          return;
+        }
+
         reject(
           new DatabaseError(
-            trn.error?.message ?? "Resume creation was aborted",
+            trn.error?.message || "Resume creation was aborted",
+            undefined,
+            { cause: trn.error },
+            { ...payload, id: metaDetail?.id ?? payload.id },
           ),
         );
       };
@@ -94,7 +115,7 @@ export class ResumeRepository {
 
       request.onerror = () => {
         reject(
-          new DatabaseError(trn.error?.message ?? "Failed to get resumes"),
+          new DatabaseError(trn.error?.message || "Failed to get resumes"),
         );
       };
 
@@ -106,7 +127,9 @@ export class ResumeRepository {
       trn.onabort = () => {
         reject(
           new DatabaseError(
-            trn.error?.message ?? "Resumes retrieve was aborted",
+            trn.error?.message || "Resumes retrieve was aborted",
+            undefined,
+            { cause: trn.error },
           ),
         );
       };
@@ -120,7 +143,12 @@ export class ResumeRepository {
 
       trn.onerror = () => {
         reject(
-          new DatabaseError(trn.error?.message ?? "Failed to retrieve resume"),
+          new DatabaseError(
+            trn.error?.message || "Failed to retrieve resume",
+            undefined,
+            { cause: trn.error },
+            id,
+          ),
         );
       };
 
@@ -132,7 +160,10 @@ export class ResumeRepository {
       trn.onabort = () => {
         reject(
           new DatabaseError(
-            trn.error?.message ?? "Resume retrieve was aborted",
+            trn.error?.message || "Resume retrieve was aborted",
+            undefined,
+            { cause: trn.error },
+            id,
           ),
         );
       };
@@ -159,7 +190,12 @@ export class ResumeRepository {
 
       trn.onerror = () => {
         reject(
-          new DatabaseError(trn.error?.message ?? "Failed to update resume"),
+          new DatabaseError(
+            trn.error?.message || "Failed to update resume",
+            undefined,
+            { cause: trn.error },
+            payload,
+          ),
         );
       };
 
@@ -168,8 +204,25 @@ export class ResumeRepository {
       };
 
       trn.onabort = () => {
+        if (trn.error?.QUOTA_EXCEEDED_ERR) {
+          reject(
+            new DatabaseError(
+              "Browser storage is full. Free up space and try again.",
+              "STORAGE_FULL",
+              { cause: trn.error },
+              { ...payload, id: resume?.id ?? payload.id },
+            ),
+          );
+          return;
+        }
+
         reject(
-          new DatabaseError(trn.error?.message ?? "Resume update was aborted"),
+          new DatabaseError(
+            trn.error?.message || "Resume update was aborted",
+            undefined,
+            { cause: trn.error },
+            payload,
+          ),
         );
       };
     });
@@ -183,7 +236,7 @@ export class ResumeRepository {
 
         trn.onerror = () => {
           reject(
-            new DatabaseError(trn.error?.message ?? "Resumes lookup failed"),
+            new DatabaseError(trn.error?.message || "Resumes lookup failed"),
           );
         };
 
@@ -199,7 +252,7 @@ export class ResumeRepository {
         trn.onabort = () => {
           reject(
             new DatabaseError(
-              trn.error?.message ?? "Resume lookup was aborted",
+              trn.error?.message || "Resume lookup was aborted",
             ),
           );
         };
@@ -214,7 +267,7 @@ export class ResumeRepository {
 
       trn.onerror = () => {
         reject(
-          new DatabaseError(trn.error?.message ?? "Failed to delete resume"),
+          new DatabaseError(trn.error?.message || "Failed to delete resume"),
         );
       };
 
@@ -225,7 +278,7 @@ export class ResumeRepository {
       trn.onabort = () => {
         reject(
           new DatabaseError(
-            trn.error?.message ?? "Resume deletion was aborted",
+            trn.error?.message || "Resume deletion was aborted",
           ),
         );
       };
