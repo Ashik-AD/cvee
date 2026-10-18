@@ -45,6 +45,7 @@ function Toolbar({
                 )}
                 onClick={() => onViewChange(view.key as ViewMode)}
                 type="button"
+                key={view.key}
               >
                 <Icon />
                 <span className="sr-only">{view.label} view</span>
