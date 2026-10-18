@@ -14,21 +14,21 @@ export type Experience = {
   companyName: string;
   role: string;
   duration: string;
-  description: string[];
+  description: string | string[];
 };
 
 export type Project = {
   name: string;
   link: string;
   repoLink: string;
-  description: string[];
+  description: string | string[];
 };
 
 export type Education = {
   institute: string;
   course: string;
   duration: string;
-  grade: string;
+  grade: string | number;
 };
 
 export type Resume = {
