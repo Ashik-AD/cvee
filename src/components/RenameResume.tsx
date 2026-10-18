@@ -45,7 +45,7 @@ function RenameResume({ id }: RenameResumeProps) {
   // Pre-fill the rename input
   useEffect(() => {
     if (!id || isLoading) return;
-    if (resume) {
+    if (resume?.meta?.title) {
       if (inputRef.current) {
         inputRef.current.value = resume.meta.title ?? "";
       }
@@ -53,7 +53,7 @@ function RenameResume({ id }: RenameResumeProps) {
         descRef.current.value = resume.meta.description ?? "";
       }
     }
-  }, [id, isLoading, resume]);
+  }, [id, isLoading, resume?.meta?.title]);
 
   // Handle `Escape` key press
   const handleKeyUp = useEffectEvent((e: KeyboardEvent) => {
@@ -100,13 +100,15 @@ function RenameResume({ id }: RenameResumeProps) {
           return;
         }
 
-        resume.meta.title = resumeName;
         if (resumeDesc?.trim()) {
           resume.meta.description = resumeDesc;
         }
 
         // Update db
-        const updatedResume = await services?.resumeSrv.updateResume(id, resume);
+        const updatedResume = await services?.resumeSrv.updateResume(id, {
+          ...resume,
+          meta: { ...resume.meta, title: resumeName || resume.meta.title },
+        });
         if (!updatedResume) {
           setError({
             title: "Couldn't update the name.",
