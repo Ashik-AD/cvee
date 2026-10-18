@@ -203,11 +203,13 @@ const QUICK_ACTIONS: Array<QuickAction> = [
 
 function QuickActions() {
   const { execMenuAction } = useMenuActions();
+  const { toggleCommandCenter } = useCommonActions();
 
   async function handleExecAction(event: MouseEvent<HTMLButtonElement>) {
     try {
       const actionKey = event.currentTarget.dataset.key as ActionKey;
       await execMenuAction(actionKey);
+      toggleCommandCenter()
     } catch (error) {
       toast.add({
         type: "error",
