@@ -6,12 +6,25 @@ export const KeyboardShortcutGroups: {
 }[] = [
   {
     label: "General",
-    actions: ["save", "command-palette", "keyboard-shortcuts"],
+    actions: [
+      "save",
+      "command-palette",
+      "keyboard-shortcuts",
+      "import-all-json",
+      "export-all-json",
+    ],
   },
 
   {
     label: "CV",
-    actions: ["new-cv", "duplicate-cv", "rename-cv", "delete-cv"],
+    actions: [
+      "new-cv",
+      "duplicate-cv",
+      "rename-cv",
+      "delete-cv",
+      "import-json",
+      "export-json",
+    ],
   },
 
   // {
