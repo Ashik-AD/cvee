@@ -1,5 +1,5 @@
 import { useCommandCenterState, useCommonActions } from "@/store/common";
-import { Activity, useEffect } from "react";
+import { Activity, useEffect, type MouseEvent } from "react";
 import { Flex, FlexCenter, FlexColumn, Grid } from "./layout";
 import Searchbar from "./Searchbar";
 import { Separator } from "../ui/separator";
@@ -17,6 +17,9 @@ import type { ResumePopulate } from "@/lib/model/resume";
 import { Link } from "wouter";
 import { Button } from "../ui/button";
 import { Kbd } from "../ui/kbd";
+import { toast } from "../ui/toast";
+import { getErrorMessage } from "@/utils/error";
+import useMenuActions from "@/hooks/useMenuActions";
 
 function CommandCenter() {
   const { showCommandCenter } = useCommandCenterState();
@@ -118,6 +121,7 @@ function ResumeResults({ resumes }: { resumes: ResumePopulate[] }) {
             <Link
               href={`/editor?id=${resume.id}`}
               className="flex bg-neutral-171717 p-2 rounded-sm hover:bg-neutral-1C1917 hover:shadow-md gap-2"
+              key={resume.id}
             >
               <FileText size={18} className="text-emerald-600" />
               <span className="flex flex-col gap-1">
@@ -148,6 +152,7 @@ function MenuActionResult({ actions }: { actions: MenuAction[] }) {
             <Button
               className="flex flex-col p-2 rounded-sm hover:shadow-md gap-1 h-auto text-xs!"
               variant="secondary"
+              key={action.key}
             >
               <action.icon />
               {action.label}
@@ -186,7 +191,7 @@ const QUICK_ACTIONS: Array<QuickAction> = [
     label: "Export JSON",
     description: "Export all CV JSON file.",
     icon: Download,
-    actionKey: "export-json",
+    actionKey: "export-all-json",
   },
   {
     label: "Keyboard Shortcuts",
@@ -195,24 +200,40 @@ const QUICK_ACTIONS: Array<QuickAction> = [
     actionKey: "keyboard-shortcuts",
   },
 ];
+
 function QuickActions() {
+  const { execMenuAction } = useMenuActions();
+
+  async function handleExecAction(event: MouseEvent<HTMLButtonElement>) {
+    try {
+      const actionKey = event.currentTarget.dataset.key as ActionKey;
+      await execMenuAction(actionKey);
+    } catch (error) {
+      toast.add({
+        type: "error",
+        title: getErrorMessage(error),
+      });
+    }
+  }
+
   return (
     <Grid className="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
       {QUICK_ACTIONS.map((action) => {
         return (
-          <FlexCenter
+          <button
             key={action.actionKey}
-            className="flex-col gap-4 border rounded-md px-2 py-3 hover:bg-neutral-2A2A2A/50 cursor-pointer focus-visible:ring"
-            tabIndex={0}
+            className="flex flex-col gap-4 border rounded-md px-2 py-3 hover:bg-neutral-2A2A2A/50 cursor-pointer justify-center items-center"
+            data-key={action.actionKey}
+            onClick={handleExecAction}
           >
             <action.icon className="text-neutral-400" />
-            <FlexCenter className="flex-col gap-2">
+            <span className="flex flex-col gap-2">
               <span className="text-center text-sm">{action.label}</span>
-              <p className="text-xs text-center text-muted-foreground">
+              <span className="text-xs text-center text-muted-foreground">
                 {action.description}
-              </p>
-            </FlexCenter>
-          </FlexCenter>
+              </span>
+            </span>
+          </button>
         );
       })}
     </Grid>

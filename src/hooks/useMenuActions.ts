@@ -9,6 +9,7 @@ import useCreateDuplicateResume from "./useCreateDuplicateResume";
 import useCreateResume from "./useCreateResume";
 import { useSettingActions } from "@/store/setting";
 import { useExportResume } from "./useExportResume";
+import useExportResumes from "./useExportResumes";
 
 export default function useMenuActions() {
   const [searchParams] = useSearchParams();
@@ -27,6 +28,7 @@ export default function useMenuActions() {
   const deleteResume = useDeleteResume();
   const handleCreateDuplicateResume = useCreateDuplicateResume(id);
   const { exportResume } = useExportResume();
+  const { onExport } = useExportResumes();
 
   async function execMenuAction(actionKey: ActionKey) {
     switch (actionKey) {
@@ -68,11 +70,20 @@ export default function useMenuActions() {
         setModalOpen("import-json");
         break;
 
+      case "import-all-json":
+        setModalOpen("import-all-json");
+        break;
+
       // export json
       case "export-json":
         if (id?.trim()) {
           await exportResume(id);
         }
+        break;
+
+      // export json
+      case "export-all-json":
+        await onExport();
         break;
 
       // Print Menu
