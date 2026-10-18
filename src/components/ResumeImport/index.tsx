@@ -1,4 +1,4 @@
-import { Download, FileCode, FileUp, Upload } from "lucide-react";
+import { Download, FileCode, FileUp, type LucideIcon } from "lucide-react";
 import { Flex, FlexColumn } from "../common/layout";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
@@ -19,10 +19,16 @@ import { useLocation } from "wouter";
 import { cn } from "cn";
 import { toast } from "../ui/toast";
 import { AppError, getErrorMessage } from "@/utils/error";
+import {
+  normalizeJsonToExport,
+  parseImportedJSON,
+} from "@/utils/normalizeJSON";
+import FilePicker from "../common/FilePicker";
 
 type ImportDestination = "createNew" | "override";
+type Mode = "filePicker" | "rawJson";
 
-const tabs = [
+const tabs: { icon: LucideIcon; label: string; key: Mode }[] = [
   {
     icon: FileUp,
     label: "File Upload",
@@ -34,8 +40,9 @@ const tabs = [
     key: "rawJson",
   },
 ];
+
 function ResumeImport() {
-  const [mode, setMode] = useState<"filePicker" | "rawJson">("filePicker");
+  const [mode, setMode] = useState<Mode>("filePicker");
   const [importAction, setImportAction] =
     useState<ImportDestination>("createNew");
   const [importedCv, setImportCv] = useState<Resume | ResumePopulate | null>(
@@ -65,7 +72,9 @@ function ResumeImport() {
           resumeNameInputRef.current.value = resumeName;
         }
 
-        setImportCv(json);
+        // Show exported JSON which have well formatted
+        const normalize = normalizeJsonToExport(json);
+        setImportCv(normalize);
         setMode("rawJson");
       };
       reader.onerror = (error) => {
@@ -89,7 +98,8 @@ function ResumeImport() {
     try {
       const resumeName = resumeNameInputRef.current?.value;
 
-      const res = await createResume(resume, resumeName);
+      const normalize = parseImportedJSON(JSON.stringify(resume));
+      const res = await createResume(normalize, resumeName);
       if (res) {
         setEditor(res);
         addResume(res);
@@ -119,22 +129,21 @@ function ResumeImport() {
         throw new AppError("Target resume not found.");
       }
 
-      const normalize = { ...resume, meta: targetResume.meta, id: resumeId };
+      const normalize = parseImportedJSON(JSON.stringify(resume));
+      const finalResume = {
+        ...normalize,
+        meta: targetResume.meta,
+        id: resumeId,
+      };
 
       // update target resume to override with exported resume
       const res = await services?.resumeSrv.updateResume(resumeId, {
-        ...normalize,
+        ...finalResume,
       });
       if (res) {
         // populate/set editor
         setEditor(res);
-
-        // Refetch all resumes
-        updateResume(res)
-        // const resumes = await services?.resumeSrv.getResumes();
-        // if (resumes) {
-        //   setResumes(resumes);
-        // }
+        updateResume(res);
       }
     } catch (error) {
       toast.add({
@@ -164,6 +173,12 @@ function ResumeImport() {
     }
   }
 
+  function handleClear() {
+    setImportCv(null);
+    setOverrideId(null);
+    setMode("filePicker");
+  }
+
   return (
     <FlexColumn className="w-full gap-3">
       {/* File picker & Raw json*/}
@@ -172,11 +187,12 @@ function ResumeImport() {
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = mode === tab.key;
+
             return (
               <Button
                 key={tab.key}
                 variant="ghost"
-                onClick={() => setMode(tab.key as typeof mode)}
+                onClick={() => setMode(tab.key)}
                 className={cn(
                   isActive && "text-emerald-500 border-b! border-b-emerald-700",
                   "border-b",
@@ -189,22 +205,14 @@ function ResumeImport() {
           })}
         </Flex>
         <Activity mode={mode === "filePicker" ? "visible" : "hidden"}>
-          <Label>
-            <FlexColumn className="w-full bg-neutral-0E0E0E items-center justify-center gap-3 px-4 py-10 rounded-sm border border-dashed hover:bg-neutral-1C1B1B group">
-              <Flex className="bg-neutral-2A2A2A size-14 items-center justify-center rounded-sm">
-                <Upload size={32} className="group-hover:animate-bounce" />
-              </Flex>
-              <p>Drag and drop your schema file here, or Browse files</p>
-              <input type="file" hidden onChange={handleFileImport} />
-            </FlexColumn>
-          </Label>
+          <FilePicker onChange={handleFileImport} clearFile={handleClear} />
         </Activity>
         <Activity mode={mode === "rawJson" ? "visible" : "hidden"}>
           <Textarea
             rows={20}
             placeholder="Paste or edit json"
             className="max-h-132 min-h-41 scrollbar-thin"
-            value={JSON.stringify(importedCv, null, 2)?.trim() || ""}
+            value={JSON.stringify(importedCv, null, 2) ?? ""}
           />
         </Activity>
       </FlexColumn>
