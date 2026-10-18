@@ -36,7 +36,9 @@ export const ACTION_KEYS = {
   DELETE_CV: "delete-cv",
 
   IMPORT_JSON: "import-json",
+  IMPORT_ALL_JSON: "import-all-json",
   EXPORT_JSON: "export-json",
+  EXPORT_ALL_JSON: "export-all-json",
 
   PRINT_PDF: "print-pdf",
 
@@ -139,9 +141,27 @@ export const menu: Menu[] = [
       },
       {
         type: "action",
+        key: "import-all-json",
+        label: "Import JSON Collection",
+        icon: Import,
+        cmd: "Ctrl+Shift+I",
+      },
+
+      { type: "separator" },
+
+      {
+        type: "action",
         key: "export-json",
         label: "Export JSON",
         icon: Download,
+        cmd: "Ctrl+E",
+      },
+      {
+        type: "action",
+        key: "export-all-json",
+        label: "Export All JSON",
+        icon: Download,
+        cmd: "Ctrl+Shift+E",
       },
 
       { type: "separator" },

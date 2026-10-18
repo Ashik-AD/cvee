@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useServices from "./useServices";
 import { AppError, getErrorMessage } from "@/utils/error";
+import { normalizeJsonToExport } from "@/utils/normalizeJSON";
+import { downloadAsFile } from "@/utils/downloadAsFile";
 
 export function useExportResume() {
   const [error, setError] = useState<string | null>(null);
@@ -17,29 +19,11 @@ export function useExportResume() {
         throw new AppError("Resume not found to export");
       }
 
-      const toJSON = JSON.stringify(resume, null, 2);
+      const normalize = normalizeJsonToExport(JSON.stringify(resume));
       const fileName =
         name ??
         `${resume.personalInfo?.name}-${resume.meta?.title ?? resume?.personalInfo?.role}.json`;
-
-      const file = new File([toJSON], fileName, {
-        type: "application/json",
-      });
-
-      const fileUrl = URL.createObjectURL(file);
-
-      const downloadLinkEl = document.createElement("a");
-      downloadLinkEl.href = fileUrl;
-      downloadLinkEl.download = fileName;
-      downloadLinkEl.className = "absolute invisible";
-
-      document.body.appendChild(downloadLinkEl);
-
-      downloadLinkEl.click();
-
-      document.body.removeChild(downloadLinkEl);
-
-      URL.revokeObjectURL(fileUrl);
+      downloadAsFile(normalize, fileName, "application/json");
     } catch (err) {
       setError(
         getErrorMessage(err, "Failed to export resume. Please try again."),

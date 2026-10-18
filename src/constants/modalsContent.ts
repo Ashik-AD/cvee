@@ -1,4 +1,5 @@
 import { About } from "@/components/About";
+import ImportResumes from "@/components/common/ImportResumes";
 import KeyboardShortcuts from "@/components/common/KeyboardShortcuts";
 import { QuickStartGuide } from "@/components/QuickGuideContent";
 import ResumeImport from "@/components/ResumeImport";
@@ -18,6 +19,12 @@ export const modalsContent: Record<string, ModalContent> = {
     title: "Import Resume from JSON",
     description: "Upload a JSON Resume, or reactive-resume export file.",
     className: "sm:min-w-[90%] lg:min-w-4xl",
+  },
+  "import-all-json": {
+    element: ImportResumes,
+    title: "Import Resumes from JSON",
+    description: "Upload a resumes JSON",
+    className: "sm:min-w-[90%] lg:min-w-5xl",
   },
   keyboardShortcut: {
     element: KeyboardShortcuts,
