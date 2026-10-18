@@ -96,6 +96,20 @@ export default function useHandleActionsGlobal() {
         execMenuAction("keyboard-shortcuts");
         return;
       }
+
+      // Open import JSONS modal
+      if (e.ctrlKey && e.shiftKey && key === "i") {
+        interuptDown();
+        execMenuAction("import-all-json");
+        return;
+      }
+
+      // Export all JSON
+      if (e.ctrlKey && e.shiftKey && key === "e") {
+        interuptDown();
+        execMenuAction("export-all-json");
+        return;
+      }
     } catch (error) {
       const msg = getErrorMessage(error);
       toast.add({
