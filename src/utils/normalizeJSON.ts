@@ -97,8 +97,8 @@ function newLineToArray(str: string | Array<string>) {
 }
 
 function arrayToNewLineStr(str: string | Array<string>) {
-  if (typeof str === "string") {
-    return str;
+  if (Array.isArray(str)) {
+    return str.join("\n- ");
   }
-  return str.concat("\n- ");
+  return str;
 }
