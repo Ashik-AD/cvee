@@ -73,10 +73,11 @@ function ResumeImport() {
         }
 
         // Show exported JSON which have well formatted
-        const normalize = normalizeJsonToExport(json);
+        const normalize = normalizeJsonToExport(JSON.stringify(json));
         setImportCv(normalize);
         setMode("rawJson");
       };
+
       reader.onerror = (error) => {
         toast.add({
           type: "error",
