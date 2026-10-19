@@ -12,7 +12,8 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "test": "vitest"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
@@ -49,6 +50,7 @@
     "oxfmt": "^0.73.0",
     "oxlint": "^1.79.0",
     "typescript": "~6.0.2",
-    "vite": "^8.2.2"
+    "vite": "^8.2.2",
+    "vitest": "^5.0.5"
   }
 }
