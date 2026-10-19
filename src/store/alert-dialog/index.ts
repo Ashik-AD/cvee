@@ -1,8 +1,8 @@
-import type { AlertDialogKeys } from "@/constants/alertDialogContent";
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { immer } from "zustand/middleware/immer";
-import { useShallow } from "zustand/shallow";
+import type { AlertDialogKeys } from '@/constants/alertDialogContent';
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
+import { useShallow } from 'zustand/shallow';
 
 type State = {
   alertName: AlertDialogKeys | null;
@@ -38,7 +38,7 @@ export const useAlertDialogStore = create<State>()(
       },
     })),
     {
-      name: "alertDialogStore",
+      name: 'alertDialogStore',
     },
   ),
 );

@@ -1,5 +1,5 @@
-import { modalsContent } from "@/constants/modalsContent";
-import { useModalActions, useModalState } from "@/store/modal";
+import { modalsContent } from '@/constants/modalsContent';
+import { useModalActions, useModalState } from '@/store/modal';
 
 import {
   Dialog,
@@ -7,8 +7,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { cn } from "cn";
+} from '../ui/dialog';
+import { cn } from 'cn';
 
 function ModalRender() {
   const { isOpen, modalName, modalProps } = useModalState();

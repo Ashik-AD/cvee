@@ -4,17 +4,17 @@ import {
   useRef,
   useState,
   type ChangeEvent,
-} from "react";
-import { Flex, FlexColumn } from "./common/layout";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import useServices from "@/hooks/useServices";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { AlertCircleIcon } from "lucide-react";
-import { useCommonActions, useResumeActions } from "@/store";
-import { useEditorActions } from "@/features/editor/store";
-import useGetResume from "@/hooks/useGetResume";
-import { Textarea } from "./ui/textarea";
+} from 'react';
+import { Flex, FlexColumn } from './common/layout';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import useServices from '@/hooks/useServices';
+import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { AlertCircleIcon } from 'lucide-react';
+import { useCommonActions, useResumeActions } from '@/store';
+import { useEditorActions } from '@/features/editor/store';
+import useGetResume from '@/hooks/useGetResume';
+import { Textarea } from './ui/textarea';
 
 type RenameResumeProps = {
   id: string | null;
@@ -47,24 +47,24 @@ function RenameResume({ id }: RenameResumeProps) {
     if (!id || isLoading) return;
     if (resume?.meta?.title) {
       if (inputRef.current) {
-        inputRef.current.value = resume.meta.title ?? "";
+        inputRef.current.value = resume.meta.title ?? '';
       }
       if (descRef.current) {
-        descRef.current.value = resume.meta.description ?? "";
+        descRef.current.value = resume.meta.description ?? '';
       }
     }
   }, [id, isLoading, resume?.meta?.title]);
 
   // Handle `Escape` key press
   const handleKeyUp = useEffectEvent((e: KeyboardEvent) => {
-    if (e.key === "Escape") toggleRenameResume();
+    if (e.key === 'Escape') toggleRenameResume();
   });
 
   useEffect(() => {
-    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
 
@@ -73,8 +73,8 @@ function RenameResume({ id }: RenameResumeProps) {
     eve.stopPropagation();
 
     const formData = new FormData(eve.target);
-    const resumeName = formData.get("resumeName")?.toString();
-    const resumeDesc = formData.get("resumeDescription")?.toString();
+    const resumeName = formData.get('resumeName')?.toString();
+    const resumeDesc = formData.get('resumeDescription')?.toString();
 
     if (!id || !resumeName || !resumeName?.trim()) return;
 
@@ -87,7 +87,7 @@ function RenameResume({ id }: RenameResumeProps) {
         if (isNameExist) {
           setError({
             title: `Name "${resumeName}" is already exist`,
-            desc: "Add different name as possible. If you want same name try to use different character cases.",
+            desc: 'Add different name as possible. If you want same name try to use different character cases.',
           });
           return;
         }
@@ -136,8 +136,8 @@ function RenameResume({ id }: RenameResumeProps) {
   }
 
   return (
-    <Flex className="fixed h-screen w-screen inset-0 justify-center p-4 md:p-10">
-      <FlexColumn className="flex z-1 bg-neutral-1C1B1B h-fit p-4 shadow-md gap-4 rounded-sm max-w-sm w-full border">
+    <Flex className="fixed inset-0 h-screen w-screen justify-center p-4 md:p-10">
+      <FlexColumn className="bg-neutral-1C1B1B z-1 flex h-fit w-full max-w-sm gap-4 rounded-sm border p-4 shadow-md">
         <h2 className="text-sm">Rename</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
@@ -170,13 +170,13 @@ function RenameResume({ id }: RenameResumeProps) {
           <Alert variant="destructive" className="max-w-md">
             <AlertCircleIcon />
             <AlertTitle>{error.title}</AlertTitle>
-            <AlertDescription>{error.desc ?? ""}</AlertDescription>
+            <AlertDescription>{error.desc ?? ''}</AlertDescription>
           </Alert>
         )}
       </FlexColumn>
       <div
         role="presentation"
-        className="absolute h-full w-full bg-neutral-1C1B1B/20 inset-0"
+        className="bg-neutral-1C1B1B/20 absolute inset-0 h-full w-full"
         onClick={toggleRenameResume}
         onKeyUp={toggleRenameResume}
       />

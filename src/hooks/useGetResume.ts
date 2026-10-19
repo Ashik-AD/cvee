@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import useServices from "./useServices";
-import { getErrorMessage } from "@/utils/error";
-import type { ResumePopulate } from "@/lib/model/resume";
+import { useEffect, useState } from 'react';
+import useServices from './useServices';
+import { getErrorMessage } from '@/utils/error';
+import type { ResumePopulate } from '@/lib/model/resume';
 
 export default function useGetResume(resumeId: string | null) {
   const [resume, setResume] = useState<ResumePopulate | null>(null);

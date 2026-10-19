@@ -1,50 +1,50 @@
-import { Download, FileCode, FileUp, type LucideIcon } from "lucide-react";
-import { Flex, FlexColumn } from "../common/layout";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { Activity, useRef, useState, type ChangeEvent } from "react";
-import { Textarea } from "../ui/textarea";
-import { Separator } from "../ui/separator";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Input } from "../ui/input";
-import ResumeLookup from "../common/ResumeLookup";
-import { useModalActions } from "@/store/modal";
-import useCreateResume from "@/hooks/useCreateResume";
-import type { Resume } from "@/lib/model/resume";
-import { useResumeActions } from "@/store";
-import useServices from "@/hooks/useServices";
-import type { ResumePopulate } from "@/lib/model/resume";
-import { useEditorActions } from "@/features/editor/store";
-import { useLocation } from "wouter";
-import { cn } from "cn";
-import { toast } from "../ui/toast";
-import { AppError, getErrorMessage } from "@/utils/error";
+import { Download, FileCode, FileUp, type LucideIcon } from 'lucide-react';
+import { Flex, FlexColumn } from '../common/layout';
+import { Button } from '../ui/button';
+import { Label } from '../ui/label';
+import { Activity, useRef, useState, type ChangeEvent } from 'react';
+import { Textarea } from '../ui/textarea';
+import { Separator } from '../ui/separator';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Input } from '../ui/input';
+import ResumeLookup from '../common/ResumeLookup';
+import { useModalActions } from '@/store/modal';
+import useCreateResume from '@/hooks/useCreateResume';
+import type { Resume } from '@/lib/model/resume';
+import { useResumeActions } from '@/store';
+import useServices from '@/hooks/useServices';
+import type { ResumePopulate } from '@/lib/model/resume';
+import { useEditorActions } from '@/features/editor/store';
+import { useLocation } from 'wouter';
+import { cn } from 'cn';
+import { toast } from '../ui/toast';
+import { AppError, getErrorMessage } from '@/utils/error';
 import {
   normalizeJsonToExport,
   parseImportedJSON,
-} from "@/utils/normalizeJSON";
-import FilePicker from "../common/FilePicker";
+} from '@/utils/normalizeJSON';
+import FilePicker from '../common/FilePicker';
 
-type ImportDestination = "createNew" | "override";
-type Mode = "filePicker" | "rawJson";
+type ImportDestination = 'createNew' | 'override';
+type Mode = 'filePicker' | 'rawJson';
 
 const tabs: { icon: LucideIcon; label: string; key: Mode }[] = [
   {
     icon: FileUp,
-    label: "File Upload",
-    key: "filePicker",
+    label: 'File Upload',
+    key: 'filePicker',
   },
   {
     icon: FileCode,
-    label: "Raw JSON",
-    key: "rawJson",
+    label: 'Raw JSON',
+    key: 'rawJson',
   },
 ];
 
 function ResumeImport() {
-  const [mode, setMode] = useState<Mode>("filePicker");
+  const [mode, setMode] = useState<Mode>('filePicker');
   const [importAction, setImportAction] =
-    useState<ImportDestination>("createNew");
+    useState<ImportDestination>('createNew');
   const [importedCv, setImportCv] = useState<Resume | ResumePopulate | null>(
     null,
   );
@@ -63,7 +63,7 @@ function ResumeImport() {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        const json = JSON.parse(reader.result?.toString() ?? "");
+        const json = JSON.parse(reader.result?.toString() ?? '');
 
         // Set resume name for create as new
         const resumeName =
@@ -75,13 +75,13 @@ function ResumeImport() {
         // Show exported JSON which have well formatted
         const normalize = normalizeJsonToExport(JSON.stringify(json));
         setImportCv(normalize);
-        setMode("rawJson");
+        setMode('rawJson');
       };
 
       reader.onerror = (error) => {
         toast.add({
-          type: "error",
-          title: getErrorMessage(error, "Failed to read JSON file."),
+          type: 'error',
+          title: getErrorMessage(error, 'Failed to read JSON file.'),
         });
       };
       reader.readAsText(file);
@@ -91,8 +91,8 @@ function ResumeImport() {
   async function handleCreateNewFromImportedJson(resume: Partial<Resume>) {
     if (!resume) {
       toast.add({
-        type: "warning",
-        title: "File is empty. Please make sure you import right file",
+        type: 'warning',
+        title: 'File is empty. Please make sure you import right file',
       });
       return;
     }
@@ -110,10 +110,10 @@ function ResumeImport() {
       }
     } catch (error) {
       toast.add({
-        type: "error",
+        type: 'error',
         title: getErrorMessage(
           error,
-          "Failed to create a cv from imported JSON.",
+          'Failed to create a cv from imported JSON.',
         ),
       });
     }
@@ -127,7 +127,7 @@ function ResumeImport() {
     try {
       const targetResume = await services?.resumeSrv.getResumeById(resumeId);
       if (!targetResume) {
-        throw new AppError("Target resume not found.");
+        throw new AppError('Target resume not found.');
       }
 
       const normalize = parseImportedJSON(JSON.stringify(resume));
@@ -148,8 +148,8 @@ function ResumeImport() {
       }
     } catch (error) {
       toast.add({
-        type: "error",
-        title: getErrorMessage(error, "Failed override resume: "),
+        type: 'error',
+        title: getErrorMessage(error, 'Failed override resume: '),
       });
     }
   }
@@ -157,19 +157,19 @@ function ResumeImport() {
   async function handleImport() {
     try {
       if (!importedCv) {
-        throw new AppError("No resume found to be import");
+        throw new AppError('No resume found to be import');
       }
-      if (importAction === "createNew") {
+      if (importAction === 'createNew') {
         await handleCreateNewFromImportedJson(importedCv);
       }
-      if (importAction === "override") {
+      if (importAction === 'override') {
         await handleOverrideTargetResume(overrideId, importedCv);
       }
       closeModal();
     } catch (error) {
       toast.add({
-        type: "error",
-        title: getErrorMessage(error, "Failed to import json cv"),
+        type: 'error',
+        title: getErrorMessage(error, 'Failed to import json cv'),
       });
     }
   }
@@ -177,7 +177,7 @@ function ResumeImport() {
   function handleClear() {
     setImportCv(null);
     setOverrideId(null);
-    setMode("filePicker");
+    setMode('filePicker');
   }
 
   return (
@@ -195,8 +195,8 @@ function ResumeImport() {
                 variant="ghost"
                 onClick={() => setMode(tab.key)}
                 className={cn(
-                  isActive && "text-emerald-500 border-b! border-b-emerald-700",
-                  "border-b",
+                  isActive && 'text-emerald-500 border-b! border-b-emerald-700',
+                  'border-b',
                 )}
               >
                 <Icon />
@@ -205,15 +205,15 @@ function ResumeImport() {
             );
           })}
         </Flex>
-        <Activity mode={mode === "filePicker" ? "visible" : "hidden"}>
+        <Activity mode={mode === 'filePicker' ? 'visible' : 'hidden'}>
           <FilePicker onChange={handleFileImport} clearFile={handleClear} />
         </Activity>
-        <Activity mode={mode === "rawJson" ? "visible" : "hidden"}>
+        <Activity mode={mode === 'rawJson' ? 'visible' : 'hidden'}>
           <Textarea
             rows={20}
             placeholder="Paste or edit json"
             className="max-h-132 min-h-41 scrollbar-thin"
-            value={JSON.stringify(importedCv, null, 2) ?? ""}
+            value={JSON.stringify(importedCv, null, 2) ?? ''}
           />
         </Activity>
       </FlexColumn>
@@ -228,23 +228,23 @@ function ResumeImport() {
           onValueChange={(val) => setImportAction(val)}
           defaultValue="createNew"
         >
-          <Label htmlFor="createNew" className="border flex-1 p-2 rounded-sm">
-            <FlexColumn className="gap-4 w-full">
-              <Flex className="gap-1.5 items-center">
+          <Label htmlFor="createNew" className="flex-1 rounded-sm border p-2">
+            <FlexColumn className="w-full gap-4">
+              <Flex className="items-center gap-1.5">
                 <RadioGroupItem value="createNew" id="createNew" />
                 <span>Create as new CV</span>
               </Flex>
               <Input
                 placeholder="CV name"
-                className="w-full bg-neutral-0E0E0E"
+                className="bg-neutral-0E0E0E w-full"
                 ref={resumeNameInputRef}
               />
             </FlexColumn>
           </Label>
 
-          <Label htmlFor="override" className="border flex-1 p-2 rounded-sm">
-            <FlexColumn className="gap-4 w-full">
-              <Flex className="gap-1.5 items-center">
+          <Label htmlFor="override" className="flex-1 rounded-sm border p-2">
+            <FlexColumn className="w-full gap-4">
+              <Flex className="items-center gap-1.5">
                 <RadioGroupItem value="override" id="override" />
                 <span>Override resume</span>
               </Flex>
@@ -255,7 +255,7 @@ function ResumeImport() {
       </FlexColumn>
 
       <Separator />
-      <Flex className="justify-end items-center gap-4">
+      <Flex className="items-center justify-end gap-4">
         <Button variant="ghost" onClick={closeModal}>
           Cancel
         </Button>

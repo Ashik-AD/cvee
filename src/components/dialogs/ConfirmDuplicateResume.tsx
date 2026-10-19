@@ -1,9 +1,9 @@
-import useCreateDuplicateResume from "@/hooks/useCreateDuplicateResume";
-import { useAlertDialogActions } from "@/store/alert-dialog";
-import { ActionInteruptDialog } from "../common/ActionInteruptDialog";
-import { useLocation } from "wouter";
-import { toast } from "../ui/toast";
-import { getErrorMessage } from "@/utils/error";
+import useCreateDuplicateResume from '@/hooks/useCreateDuplicateResume';
+import { useAlertDialogActions } from '@/store/alert-dialog';
+import { ActionInteruptDialog } from '../common/ActionInteruptDialog';
+import { useLocation } from 'wouter';
+import { toast } from '../ui/toast';
+import { getErrorMessage } from '@/utils/error';
 
 function ConfirmDuplicateResume({ id }: { id: string }) {
   const duplicateResume = useCreateDuplicateResume(id);
@@ -18,7 +18,7 @@ function ConfirmDuplicateResume({ id }: { id: string }) {
       }
     } catch (err) {
       toast.add({
-        type: "error",
+        type: 'error',
         title: getErrorMessage(err),
       });
     } finally {

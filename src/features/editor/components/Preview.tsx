@@ -1,16 +1,16 @@
-import type { ReactNode } from "react";
-import { Flex } from "@/components/common/layout";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import CVTemplate, { type CVTemplates } from "@/components/templates";
-import { useEditorSettings } from "../store";
-import { calcPreviewDocsScaleLevel } from "@/utils/calcPreviewDocsScaleLevel";
+import type { ReactNode } from 'react';
+import { Flex } from '@/components/common/layout';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import CVTemplate, { type CVTemplates } from '@/components/templates';
+import { useEditorSettings } from '../store';
+import { calcPreviewDocsScaleLevel } from '@/utils/calcPreviewDocsScaleLevel';
 import type {
   Education,
   Experience,
   PersonalInfo,
   Project,
-} from "@/lib/model/resume";
-import { cn } from "cn";
+} from '@/lib/model/resume';
+import { cn } from 'cn';
 
 interface PreviewProps {
   personalInfo: PersonalInfo;
@@ -36,7 +36,7 @@ export default function Preview({
   return (
     <>
       <title>{documentTitle}</title>
-      <Flex className="p-8 overflow-auto max-h-[calc(100dvh-5rem)] scrollbar-none preview-wrapper">
+      <Flex className="preview-wrapper max-h-[calc(100dvh-5rem)] scrollbar-none overflow-auto p-8">
         <PreviewCanvas>
           <CVTemplate
             type={template}
@@ -60,8 +60,8 @@ function PreviewCanvas({ children }: { children: ReactNode }) {
     <AspectRatio
       ratio={1 / 1.4142}
       className={cn(
-        "bg-document h-fit w-full preview-content p-8 mx-auto origin-center",
-        zoomToFit && "transform-none! min-w-auto!",
+        'bg-document h-fit w-full preview-content p-8 mx-auto origin-center',
+        zoomToFit && 'transform-none! min-w-auto!',
       )}
       id="preview"
       style={{

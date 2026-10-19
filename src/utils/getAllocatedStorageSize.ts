@@ -1,4 +1,4 @@
-import { byteConversion } from "./byteConversion";
+import { byteConversion } from './byteConversion';
 
 /**
  * Get allocated storage size of this domain

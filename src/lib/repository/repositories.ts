@@ -1,4 +1,4 @@
-import { ResumeRepository } from "./resume";
+import { ResumeRepository } from './resume';
 
 interface Repos {
   readonly resume: ResumeRepository;

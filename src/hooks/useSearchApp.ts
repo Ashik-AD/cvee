@@ -1,8 +1,8 @@
-import { menu, type MenuAction } from "@/constants/menubar";
-import type { ResumePopulate } from "@/lib/model/resume";
-import { useResumeState } from "@/store";
-import { useState } from "react";
-import useDebounceCallback from "./useDebounceCallback";
+import { menu, type MenuAction } from '@/constants/menubar';
+import type { ResumePopulate } from '@/lib/model/resume';
+import { useResumeState } from '@/store';
+import { useState } from 'react';
+import useDebounceCallback from './useDebounceCallback';
 
 export function useSearchApp() {
   const [searchResult, setSearchResult] = useState<{
@@ -75,7 +75,7 @@ export function useSearchApp() {
 
     menu.forEach((item) => {
       item.actions?.forEach((act) => {
-        if (act.type === "action") {
+        if (act.type === 'action') {
           if (act.label?.toLowerCase()?.includes(term)) {
             result.push(act);
           }

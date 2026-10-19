@@ -1,13 +1,13 @@
-import { Flex, FlexColumn, Grid } from "@/components/common/layout";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import type { Experience } from "@/lib/model/resume";
-import { useEditorActions, useEditorExperiences } from "../../store";
-import { Button } from "@/components/ui/button";
-import type { ChangeEvent } from "react";
-import { Plus } from "lucide-react";
-import SectionItemActions from "./SectionItemActions";
+import { Flex, FlexColumn, Grid } from '@/components/common/layout';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import type { Experience } from '@/lib/model/resume';
+import { useEditorActions, useEditorExperiences } from '../../store';
+import { Button } from '@/components/ui/button';
+import type { ChangeEvent } from 'react';
+import { Plus } from 'lucide-react';
+import SectionItemActions from './SectionItemActions';
 
 type ExperienceFieldProps = Experience & {
   onChange: (values: Partial<Experience>) => void;
@@ -30,7 +30,7 @@ function ExperienceField({
   }
 
   return (
-    <FieldGroup className="bg-neutral-0E0E0E border border-neutral-2A2A2A rounded-xs p-2">
+    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A rounded-xs border p-2">
       <Flex className="gap-4">
         <Field>
           <FieldLabel htmlFor="companyName">Company Name</FieldLabel>
@@ -39,17 +39,17 @@ function ExperienceField({
             name="companyName"
             value={companyName}
             placeholder="Galactico"
-            className="max-w-md bg-neutral-1C1B1B"
+            className="bg-neutral-1C1B1B max-w-md"
             onChange={handleFieldChange}
           />
         </Field>
 
-        <span className="text-xs text-nowrap text-muted-foreground font-semibold">
+        <span className="text-muted-foreground text-xs font-semibold text-nowrap">
           {duration}
         </span>
       </Flex>
 
-      <Grid className="grid-cols-1 sm:grid-cols-2 gap-2">
+      <Grid className="grid-cols-1 gap-2 sm:grid-cols-2">
         <Field>
           <FieldLabel htmlFor="role">Role</FieldLabel>
           <Input
@@ -102,10 +102,10 @@ function Experiences() {
 
   function handleAddNewExperience() {
     addNewExperience({
-      companyName: "",
-      role: "",
-      description: [""],
-      duration: "",
+      companyName: '',
+      role: '',
+      description: [''],
+      duration: '',
     });
   }
 

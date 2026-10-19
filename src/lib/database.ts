@@ -1,4 +1,4 @@
-import { ResumeRepository } from "./repository/resume";
+import { ResumeRepository } from './repository/resume';
 
 export class Database {
   private name: string;
@@ -34,17 +34,17 @@ export class Database {
       };
 
       dbReq.onerror = (e) => {
-        console.error("Database initialized failed. Error: ", e);
+        console.error('Database initialized failed. Error: ', e);
 
         this.error = {
-          message: "Failed initialize database",
+          message: 'Failed initialize database',
           info: e,
         };
         reject(this.error);
       };
 
       dbReq.onsuccess = (e) => {
-        console.info("Database connection initialized: ", e.type);
+        console.info('Database connection initialized: ', e.type);
         this.db = dbReq.result;
         resolve(this.db);
       };

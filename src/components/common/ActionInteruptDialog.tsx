@@ -3,7 +3,7 @@ import {
   Info,
   type LucideIcon,
   TriangleAlert,
-} from "lucide-react";
+} from 'lucide-react';
 
 import {
   AlertDialog,
@@ -15,11 +15,11 @@ import {
   AlertDialogHeader,
   AlertDialogMedia,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { cn } from "@/lib/utils";
-import { FlexColumn } from "./layout";
+} from '@/components/ui/alert-dialog';
+import { cn } from '@/lib/utils';
+import { FlexColumn } from './layout';
 
-type AlertDialogType = "info" | "warning" | "destructive";
+type AlertDialogType = 'info' | 'warning' | 'destructive';
 
 const dialogMeta: Record<
   AlertDialogType,
@@ -31,17 +31,17 @@ const dialogMeta: Record<
 > = {
   info: {
     icon: Info,
-    mediaStyle: "bg-blue-500/10 text-blue-500",
+    mediaStyle: 'bg-blue-500/10 text-blue-500',
   },
   warning: {
     icon: TriangleAlert,
-    mediaStyle: "bg-amber-500/10 text-amber-500",
+    mediaStyle: 'bg-amber-500/10 text-amber-500',
   },
   destructive: {
     icon: CircleAlert,
-    mediaStyle: "bg-red-500/10 text-destructive",
+    mediaStyle: 'bg-red-500/10 text-destructive',
     confirmStyle:
-      "bg-destructive! text-destructive-foreground hover:bg-destructive/90",
+      'bg-destructive! text-destructive-foreground hover:bg-destructive/90',
   },
 };
 
@@ -63,10 +63,10 @@ export function ActionInteruptDialog(props: ActionInteruptDialogProps) {
     onOpenChange,
     title,
     description,
-    type = "info",
+    type = 'info',
     onConfirm,
-    confirmLabel = "Confirm",
-    cancelLabel = "Cancel",
+    confirmLabel = 'Confirm',
+    cancelLabel = 'Cancel',
     isLoading,
   } = props;
 
@@ -77,12 +77,12 @@ export function ActionInteruptDialog(props: ActionInteruptDialogProps) {
       <AlertDialogContent>
         <AlertDialogHeader className="flex items-start">
           <AlertDialogMedia
-            className={cn(meta.mediaStyle, "rounded-full size-6 mb-0")}
+            className={cn(meta.mediaStyle, 'rounded-full size-6 mb-0')}
           >
             <meta.icon size={16} />
           </AlertDialogMedia>
           <FlexColumn className="justify-start!">
-            <AlertDialogTitle className="font-semibold text-sm text-left">
+            <AlertDialogTitle className="text-left text-sm font-semibold">
               <span className="text-muted-foreground">//</span> {title}
             </AlertDialogTitle>
             {description && (

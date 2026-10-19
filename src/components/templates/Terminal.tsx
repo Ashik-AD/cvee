@@ -1,7 +1,7 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import type { TemplateProps } from ".";
-import { Contact, ProjectLink, splitDescription } from "./Shared";
-import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+import { Mail, MapPin, Phone } from 'lucide-react';
+import type { TemplateProps } from '.';
+import { Contact, ProjectLink, splitDescription } from './Shared';
+import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 
 export function Terminal({
   personalInfo,
@@ -31,7 +31,7 @@ export function Terminal({
                   </td>
 
                   <td className="text-right align-bottom">
-                    <div className="space-y-1 text-[9px] font-mono">
+                    <div className="space-y-1 font-mono text-[9px]">
                       <Contact icon={Mail}>
                         <a
                           href={`mailto:${personalInfo.email}`}
@@ -86,7 +86,7 @@ export function Terminal({
                 <tbody>
                   <tr>
                     <td className="w-[10%] align-top">
-                      <span className="text-[9px] font-mono">$ about</span>
+                      <span className="font-mono text-[9px]">$ about</span>
                     </td>
 
                     <td>
@@ -107,7 +107,7 @@ export function Terminal({
                 <tr>
                   {/* Experience */}
                   <td className="w-1/2 border-r border-neutral-300 pr-5 align-top">
-                    <span className="text-[9px] font-mono">
+                    <span className="font-mono text-[9px]">
                       $ git log --experience
                     </span>
 
@@ -127,7 +127,7 @@ export function Terminal({
                                   </p>
                                 </div>
 
-                                <span className="text-[9px] font-mono">
+                                <span className="font-mono text-[9px]">
                                   {experience.duration}
                                 </span>
                               </div>
@@ -150,7 +150,7 @@ export function Terminal({
 
                   {/* Projects */}
                   <td className="w-1/2 pl-5 align-top">
-                    <span className="text-[9px] font-mono">
+                    <span className="font-mono text-[9px]">
                       $ ls ./projects
                     </span>
 
@@ -192,8 +192,8 @@ export function Terminal({
                 {/* Supporting information */}
                 <tr>
                   {/* Skills */}
-                  <td className="border-r border-neutral-300 pr-5 pt-3 align-top">
-                    <span className="text-[9px] font-mono">$ echo $SKILLS</span>
+                  <td className="border-r border-neutral-300 pt-3 pr-5 align-top">
+                    <span className="font-mono text-[9px]">$ echo $SKILLS</span>
 
                     <div className="mt-3 flex flex-wrap gap-1">
                       {skills?.map((skill) => (
@@ -205,8 +205,8 @@ export function Terminal({
                   </td>
 
                   {/* Education */}
-                  <td className="pl-5 pt-3 align-top">
-                    <span className="text-[9px] font-mono">
+                  <td className="pt-3 pl-5 align-top">
+                    <span className="font-mono text-[9px]">
                       $ cat education.log
                     </span>
 
@@ -224,12 +224,12 @@ export function Terminal({
                                   {education.institute}
                                 </p>
 
-                                <p className="mt-1 text-[9px] font-mono">
+                                <p className="mt-1 font-mono text-[9px]">
                                   {education.duration}
                                 </p>
 
                                 {education.grade && (
-                                  <p className="text-[9px] font-mono">
+                                  <p className="font-mono text-[9px]">
                                     {education.grade}
                                   </p>
                                 )}

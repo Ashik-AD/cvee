@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export function useResizeObserver(
   onResize?: (entries: ResizeObserverEntry[]) => void,

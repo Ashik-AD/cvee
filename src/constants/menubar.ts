@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
 
 import {
   FilePlusCorner,
@@ -27,55 +27,55 @@ import {
   SplinePointer,
   // FilePenLine,
   CircleQuestionMark,
-} from "lucide-react";
+} from 'lucide-react';
 
 export const ACTION_KEYS = {
-  NEW_CV: "new-cv",
-  DUPLICATE_CV: "duplicate-cv",
-  RENAME_CV: "rename-cv",
-  DELETE_CV: "delete-cv",
+  NEW_CV: 'new-cv',
+  DUPLICATE_CV: 'duplicate-cv',
+  RENAME_CV: 'rename-cv',
+  DELETE_CV: 'delete-cv',
 
-  IMPORT_JSON: "import-json",
-  IMPORT_ALL_JSON: "import-all-json",
-  EXPORT_JSON: "export-json",
-  EXPORT_ALL_JSON: "export-all-json",
+  IMPORT_JSON: 'import-json',
+  IMPORT_ALL_JSON: 'import-all-json',
+  EXPORT_JSON: 'export-json',
+  EXPORT_ALL_JSON: 'export-all-json',
 
-  PRINT_PDF: "print-pdf",
+  PRINT_PDF: 'print-pdf',
 
-  CHANGE_TEMPLATE: "change-template",
+  CHANGE_TEMPLATE: 'change-template',
 
-  ADD_SECTION: "add-section",
-  EDIT_SECTION: "edit-section",
-  DUPLICATE_SECTION: "duplicate-section",
-  DELETE_SECTION: "delete-section",
+  ADD_SECTION: 'add-section',
+  EDIT_SECTION: 'edit-section',
+  DUPLICATE_SECTION: 'duplicate-section',
+  DELETE_SECTION: 'delete-section',
 
-  MOVE_SECTION_UP: "move-section-up",
-  MOVE_SECTION_DOWN: "move-section-down",
+  MOVE_SECTION_UP: 'move-section-up',
+  MOVE_SECTION_DOWN: 'move-section-down',
 
-  TOGGLE_SECTION_VISIBILITY: "toggle-section-visibility",
+  TOGGLE_SECTION_VISIBILITY: 'toggle-section-visibility',
 
-  SAVE: "save",
+  SAVE: 'save',
 
-  VIEW_EDITOR: "view-editor",
-  VIEW_PREVIEW: "view-preview",
-  VIEW_SPLIT: "view-split",
-  VIEW_DESKTOP: "view-desktop",
-  VIEW_MOBILE: "view-mobile",
+  VIEW_EDITOR: 'view-editor',
+  VIEW_PREVIEW: 'view-preview',
+  VIEW_SPLIT: 'view-split',
+  VIEW_DESKTOP: 'view-desktop',
+  VIEW_MOBILE: 'view-mobile',
 
-  PRINT_CV: "print-cv",
-  PRINT_PREVIEW: "print-preview",
+  PRINT_CV: 'print-cv',
+  PRINT_PREVIEW: 'print-preview',
 
-  KEYBOARD_SHORTCUTS: "keyboard-shortcuts",
-  COMMAND_PALETTE: "command-palette",
-  GETTING_STARTED: "getting-started",
-  ABOUT: "about",
-  FEEDBACK: "feedback",
+  KEYBOARD_SHORTCUTS: 'keyboard-shortcuts',
+  COMMAND_PALETTE: 'command-palette',
+  GETTING_STARTED: 'getting-started',
+  ABOUT: 'about',
+  FEEDBACK: 'feedback',
 } as const;
 
 export type ActionKey = (typeof ACTION_KEYS)[keyof typeof ACTION_KEYS];
 
 export type MenuAction = {
-  type: "action";
+  type: 'action';
   key: ActionKey;
   label: string;
   icon: LucideIcon;
@@ -83,7 +83,7 @@ export type MenuAction = {
 };
 
 type MenuSeparator = {
-  type: "separator";
+  type: 'separator';
 };
 
 type MenuItem = MenuAction | MenuSeparator;
@@ -97,176 +97,176 @@ type Menu = {
 
 export const menu: Menu[] = [
   {
-    name: "File",
-    cmd: "Alt+F",
+    name: 'File',
+    cmd: 'Alt+F',
     icon: File,
     actions: [
       {
-        type: "action",
-        key: "new-cv",
-        label: "New CV",
+        type: 'action',
+        key: 'new-cv',
+        label: 'New CV',
         icon: FilePlusCorner,
-        cmd: "Ctrl+N",
+        cmd: 'Ctrl+N',
       },
       {
-        type: "action",
-        key: "duplicate-cv",
-        label: "Duplicate CV",
+        type: 'action',
+        key: 'duplicate-cv',
+        label: 'Duplicate CV',
         icon: Copy,
-        cmd: "Ctrl+D",
+        cmd: 'Ctrl+D',
       },
       {
-        type: "action",
-        key: "rename-cv",
-        label: "Rename CV",
+        type: 'action',
+        key: 'rename-cv',
+        label: 'Rename CV',
         icon: Pencil,
-        cmd: "F2",
+        cmd: 'F2',
       },
       {
-        type: "action",
-        key: "delete-cv",
-        label: "Delete CV",
+        type: 'action',
+        key: 'delete-cv',
+        label: 'Delete CV',
         icon: Trash2,
-        cmd: "Delete",
+        cmd: 'Delete',
       },
 
-      { type: "separator" },
+      { type: 'separator' },
 
       {
-        type: "action",
-        key: "import-json",
-        label: "Import JSON",
+        type: 'action',
+        key: 'import-json',
+        label: 'Import JSON',
         icon: Import,
-        cmd: "Ctrl+I",
+        cmd: 'Ctrl+I',
       },
       {
-        type: "action",
-        key: "import-all-json",
-        label: "Import JSON Collection",
+        type: 'action',
+        key: 'import-all-json',
+        label: 'Import JSON Collection',
         icon: Import,
-        cmd: "Ctrl+Shift+I",
+        cmd: 'Ctrl+Shift+I',
       },
 
-      { type: "separator" },
+      { type: 'separator' },
 
       {
-        type: "action",
-        key: "export-json",
-        label: "Export JSON",
+        type: 'action',
+        key: 'export-json',
+        label: 'Export JSON',
         icon: Download,
-        cmd: "Ctrl+E",
+        cmd: 'Ctrl+E',
       },
       {
-        type: "action",
-        key: "export-all-json",
-        label: "Export All JSON",
+        type: 'action',
+        key: 'export-all-json',
+        label: 'Export All JSON',
         icon: Download,
-        cmd: "Ctrl+Shift+E",
+        cmd: 'Ctrl+Shift+E',
       },
 
-      { type: "separator" },
+      { type: 'separator' },
 
       {
-        type: "action",
-        key: "print-pdf",
-        label: "Print / Save as PDF",
+        type: 'action',
+        key: 'print-pdf',
+        label: 'Print / Save as PDF',
         icon: Printer,
-        cmd: "Ctrl+P",
+        cmd: 'Ctrl+P',
       },
     ],
   },
 
   {
-    name: "View",
-    cmd: "Alt+V",
+    name: 'View',
+    cmd: 'Alt+V',
     icon: SplinePointer,
     actions: [
       {
-        type: "action",
-        key: "view-editor",
-        label: "Editor",
+        type: 'action',
+        key: 'view-editor',
+        label: 'Editor',
         icon: SquarePen,
-        cmd: "Ctrl+[",
+        cmd: 'Ctrl+[',
       },
       {
-        type: "action",
-        key: "view-preview",
-        label: "Preview",
+        type: 'action',
+        key: 'view-preview',
+        label: 'Preview',
         icon: Eye,
-        cmd: "Ctrl+]",
+        cmd: 'Ctrl+]',
       },
       {
-        type: "action",
-        key: "view-split",
-        label: "Split View",
+        type: 'action',
+        key: 'view-split',
+        label: 'Split View',
         icon: PanelLeft,
-        cmd: "Ctrl+\\",
+        cmd: 'Ctrl+\\',
       },
     ],
   },
 
   {
-    name: "Print",
-    cmd: "Alt+P",
+    name: 'Print',
+    cmd: 'Alt+P',
     icon: Printer,
     actions: [
       {
-        type: "action",
-        key: "print-cv",
-        label: "Print CV",
+        type: 'action',
+        key: 'print-cv',
+        label: 'Print CV',
         icon: Printer,
-        cmd: "Ctrl+P",
+        cmd: 'Ctrl+P',
       },
       {
-        type: "action",
-        key: "print-preview",
-        label: "Open print preview",
+        type: 'action',
+        key: 'print-preview',
+        label: 'Open print preview',
         icon: Eye,
       },
     ],
   },
 
   {
-    name: "Help",
-    cmd: "Alt+H",
+    name: 'Help',
+    cmd: 'Alt+H',
     icon: CircleQuestionMark,
     actions: [
       {
-        type: "action",
-        key: "keyboard-shortcuts",
-        label: "Keyboard shortcuts",
+        type: 'action',
+        key: 'keyboard-shortcuts',
+        label: 'Keyboard shortcuts',
         icon: Keyboard,
-        cmd: "?",
+        cmd: '?',
       },
       {
-        type: "action",
-        key: "command-palette",
-        label: "Command palette",
+        type: 'action',
+        key: 'command-palette',
+        label: 'Command palette',
         icon: Command,
-        cmd: "Ctrl+K",
+        cmd: 'Ctrl+K',
       },
 
-      { type: "separator" },
+      { type: 'separator' },
 
       {
-        type: "action",
-        key: "getting-started",
-        label: "Getting started / quick guide",
+        type: 'action',
+        key: 'getting-started',
+        label: 'Getting started / quick guide',
         icon: BookOpen,
       },
 
-      { type: "separator" },
+      { type: 'separator' },
 
       {
-        type: "action",
-        key: "about",
-        label: "About",
+        type: 'action',
+        key: 'about',
+        label: 'About',
         icon: Info,
       },
       {
-        type: "action",
-        key: "feedback",
-        label: "Feedback / report issue",
+        type: 'action',
+        key: 'feedback',
+        label: 'Feedback / report issue',
         icon: MessageSquareWarning,
       },
     ],

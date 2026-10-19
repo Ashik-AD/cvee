@@ -1,8 +1,8 @@
-import { Flex, Grid } from "@/components/common/layout";
-import { Button } from "@/components/ui/button";
-import usePrintResume from "@/hooks/usePrintResume";
-import { Check, ChevronDown, FileUser, Printer } from "lucide-react";
-import { useEditorActions, useEditorMeta, useEditorSettings } from "../store";
+import { Flex, Grid } from '@/components/common/layout';
+import { Button } from '@/components/ui/button';
+import usePrintResume from '@/hooks/usePrintResume';
+import { Check, ChevronDown, FileUser, Printer } from 'lucide-react';
+import { useEditorActions, useEditorMeta, useEditorSettings } from '../store';
 import {
   Select,
   SelectContent,
@@ -11,12 +11,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   TemplateSelectOptions,
   type CVTemplates,
-} from "@/components/templates";
-import { Slider } from "@/components/ui/slider";
+} from '@/components/templates';
+import { Slider } from '@/components/ui/slider';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,23 +24,23 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 const zoomLevels = [
   {
-    name: "25%",
+    name: '25%',
     value: 25,
   },
   {
-    name: "50%",
+    name: '50%',
     value: 50,
   },
   {
-    name: "75%",
+    name: '75%',
     value: 75,
   },
   {
-    name: "100%",
+    name: '100%',
     value: 100,
   },
 ];
@@ -74,10 +74,10 @@ function Toolbar() {
   }
 
   return (
-    <Grid className="editor-toolbar grid-cols-2 px-1 border-b border-t p-1 print:hidden!">
+    <Grid className="editor-toolbar grid-cols-2 border-t border-b p-1 px-1 print:hidden!">
       <Flex>
         {meta.title && (
-          <Flex className="gap-1 items-center">
+          <Flex className="items-center gap-1">
             <FileUser size={18} className="text-neutral-C4C7C8" />
             <span className="text-sm">{meta.title}</span>
           </Flex>
@@ -85,13 +85,14 @@ function Toolbar() {
       </Flex>
 
       {/* Preview toolbar */}
-      <Flex className="justify-end items-center gap-3">
+      <Flex className="items-center justify-end gap-3">
         <Flex className="items-center gap-1">
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
-                <Button variant="ghost" className="px-0.5 py-0 bg-transparent!">
-                  {zoomLevel}% <ChevronDown size={3} className="text-muted-foreground" />
+                <Button variant="ghost" className="bg-transparent! px-0.5 py-0">
+                  {zoomLevel}%{' '}
+                  <ChevronDown size={3} className="text-muted-foreground" />
                 </Button>
               }
             />
@@ -103,7 +104,10 @@ function Toolbar() {
                       key={level.name}
                       className="justify-between"
                       onClick={() =>
-                        setEditorSettings({ zoomLevel: level.value, zoomToFit: false })
+                        setEditorSettings({
+                          zoomLevel: level.value,
+                          zoomToFit: false,
+                        })
                       }
                     >
                       {level.name}
@@ -135,7 +139,7 @@ function Toolbar() {
             step={1}
             max={100}
             min={10}
-            className="min-w-16 max-w-24 w-full"
+            className="w-full max-w-24 min-w-16"
             onValueChange={(val) => handleZoomLevelChange(val)}
           />
         </Flex>
@@ -166,7 +170,7 @@ function Toolbar() {
           onClick={onPrint}
           variant="outline"
           size="sm"
-          className="rounded-none hidden md:flex"
+          className="hidden rounded-none md:flex"
         >
           Export
           <Printer />

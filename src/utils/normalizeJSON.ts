@@ -1,4 +1,4 @@
-import type { ResumePopulate } from "@/lib/model/resume";
+import type { ResumePopulate } from '@/lib/model/resume';
 
 export function normalizeJsonToExport(json: string) {
   let resume: ResumePopulate = JSON.parse(json ?? {});
@@ -87,18 +87,18 @@ export function parseImportedJSON(json: string) {
 }
 
 function newLineToArray(str: string | Array<string>) {
-  if (typeof str === "string") {
-    return str.split("\n-")?.map((str) => str?.trim());
+  if (typeof str === 'string') {
+    return str.split('\n-')?.map((str) => str?.trim());
   }
   return str.reduce<string[]>((ac, cur) => {
-    const splitedStrs = cur?.split("\n-")?.map((str) => str.trim());
+    const splitedStrs = cur?.split('\n-')?.map((str) => str.trim());
     return [...(ac ?? []), ...splitedStrs];
   }, []);
 }
 
 function arrayToNewLineStr(str: string | Array<string>) {
   if (Array.isArray(str)) {
-    return str.join("\n- ");
+    return str.join('\n- ');
   }
   return str;
 }

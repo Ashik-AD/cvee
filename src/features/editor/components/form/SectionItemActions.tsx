@@ -1,6 +1,6 @@
-import { Flex } from "@/components/common/layout";
-import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
+import { Flex } from '@/components/common/layout';
+import { Button } from '@/components/ui/button';
+import { Trash } from 'lucide-react';
 
 type SectionItemActionsProps = {
   onDelete: () => void;

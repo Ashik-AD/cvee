@@ -1,13 +1,13 @@
-import { FlexColumn, Grid } from "@/components/common/layout";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import type { Project } from "@/lib/model/resume";
-import { useEditorActions, useEditorProjects } from "../../store";
-import type { ChangeEvent } from "react";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import SectionItemActions from "./SectionItemActions";
+import { FlexColumn, Grid } from '@/components/common/layout';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import type { Project } from '@/lib/model/resume';
+import { useEditorActions, useEditorProjects } from '../../store';
+import type { ChangeEvent } from 'react';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import SectionItemActions from './SectionItemActions';
 
 interface ProjectFieldProps extends Project {
   onChange: (values: Partial<Project>) => void;
@@ -29,8 +29,8 @@ function ProjectField({
     onChange?.({ [name]: value });
   }
   return (
-    <FieldGroup className="bg-neutral-0E0E0E border border-neutral-2A2A2A rounded-xs p-2">
-      <Grid className="grid-cols-1 sm:grid-cols-2 gap-2">
+    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A rounded-xs border p-2">
+      <Grid className="grid-cols-1 gap-2 sm:grid-cols-2">
         <Field>
           <FieldLabel htmlFor="name">Project Name</FieldLabel>
           <Input
@@ -94,9 +94,9 @@ function Projects() {
 
   function handleAddProject() {
     addNewProject({
-      name: "",
-      link: "",
-      repoLink: "",
+      name: '',
+      link: '',
+      repoLink: '',
       description: [],
     });
   }

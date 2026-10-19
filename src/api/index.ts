@@ -1,1 +1,1 @@
-export { useFetchResumes } from "./useFetchResumes";
+export { useFetchResumes } from './useFetchResumes';

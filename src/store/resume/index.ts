@@ -1,9 +1,9 @@
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { immer } from "zustand/middleware/immer";
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 
-import type { ResumePopulate } from "@/lib/model/resume";
-import { useShallow } from "zustand/shallow";
+import type { ResumePopulate } from '@/lib/model/resume';
+import { useShallow } from 'zustand/shallow';
 
 type State = {
   resumes: ResumePopulate[];
@@ -60,7 +60,7 @@ export const useResumeStore = create<State>()(
       },
     })),
     {
-      name: "resumeStore",
+      name: 'resumeStore',
     },
   ),
 );

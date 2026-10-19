@@ -1,19 +1,19 @@
-import type { ActionKey } from "@/constants/menubar";
-import { useModalActions } from "@/store/modal";
-import usePrintResume from "./usePrintResume";
-import useDeleteResume from "./useDeleteResume";
-import { useLocation, useSearchParams } from "wouter";
-import { useEditorActions } from "@/features/editor/store";
-import { useCommonActions, useResumeActions } from "@/store";
-import useCreateDuplicateResume from "./useCreateDuplicateResume";
-import useCreateResume from "./useCreateResume";
-import { useSettingActions } from "@/store/setting";
-import { useExportResume } from "./useExportResume";
-import useExportResumes from "./useExportResumes";
+import type { ActionKey } from '@/constants/menubar';
+import { useModalActions } from '@/store/modal';
+import usePrintResume from './usePrintResume';
+import useDeleteResume from './useDeleteResume';
+import { useLocation, useSearchParams } from 'wouter';
+import { useEditorActions } from '@/features/editor/store';
+import { useCommonActions, useResumeActions } from '@/store';
+import useCreateDuplicateResume from './useCreateDuplicateResume';
+import useCreateResume from './useCreateResume';
+import { useSettingActions } from '@/store/setting';
+import { useExportResume } from './useExportResume';
+import useExportResumes from './useExportResumes';
 
 export default function useMenuActions() {
   const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams.get('id');
   const [_, navigate] = useLocation();
 
   const { toggleCommandCenter } = useCommonActions();
@@ -33,7 +33,7 @@ export default function useMenuActions() {
   async function execMenuAction(actionKey: ActionKey) {
     switch (actionKey) {
       // File menu
-      case "new-cv": // Create new resume
+      case 'new-cv': // Create new resume
         const res = await createResume();
         if (res) {
           updateResume(res);
@@ -42,7 +42,7 @@ export default function useMenuActions() {
         break;
 
       // create duplicate resume
-      case "duplicate-cv":
+      case 'duplicate-cv':
         const resume = await handleCreateDuplicateResume();
         if (resume) {
           navigate(`/editor?id=${resume.id}`);
@@ -50,95 +50,95 @@ export default function useMenuActions() {
         break;
 
       // Delete Resume
-      case "delete-cv":
+      case 'delete-cv':
         if (id?.trim()) {
           await deleteResume(id);
           // Reset editor
           resetEditor();
           // Redirect to dashboard
-          navigate("/");
+          navigate('/');
         }
         break;
 
       // Rename current open resume
-      case "rename-cv":
+      case 'rename-cv':
         toggleRenameResume();
         break;
 
       // import json
-      case "import-json":
-        setModalOpen("import-json");
+      case 'import-json':
+        setModalOpen('import-json');
         break;
 
-      case "import-all-json":
-        setModalOpen("import-all-json");
+      case 'import-all-json':
+        setModalOpen('import-all-json');
         break;
 
       // export json
-      case "export-json":
+      case 'export-json':
         if (id?.trim()) {
           await exportResume(id);
         }
         break;
 
       // export json
-      case "export-all-json":
+      case 'export-all-json':
         await onExport();
         break;
 
       // Print Menu
-      case "print-pdf": // Print resume
-      case "print-cv":
+      case 'print-pdf': // Print resume
+      case 'print-cv':
         printResume();
         break;
 
       // Open preview modal
-      case "print-preview":
+      case 'print-preview':
         if (id) {
           setPreviewId(id);
           togglePreview();
         }
         break;
 
-      case "view-editor":
-      case "view-split":
-      case "view-preview":
+      case 'view-editor':
+      case 'view-split':
+      case 'view-preview':
         if (id) {
-          if (actionKey === "view-editor") {
+          if (actionKey === 'view-editor') {
             setViewSetting({
-              editorMode: "editor",
+              editorMode: 'editor',
             });
-          } else if (actionKey === "view-split") {
+          } else if (actionKey === 'view-split') {
             setViewSetting({
-              editorMode: "split",
+              editorMode: 'split',
             });
-          } else if (actionKey === "view-preview") {
+          } else if (actionKey === 'view-preview') {
             setViewSetting({
-              editorMode: "preview",
+              editorMode: 'preview',
             });
           }
         }
         break;
 
       // Help section
-      case "keyboard-shortcuts":
-        setModalOpen("keyboardShortcut");
+      case 'keyboard-shortcuts':
+        setModalOpen('keyboardShortcut');
         break;
 
-      case "command-palette":
+      case 'command-palette':
         toggleCommandCenter();
         break;
 
-      case "getting-started":
-        setModalOpen("quickGuides");
+      case 'getting-started':
+        setModalOpen('quickGuides');
         break;
 
-      case "about":
-        setModalOpen("about");
+      case 'about':
+        setModalOpen('about');
         break;
 
       // Other menu
-      case "change-template": // Change resume template
+      case 'change-template': // Change resume template
         setEditorSettings({ showTemplatePicker: true });
         return;
       default:

@@ -1,4 +1,4 @@
-import type { CVTemplates } from "@/components/templates";
+import type { CVTemplates } from '@/components/templates';
 
 export type PersonalInfo = {
   name: string;

@@ -1,11 +1,11 @@
-import { Flex } from "@/components/common/layout";
-import { Button } from "@/components/ui/button";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Plus, X } from "lucide-react";
-import { useEditorActions, useEditorSkills } from "../../store";
-import { useRef } from "react";
-import { Badge } from "@/components/ui/badge";
+import { Flex } from '@/components/common/layout';
+import { Button } from '@/components/ui/button';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Plus, X } from 'lucide-react';
+import { useEditorActions, useEditorSkills } from '../../store';
+import { useRef } from 'react';
+import { Badge } from '@/components/ui/badge';
 
 function Skills() {
   const skills = useEditorSkills();
@@ -19,7 +19,7 @@ function Skills() {
 
   function resetInput() {
     if (inputRef.current) {
-      inputRef.current.value = "";
+      inputRef.current.value = '';
     }
   }
   function handleAddNewSkill() {
@@ -39,17 +39,17 @@ function Skills() {
   return (
     <Field>
       <FieldLabel>Technical Stack</FieldLabel>
-      <Flex className="gap-2 flex-wrap">
+      <Flex className="flex-wrap gap-2">
         {skills?.map((skill, idx) => {
           return (
             <Badge
               variant="secondary"
-              className="flex gap-1 items-center"
+              className="flex items-center gap-1"
               key={skill}
             >
               {skill}
               <button
-                className="flex rounded-full hover:text-destructive cursor-pointer opacity-50 hover:opacity-100"
+                className="hover:text-destructive flex cursor-pointer rounded-full opacity-50 hover:opacity-100"
                 onClick={() => deleteSkills(idx)}
               >
                 <X className="size-4" />
@@ -64,13 +64,17 @@ function Skills() {
           name="skills"
           placeholder="Type skill tag and press enter..."
           onKeyUp={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === 'Enter') {
               handleAddNewSkill();
             }
           }}
           className="bg-neutral-0E0E0E"
         />
-        <Button variant="outline" className="border-dashed" onClick={handleAddNewSkill}>
+        <Button
+          variant="outline"
+          className="border-dashed"
+          onClick={handleAddNewSkill}
+        >
           <Plus />
           Add Skill
         </Button>

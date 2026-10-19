@@ -1,8 +1,8 @@
-import { Search } from "lucide-react";
-import { Flex } from "./layout";
-import { Input } from "../ui/input";
-import { useEffect, useRef, type ChangeEvent } from "react";
-import { cn } from "cn";
+import { Search } from 'lucide-react';
+import { Flex } from './layout';
+import { Input } from '../ui/input';
+import { useEffect, useRef, type ChangeEvent } from 'react';
+import { cn } from 'cn';
 
 type SearchbarProps = {
   onChange: (value: string) => void;
@@ -16,8 +16,8 @@ type SearchbarProps = {
 function Searchbar({
   value,
   onChange,
-  name = "searchbar",
-  placeholder = "Search...",
+  name = 'searchbar',
+  placeholder = 'Search...',
   className,
   focus = false,
 }: SearchbarProps) {
@@ -37,7 +37,7 @@ function Searchbar({
   return (
     <Flex
       className={cn(
-        "items-center gap-2 bg-muted-foreground/20 rounded-xl overflow-hidden px-3 focus-within:ring",
+        'items-center gap-2 bg-muted-foreground/20 rounded-xl overflow-hidden px-3 focus-within:ring',
         className,
       )}
       role="searchbox"
@@ -47,7 +47,7 @@ function Searchbar({
     >
       <Search size={16} className="text-muted-foreground" />
       <Input
-        className="ring-transparent border-none ring-0! px-0 flex-1"
+        className="flex-1 border-none px-0 ring-0! ring-transparent"
         placeholder={placeholder}
         value={value}
         name={name}

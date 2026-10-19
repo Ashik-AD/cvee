@@ -1,5 +1,5 @@
-import { useModalActions } from "@/store/modal";
-import type { ReactNode } from "react";
+import { useModalActions } from '@/store/modal';
+import type { ReactNode } from 'react';
 
 type RenderProps = (
   onClick: (modalName: string, modalProps?: unknown) => void,

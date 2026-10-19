@@ -1,9 +1,9 @@
-import { About } from "@/components/About";
-import ImportResumes from "@/components/common/ImportResumes";
-import KeyboardShortcuts from "@/components/common/KeyboardShortcuts";
-import { QuickStartGuide } from "@/components/QuickGuideContent";
-import ResumeImport from "@/components/ResumeImport";
-import type { ReactNode } from "react";
+import { About } from '@/components/About';
+import ImportResumes from '@/components/common/ImportResumes';
+import KeyboardShortcuts from '@/components/common/KeyboardShortcuts';
+import { QuickStartGuide } from '@/components/QuickGuideContent';
+import ResumeImport from '@/components/ResumeImport';
+import type { ReactNode } from 'react';
 
 interface ModalContent {
   element: () => ReactNode;
@@ -14,31 +14,31 @@ interface ModalContent {
 }
 
 export const modalsContent: Record<string, ModalContent> = {
-  "import-json": {
+  'import-json': {
     element: ResumeImport,
-    title: "Import Resume from JSON",
-    description: "Upload a JSON Resume, or reactive-resume export file.",
-    className: "sm:min-w-[90%] lg:min-w-4xl",
+    title: 'Import Resume from JSON',
+    description: 'Upload a JSON Resume, or reactive-resume export file.',
+    className: 'sm:min-w-[90%] lg:min-w-4xl',
   },
-  "import-all-json": {
+  'import-all-json': {
     element: ImportResumes,
-    title: "Import Resumes from JSON",
-    description: "Upload a resumes JSON",
-    className: "sm:min-w-[90%] lg:min-w-5xl",
+    title: 'Import Resumes from JSON',
+    description: 'Upload a resumes JSON',
+    className: 'sm:min-w-[90%] lg:min-w-5xl',
   },
   keyboardShortcut: {
     element: KeyboardShortcuts,
-    className: "sm:min-w-[90%] lg:min-w-4xl bg-transparent border-0! ring-0!",
+    className: 'sm:min-w-[90%] lg:min-w-4xl bg-transparent border-0! ring-0!',
     showCloseBtn: false,
   },
   quickGuides: {
     element: QuickStartGuide,
-    className: "sm:min-w-[90%] lg:min-w-4xl bg-transparent border-0! ring-0!",
+    className: 'sm:min-w-[90%] lg:min-w-4xl bg-transparent border-0! ring-0!',
     showCloseBtn: false,
   },
   about: {
     element: About,
-    className: "sm:min-w-[90%] lg:min-w-4xl bg-transparent border-0! ring-0!",
+    className: 'sm:min-w-[90%] lg:min-w-4xl bg-transparent border-0! ring-0!',
     showCloseBtn: false,
   },
 };

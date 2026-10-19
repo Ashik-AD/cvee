@@ -1,5 +1,5 @@
-import { useLayoutEffect } from "react";
-import { useResizeObserver } from "./useResizeObserver";
+import { useLayoutEffect } from 'react';
+import { useResizeObserver } from './useResizeObserver';
 
 export function useWindowResize() {
   const { resizeWidth, resizeElement } = useResizeObserver();

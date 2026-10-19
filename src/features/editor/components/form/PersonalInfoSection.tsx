@@ -1,8 +1,8 @@
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { useEditorActions, useEditorPersonalInfo } from "../../store";
-import type { ChangeEvent } from "react";
-import type { PersonalInfo } from "@/lib/model/resume";
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { useEditorActions, useEditorPersonalInfo } from '../../store';
+import type { ChangeEvent } from 'react';
+import type { PersonalInfo } from '@/lib/model/resume';
 
 function PersonalInfoSection() {
   const { updatePersonalInfo } = useEditorActions();
@@ -14,7 +14,7 @@ function PersonalInfoSection() {
   }
 
   return (
-    <FieldGroup className="sm:grid grid-cols-1 sm:grid-cols-2">
+    <FieldGroup className="grid-cols-1 sm:grid sm:grid-cols-2">
       {/* Fullname field */}
       <Field>
         <FieldLabel htmlFor="name">Full Name</FieldLabel>
@@ -72,7 +72,7 @@ function PersonalInfoSection() {
       </Field>
 
       {/* Address & Links field */}
-      <FieldGroup className="grid col-span-2 grid-cols-1 sm:grid-cols-3">
+      <FieldGroup className="col-span-2 grid grid-cols-1 sm:grid-cols-3">
         {/* Address field */}
         <Field>
           <FieldLabel htmlFor="address">Location</FieldLabel>

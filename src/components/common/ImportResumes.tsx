@@ -1,7 +1,7 @@
-import { useImportResumes } from "@/hooks/useImportsResumes";
-import { Flex, FlexCenter, FlexColumn } from "./layout";
-import { FileText } from "lucide-react";
-import { cn } from "cn";
+import { useImportResumes } from '@/hooks/useImportsResumes';
+import { Flex, FlexCenter, FlexColumn } from './layout';
+import { FileText } from 'lucide-react';
+import { cn } from 'cn';
 import {
   IconAlertCircle,
   IconAlertTriangle,
@@ -9,18 +9,18 @@ import {
   IconCircle,
   IconCircleCheckFilled,
   IconX,
-} from "@tabler/icons-react";
-import { useState, type ChangeEvent } from "react";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { Label } from "../ui/label";
-import useServices from "@/hooks/useServices";
-import { useResumeActions } from "@/store";
-import { toast } from "../ui/toast";
-import { useModalActions } from "@/store/modal";
-import { Alert, AlertTitle } from "../ui/alert";
-import FilePicker from "./FilePicker";
+} from '@tabler/icons-react';
+import { useState, type ChangeEvent } from 'react';
+import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
+import { Checkbox } from '../ui/checkbox';
+import { Label } from '../ui/label';
+import useServices from '@/hooks/useServices';
+import { useResumeActions } from '@/store';
+import { toast } from '../ui/toast';
+import { useModalActions } from '@/store/modal';
+import { Alert, AlertTitle } from '../ui/alert';
+import FilePicker from './FilePicker';
 
 function ImportResumes() {
   const [selectedIDs, setSelectedIDs] = useState<Set<string>>(new Set());
@@ -70,12 +70,12 @@ function ImportResumes() {
       }
 
       const hasRejectedResume = results?.some(
-        (res) => res.status === "rejected",
+        (res) => res.status === 'rejected',
       );
       if (!hasRejectedResume) {
         toast.add({
-          type: "success",
-          title: "Your resumes imported successfully!",
+          type: 'success',
+          title: 'Your resumes imported successfully!',
         });
         closeModal();
       }
@@ -125,9 +125,9 @@ function ImportResumes() {
 
       {totalResume > 0 ? (
         <FlexColumn className="gap-3">
-          <Flex className="gap-4 border-b py-2 items-center flex-wrap">
+          <Flex className="flex-wrap items-center gap-4 border-b py-2">
             <span className="text-xs">
-              Total:{" "}
+              Total:{' '}
               <Badge
                 variant="secondary"
                 className="bg-alert-info/15 text-alert-info-text"
@@ -136,7 +136,7 @@ function ImportResumes() {
               </Badge>
             </span>
             <span className="text-xs">
-              Conflicted:{" "}
+              Conflicted:{' '}
               <Badge
                 variant="secondary"
                 className="bg-alert-danger/15 text-alert-danger"
@@ -145,7 +145,7 @@ function ImportResumes() {
               </Badge>
             </span>
             <span className="text-xs">
-              Non-conflicted:{" "}
+              Non-conflicted:{' '}
               <Badge
                 variant="secondary"
                 className="bg-alert-success/15 text-alert-success"
@@ -154,7 +154,7 @@ function ImportResumes() {
               </Badge>
             </span>
             <span className="text-xs">
-              Selected:{" "}
+              Selected:{' '}
               <Badge
                 variant="secondary"
                 className="bg-alert-success/15 text-alert-success"
@@ -185,7 +185,7 @@ function ImportResumes() {
             )}
           </Flex>
 
-          <FlexColumn className="max-h-112 overflow-y-auto scrollbar-thin">
+          <FlexColumn className="max-h-112 scrollbar-thin overflow-y-auto">
             {importedResumes?.map((resume, idx) => {
               const isConflicted = conflictedResumes?.has(resume.id);
               const isSelected = selectedIDs?.has(resume.id);
@@ -194,25 +194,25 @@ function ImportResumes() {
                 <Flex
                   key={resume.id}
                   className={cn(
-                    "gap-2 px-2 py-2 rounded-xs hover:shadow-xl bg-neutral-131313 cursor-default group hover:bg-neutral-131313",
-                    isConflicted && "bg-destructive/2",
+                    'gap-2 px-2 py-2 rounded-xs hover:shadow-xl bg-neutral-131313 cursor-default group hover:bg-neutral-131313',
+                    isConflicted && 'bg-destructive/2',
                   )}
                   role="button"
                   onClick={() => handleChangeIDSelect(resume.id)}
                 >
-                  <FlexCenter className="w-5 relative mr-2">
+                  <FlexCenter className="relative mr-2 w-5">
                     <span
                       className={cn(
-                        "group-hover:hidden text-muted-foreground",
-                        isSelected && "hidden!",
+                        'group-hover:hidden text-muted-foreground',
+                        isSelected && 'hidden!',
                       )}
                     >
                       {idx + 1}
                     </span>
                     <span
                       className={cn(
-                        "scale-0 group-hover:scale-100 transition-all duration-300 cursor-pointer absolute shrink-0",
-                        isSelected && "scale-100!",
+                        'scale-0 group-hover:scale-100 transition-all duration-300 cursor-pointer absolute shrink-0',
+                        isSelected && 'scale-100!',
                       )}
                     >
                       {isSelected ? (
@@ -228,21 +228,21 @@ function ImportResumes() {
                     <FileText
                       size={18}
                       className={cn(
-                        "mt-0.5 text-muted-foreground shrink-0",
+                        'mt-0.5 text-muted-foreground shrink-0',
                         isConflicted
-                          ? "text-destructive/50"
-                          : "text-emerald-500",
+                          ? 'text-destructive/50'
+                          : 'text-emerald-500',
                       )}
                     />
                   )}
-                  <Flex className="flex-1 gap-3 flex-wrap">
+                  <Flex className="flex-1 flex-wrap gap-3">
                     <FlexColumn className="gap-0.5">
                       <h3>{resume.meta?.title}</h3>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         {resume.meta.description}
                       </p>
                       {failedImports?.has(resume.id) && (
-                        <p className="text-xs text-destructive">
+                        <p className="text-destructive text-xs">
                           Reason: {failedImports.get(resume.id)}
                         </p>
                       )}
@@ -261,8 +261,8 @@ function ImportResumes() {
               );
             })}
           </FlexColumn>
-          <FlexColumn className="gap-2 justify-end">
-            <Flex className="gap-1 justify-end items-center">
+          <FlexColumn className="justify-end gap-2">
+            <Flex className="items-center justify-end gap-1">
               <Checkbox
                 checked={isOverride}
                 id="override"
@@ -277,7 +277,7 @@ function ImportResumes() {
             </Flex>
             {!isOverride && (
               <Flex className="justify-end">
-                <Alert className="w-fit border-alert-warning rounded-sm">
+                <Alert className="border-alert-warning w-fit rounded-sm">
                   <IconAlertCircle className="text-alert-warning" />
                   <AlertTitle className="text-alert-warning">
                     Conflicted resumes will be skipped

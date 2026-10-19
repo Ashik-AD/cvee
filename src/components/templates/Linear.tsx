@@ -1,7 +1,7 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import type { TemplateProps } from ".";
-import { Contact, ProjectLink, SectionTitle, splitDescription } from "./Shared";
-import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+import { Mail, MapPin, Phone } from 'lucide-react';
+import type { TemplateProps } from '.';
+import { Contact, ProjectLink, SectionTitle, splitDescription } from './Shared';
+import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 
 export function Linear({
   personalInfo,
@@ -31,7 +31,7 @@ export function Linear({
                   </td>
 
                   <td className="text-right align-bottom">
-                    <div className="space-y-1 text-[9px] font-mono">
+                    <div className="space-y-1 font-mono text-[9px]">
                       <Contact icon={Mail}>
                         <a
                           href={`mailto:${personalInfo.email}`}
@@ -84,7 +84,7 @@ export function Linear({
         {/* Main layout */}
         <tr>
           {/* Left column */}
-          <td className="w-[30%] pr-5 pt-5 align-top">
+          <td className="w-[30%] pt-5 pr-5 align-top">
             {/* Skills */}
             {skills?.length > 0 && (
               <div>
@@ -116,7 +116,7 @@ export function Linear({
 
                           <p className="text-[9px]">{education.institute}</p>
 
-                          <p className="mt-1 text-[9px] font-mono">
+                          <p className="mt-1 font-mono text-[9px]">
                             {education.duration}
 
                             {education.grade && <> · {education.grade}</>}
@@ -131,7 +131,7 @@ export function Linear({
           </td>
 
           {/* Right column */}
-          <td className="w-[70%] pl-5 pt-5 align-top">
+          <td className="w-[70%] pt-5 pl-5 align-top">
             {/* Experience */}
             <SectionTitle>Experience</SectionTitle>
 
@@ -151,7 +151,7 @@ export function Linear({
                           </p>
                         </div>
 
-                        <span className="text-[9px] font-mono">
+                        <span className="font-mono text-[9px]">
                           {experience.duration}
                         </span>
                       </div>

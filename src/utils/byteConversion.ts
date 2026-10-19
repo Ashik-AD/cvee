@@ -22,14 +22,14 @@ export function byteConversion(bytes: number) {
   const gB = mB / 1000;
 
   if (gB >= 1) {
-    return toFormat(gB, "GB");
+    return toFormat(gB, 'GB');
   }
   if (mB >= 1) {
-    return toFormat(mB, "MB");
+    return toFormat(mB, 'MB');
   }
 
   if (kB > 0) {
-    return toFormat(kB, "KB");
+    return toFormat(kB, 'KB');
   }
 
   function toFormat(size: number, unit: string) {

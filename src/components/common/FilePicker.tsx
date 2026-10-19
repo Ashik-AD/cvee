@@ -1,9 +1,9 @@
-import { IconFile, IconUpload, IconX } from "@tabler/icons-react";
-import { Label } from "../ui/label";
-import { Flex, FlexColumn } from "./layout";
-import { useRef, useState, type ChangeEvent } from "react";
-import { Button } from "../ui/button";
-import { byteConversion } from "@/utils/byteConversion";
+import { IconFile, IconUpload, IconX } from '@tabler/icons-react';
+import { Label } from '../ui/label';
+import { Flex, FlexColumn } from './layout';
+import { useRef, useState, type ChangeEvent } from 'react';
+import { Button } from '../ui/button';
+import { byteConversion } from '@/utils/byteConversion';
 
 type FilePickerProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -32,14 +32,14 @@ function FilePicker({ onChange, clearFile }: FilePickerProps) {
     if (file) {
       const name = file.name;
       const formatedSize = byteConversion(file.size);
-      const type = file?.type?.includes("/")
-        ? (file?.type?.split("/")[1] ?? file.type)
+      const type = file?.type?.includes('/')
+        ? (file?.type?.split('/')[1] ?? file.type)
         : file.type;
 
       setFileMeta({
         name,
         size: formatedSize?.size ?? 0,
-        sizeUnit: formatedSize?.unit || "Byte",
+        sizeUnit: formatedSize?.unit || 'Byte',
         type,
       });
     }
@@ -51,7 +51,7 @@ function FilePicker({ onChange, clearFile }: FilePickerProps) {
     <>
       {!fileMeta && (
         <Label>
-          <FlexColumn className="w-full bg-neutral-0E0E0E items-center justify-center gap-3 px-4 py-10 rounded-sm border border-dashed hover:bg-neutral-1C1B1B group">
+          <FlexColumn className="bg-neutral-0E0E0E hover:bg-neutral-1C1B1B group w-full items-center justify-center gap-3 rounded-sm border border-dashed px-4 py-10">
             <Flex className="bg-neutral-2A2A2A size-14 items-center justify-center rounded-sm">
               <IconUpload size={32} className="group-hover:animate-bounce" />
             </Flex>
@@ -66,7 +66,7 @@ function FilePicker({ onChange, clearFile }: FilePickerProps) {
         </Label>
       )}
       {fileMeta && (
-        <Flex className="bg-neutral-0E0E0E p-3  rounded-md w-fit gap-2 items-center hover:shadow-lg">
+        <Flex className="bg-neutral-0E0E0E w-fit items-center gap-2 rounded-md p-3 hover:shadow-lg">
           <IconFile className="text-emerald-600" />
           <FlexColumn className="gap-0.5">
             <span>{fileMeta.name}</span>
@@ -77,7 +77,7 @@ function FilePicker({ onChange, clearFile }: FilePickerProps) {
           <Button
             variant="ghost"
             onClick={handleClearFile}
-            className="rounded-full px-2 hover:bg-alert-danger/15 hover:text-alert-danger"
+            className="hover:bg-alert-danger/15 hover:text-alert-danger rounded-full px-2"
           >
             <IconX />
           </Button>

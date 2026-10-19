@@ -1,7 +1,7 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import type { TemplateProps } from ".";
-import { Contact, ProjectLink, SectionTitle, splitDescription } from "./Shared";
-import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+import { Mail, MapPin, Phone } from 'lucide-react';
+import type { TemplateProps } from '.';
+import { Contact, ProjectLink, SectionTitle, splitDescription } from './Shared';
+import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 
 export function Classic({
   personalInfo,
@@ -23,13 +23,13 @@ export function Classic({
 
             <p className="mt-1 text-sm font-medium">{personalInfo.role}</p>
 
-            <div className="mt-2 text-[9px] font-mono">
+            <div className="mt-2 font-mono text-[9px]">
               <Contact icon={Mail}>
                 <a href={`mailto:${personalInfo.email}`} className="underline">
                   {personalInfo.email}
                 </a>
               </Contact>
-              {" · "}
+              {' · '}
               <Contact icon={IconBrandGithub}>
                 <a
                   href={`https://github.com/${personalInfo.github}`}
@@ -39,7 +39,7 @@ export function Classic({
                   github.com/{personalInfo.github}
                 </a>
               </Contact>
-              {" · "}
+              {' · '}
               <Contact icon={IconBrandLinkedin}>
                 <a
                   href={`https://linkedin.com/in/${personalInfo.linkedin}`}
@@ -49,9 +49,9 @@ export function Classic({
                   linkedin.com/in/{personalInfo.linkedin}
                 </a>
               </Contact>
-              {" · "}
+              {' · '}
               <Contact icon={Phone}>{personalInfo.contactNo}</Contact>
-              {" · "}
+              {' · '}
               <Contact icon={MapPin}>{personalInfo.address}</Contact>
             </div>
           </td>
@@ -89,7 +89,7 @@ export function Classic({
                               </p>
                             </td>
 
-                            <td className="text-right align-top text-[9px] font-mono">
+                            <td className="text-right align-top font-mono text-[9px]">
                               {experience.duration}
                             </td>
                           </tr>
@@ -183,7 +183,7 @@ export function Classic({
                             <p className="text-[9px]">{education.institute}</p>
                           </div>
 
-                          <div className="text-right text-[9px] font-mono">
+                          <div className="text-right font-mono text-[9px]">
                             {education.duration}
 
                             {education.grade && <div>{education.grade}</div>}

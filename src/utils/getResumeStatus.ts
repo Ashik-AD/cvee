@@ -3,8 +3,8 @@ import type {
   PersonalInfo,
   Project,
   Resume,
-} from "@/lib/model/resume";
-import type { ResumePopulate } from "@/lib/model/resume";
+} from '@/lib/model/resume';
+import type { ResumePopulate } from '@/lib/model/resume';
 
 /**
  * Check resume completeness
@@ -25,7 +25,7 @@ export function getResumeStatus(resume: Resume | ResumePopulate) {
     projectExist &&
     skillExist
   )
-    return "complete";
+    return 'complete';
   if (
     personalInfosExist &&
     aboutMeExist &&
@@ -33,8 +33,8 @@ export function getResumeStatus(resume: Resume | ResumePopulate) {
     skillExist &&
     !projectExist
   )
-    return "inProgress";
-  return "draft";
+    return 'inProgress';
+  return 'draft';
 }
 
 function hasRequiredPersonalInfo(info: PersonalInfo) {
@@ -63,9 +63,7 @@ function hasExperiences(experiences: Experience[]) {
 function hasProjects(projects: Project[]) {
   if (!projects?.length) return false;
   return projects.every((proj) =>
-    proj?.name.trim() &&
-    proj?.link.trim() &&
-    proj.description?.[0]?.trim()
+    proj?.name.trim() && proj?.link.trim() && proj.description?.[0]?.trim()
       ? true
       : false,
   );

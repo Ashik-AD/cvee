@@ -1,16 +1,16 @@
-import { FlexColumn } from "@/components/common/layout";
-import PersonalInfoSection from "./form/PersonalInfoSection";
-import Summary from "./form/Summary";
-import Experiences from "./form/Experiences";
-import EducationSection from "./form/EducationSection";
-import Projects from "./form/Projects";
-import Skills from "./form/Skills";
-import { useEffect, useEffectEvent, useRef } from "react";
-import { useSearchParams } from "wouter";
-import { useEditorState } from "../store";
-import useServices from "@/hooks/useServices";
-import { Accordion } from "@/components/ui/accordion";
-import EditorSection from "@/components/common/EditorSection";
+import { FlexColumn } from '@/components/common/layout';
+import PersonalInfoSection from './form/PersonalInfoSection';
+import Summary from './form/Summary';
+import Experiences from './form/Experiences';
+import EducationSection from './form/EducationSection';
+import Projects from './form/Projects';
+import Skills from './form/Skills';
+import { useEffect, useEffectEvent, useRef } from 'react';
+import { useSearchParams } from 'wouter';
+import { useEditorState } from '../store';
+import useServices from '@/hooks/useServices';
+import { Accordion } from '@/components/ui/accordion';
+import EditorSection from '@/components/common/EditorSection';
 import {
   BriefcaseBusiness,
   GraduationCap,
@@ -18,7 +18,7 @@ import {
   ListMinus,
   SquareTerminal,
   Target,
-} from "lucide-react";
+} from 'lucide-react';
 
 /**
  * Timeout for saving after change of form values
@@ -28,7 +28,7 @@ const SAVE_TIME = 1000;
 function EditorForm() {
   const timerRef = useRef<number | null>(null);
   const [params] = useSearchParams();
-  const resumeId = params.get("id");
+  const resumeId = params.get('id');
   const { services } = useServices();
 
   const editorState = useEditorState();
@@ -37,9 +37,9 @@ function EditorForm() {
     if (resumeId) {
       try {
         await services?.resumeSrv.updateResume(resumeId, editorState);
-        console.log("Saved data", editorState);
+        console.log('Saved data', editorState);
       } catch (error) {
-        console.error("Failed save resume", error);
+        console.error('Failed save resume', error);
       }
     }
   });
@@ -82,10 +82,10 @@ function EditorForm() {
   // }, []);
 
   return (
-    <FlexColumn className="overflow-y-auto h-full md:max-h-[calc(100dvh-5rem)] scrollbar-thin">
+    <FlexColumn className="h-full scrollbar-thin overflow-y-auto md:max-h-[calc(100dvh-5rem)]">
       <Accordion
         multiple
-        defaultValue={["personalInfo", "summary", "exp", "pro", "skill", "edu"]}
+        defaultValue={['personalInfo', 'summary', 'exp', 'pro', 'skill', 'edu']}
       >
         <EditorSection title="Personal Info" id="personalInfo" icon={IdCard}>
           <PersonalInfoSection />

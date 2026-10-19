@@ -1,9 +1,9 @@
-import { createContext, useEffect, useState, type ReactNode } from "react";
-import { Database } from "@/lib/database";
-import { Repositories } from "@/lib/repository/repositories";
-import { Services } from "@/lib/service/services";
+import { createContext, useEffect, useState, type ReactNode } from 'react';
+import { Database } from '@/lib/database';
+import { Repositories } from '@/lib/repository/repositories';
+import { Services } from '@/lib/service/services';
 
-const DB_NAME = "cvee";
+const DB_NAME = 'cvee';
 
 type Context = {
   services: Services | null;
@@ -38,7 +38,7 @@ export default function ServicesProvider({
         setInitializing(false);
       })
       .catch((err) => {
-        console.error("Failed initialize db: ", err);
+        console.error('Failed initialize db: ', err);
         setInitializing(false);
       });
   }, []);

@@ -3,22 +3,22 @@ import type {
   Experience,
   PersonalInfo,
   Project,
-} from "@/lib/model/resume";
-import type { ComponentType } from "react";
-import { Obsidian } from "./Obsidian";
-import { Classic } from "./Classsic";
-import { Linear } from "./Linear";
-import { Terminal } from "./Terminal";
-import { Compact } from "./Compact";
-import { Editorial } from "./Editorial";
+} from '@/lib/model/resume';
+import type { ComponentType } from 'react';
+import { Obsidian } from './Obsidian';
+import { Classic } from './Classsic';
+import { Linear } from './Linear';
+import { Terminal } from './Terminal';
+import { Compact } from './Compact';
+import { Editorial } from './Editorial';
 
 export type CVTemplates =
-  | "obsidian"
-  | "classic"
-  | "compact"
-  | "editorial"
-  | "terminal"
-  | "linear";
+  | 'obsidian'
+  | 'classic'
+  | 'compact'
+  | 'editorial'
+  | 'terminal'
+  | 'linear';
 
 export interface TemplateProps {
   personalInfo: PersonalInfo;
@@ -35,34 +35,34 @@ export const TemplateSelectOptions: {
   description: string;
 }[] = [
   {
-    label: "Obsidian",
-    value: "obsidian",
-    description: "Clean and minimal",
+    label: 'Obsidian',
+    value: 'obsidian',
+    description: 'Clean and minimal',
   },
   {
-    label: "Classic",
-    value: "classic",
-    description: "Timeless and professional",
+    label: 'Classic',
+    value: 'classic',
+    description: 'Timeless and professional',
   },
   {
-    label: "Editorial",
-    value: "editorial",
-    description: "Refined and expressive",
+    label: 'Editorial',
+    value: 'editorial',
+    description: 'Refined and expressive',
   },
   {
-    label: "Compact",
-    value: "compact",
-    description: "More content, less space",
+    label: 'Compact',
+    value: 'compact',
+    description: 'More content, less space',
   },
   {
-    label: "Linear",
-    value: "linear",
-    description: "Structured and organized",
+    label: 'Linear',
+    value: 'linear',
+    description: 'Structured and organized',
   },
   {
-    label: "Terminal",
-    value: "terminal",
-    description: "Built for developers",
+    label: 'Terminal',
+    value: 'terminal',
+    description: 'Built for developers',
   },
 ];
 
@@ -80,9 +80,9 @@ const templates = {
   terminal: Terminal,
   compact: Compact,
   editorial: Editorial,
-} satisfies Record<CVTemplates, ComponentType<Omit<TemplateProps, "type">>>;
+} satisfies Record<CVTemplates, ComponentType<Omit<TemplateProps, 'type'>>>;
 
-function CVTemplate({ type = "obsidian", ...rest }: CvTemplateProps) {
+function CVTemplate({ type = 'obsidian', ...rest }: CvTemplateProps) {
   const Comp = templates[type];
   return <Comp {...rest} />;
 }

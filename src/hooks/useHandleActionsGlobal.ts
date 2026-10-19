@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useCommonActions } from "@/store";
-import { useLocation, useSearchParams } from "wouter";
-import useMenuActions from "./useMenuActions";
-import { useAlertDialogActions } from "@/store/alert-dialog";
-import { getErrorMessage } from "@/utils/error";
-import { toast } from "@/components/ui/toast";
+import { useEffect } from 'react';
+import { useCommonActions } from '@/store';
+import { useLocation, useSearchParams } from 'wouter';
+import useMenuActions from './useMenuActions';
+import { useAlertDialogActions } from '@/store/alert-dialog';
+import { getErrorMessage } from '@/utils/error';
+import { toast } from '@/components/ui/toast';
 
 /**
  * Listen Global Keyboard Event Handling
@@ -16,9 +16,9 @@ export default function useHandleActionsGlobal() {
   const [location] = useLocation();
   const [searchParams] = useSearchParams();
 
-  const resumeId = searchParams.get("id")?.trim();
+  const resumeId = searchParams.get('id')?.trim();
   const isResumeBeingEditing = Boolean(
-    location.startsWith("/editor") && resumeId,
+    location.startsWith('/editor') && resumeId,
   );
 
   async function handleKeyboard(e: KeyboardEvent) {
@@ -28,36 +28,36 @@ export default function useHandleActionsGlobal() {
       if (e.ctrlKey && !e.shiftKey) {
         // toggle command center `K`
         switch (key) {
-          case "k": // Show command center
+          case 'k': // Show command center
             interuptDown();
             toggleCommandCenter();
             break;
 
-          case "i": // Open import JSON modal
+          case 'i': // Open import JSON modal
             interuptDown();
-            execMenuAction("import-json");
+            execMenuAction('import-json');
             break;
 
-          case "d": // Duplicate currently open/editing resume
+          case 'd': // Duplicate currently open/editing resume
             if (isResumeBeingEditing) {
               interuptDown();
-              execMenuAction("duplicate-cv");
+              execMenuAction('duplicate-cv');
             }
             break;
 
-          case "[": // Set editor view to `form` only
+          case '[': // Set editor view to `form` only
             interuptDown();
-            await execMenuAction("view-editor");
+            await execMenuAction('view-editor');
             break;
 
-          case "]": // Set editor view to `preview` only
+          case ']': // Set editor view to `preview` only
             interuptDown();
-            await execMenuAction("view-preview");
+            await execMenuAction('view-preview');
             break;
 
-          case "\\": // split editor into form & preview
+          case '\\': // split editor into form & preview
             interuptDown();
-            await execMenuAction("view-split");
+            await execMenuAction('view-split');
             break;
 
           default:
@@ -69,51 +69,51 @@ export default function useHandleActionsGlobal() {
       if (isResumeBeingEditing) {
         // Handle function key press actions
         // Rename currently open resume
-        if (key === "f2") {
-          await execMenuAction("rename-cv");
+        if (key === 'f2') {
+          await execMenuAction('rename-cv');
           interuptDown();
           return;
         }
 
         // Handle 'delete' and Ctl+Shift+D keys
-        if (key === "delete" || (e.ctrlKey && e.shiftKey && key === "d")) {
+        if (key === 'delete' || (e.ctrlKey && e.shiftKey && key === 'd')) {
           interuptDown();
-          setAlertDialogOpen("deleteResume", { id: resumeId });
+          setAlertDialogOpen('deleteResume', { id: resumeId });
           return;
         }
 
         // Split editor into form and preview
-        if (key === "|" && e.ctrlKey && e.shiftKey) {
+        if (key === '|' && e.ctrlKey && e.shiftKey) {
           interuptDown();
-          await execMenuAction("view-split");
+          await execMenuAction('view-split');
           return;
         }
       }
 
       // Show keyboard shortcuts
-      if (e.target && !isTypingTarget(e?.target) && key === "?") {
+      if (e.target && !isTypingTarget(e?.target) && key === '?') {
         interuptDown();
-        execMenuAction("keyboard-shortcuts");
+        execMenuAction('keyboard-shortcuts');
         return;
       }
 
       // Open import JSONS modal
-      if (e.ctrlKey && e.shiftKey && key === "i") {
+      if (e.ctrlKey && e.shiftKey && key === 'i') {
         interuptDown();
-        execMenuAction("import-all-json");
+        execMenuAction('import-all-json');
         return;
       }
 
       // Export all JSON
-      if (e.ctrlKey && e.shiftKey && key === "e") {
+      if (e.ctrlKey && e.shiftKey && key === 'e') {
         interuptDown();
-        execMenuAction("export-all-json");
+        execMenuAction('export-all-json');
         return;
       }
     } catch (error) {
       const msg = getErrorMessage(error);
       toast.add({
-        type: "error",
+        type: 'error',
         title: msg,
       });
     }
@@ -125,9 +125,9 @@ export default function useHandleActionsGlobal() {
   }
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyboard);
+    document.addEventListener('keydown', handleKeyboard);
 
-    return () => document.removeEventListener("keydown", handleKeyboard);
+    return () => document.removeEventListener('keydown', handleKeyboard);
   }, [isResumeBeingEditing]);
 }
 
@@ -136,9 +136,9 @@ function isTypingTarget(target: EventTarget) {
 
   const tagName = target.tagName?.toLowerCase();
   return (
-    tagName === "input" ||
-    tagName === "textarea" ||
-    tagName === "select" ||
+    tagName === 'input' ||
+    tagName === 'textarea' ||
+    tagName === 'select' ||
     target.isContentEditable
   );
 }
