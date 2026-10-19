@@ -1,7 +1,7 @@
 export function downloadAsFile(
   content: string | number | object,
   fileName: string,
-  contentType = "text",
+  contentType = 'text',
 ) {
   const toJSON = JSON.stringify(content, null, 2);
 
@@ -11,10 +11,10 @@ export function downloadAsFile(
 
   const fileUrl = URL.createObjectURL(file);
 
-  const downloadLinkEl = document.createElement("a");
+  const downloadLinkEl = document.createElement('a');
   downloadLinkEl.href = fileUrl;
   downloadLinkEl.download = fileName;
-  downloadLinkEl.className = "absolute invisible";
+  downloadLinkEl.className = 'absolute invisible';
 
   document.body.appendChild(downloadLinkEl);
 

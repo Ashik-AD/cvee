@@ -1,7 +1,7 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import type { TemplateProps } from ".";
-import { Contact, ProjectLink, SectionTitle, splitDescription } from "./Shared";
-import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+import { Mail, MapPin, Phone } from 'lucide-react';
+import type { TemplateProps } from '.';
+import { Contact, ProjectLink, SectionTitle, splitDescription } from './Shared';
+import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 
 export function Obsidian({
   personalInfo,
@@ -31,7 +31,7 @@ export function Obsidian({
                   </td>
 
                   <td className="text-right align-bottom">
-                    <div className="space-y-1 text-[9px] font-mono">
+                    <div className="space-y-1 font-mono text-[9px]">
                       <Contact icon={Mail}>
                         <a
                           href={`mailto:${personalInfo.email}`}
@@ -104,7 +104,7 @@ export function Obsidian({
                           </p>
                         </div>
 
-                        <span className="text-[9px] font-mono">
+                        <span className="font-mono text-[9px]">
                           {experience.duration}
                         </span>
                       </div>
@@ -199,7 +199,7 @@ export function Obsidian({
                             <p className="text-[9px]">{education.institute}</p>
                           </div>
 
-                          <div className="text-right text-[9px] font-mono">
+                          <div className="text-right font-mono text-[9px]">
                             {education.duration}
 
                             {education.grade && <div>{education.grade}</div>}

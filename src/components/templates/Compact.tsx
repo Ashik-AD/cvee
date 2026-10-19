@@ -1,7 +1,7 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import type { TemplateProps } from ".";
-import { Contact, ProjectLink, SectionTitle, splitDescription } from "./Shared";
-import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+import { Mail, MapPin, Phone } from 'lucide-react';
+import type { TemplateProps } from '.';
+import { Contact, ProjectLink, SectionTitle, splitDescription } from './Shared';
+import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 
 export function Compact({
   personalInfo,
@@ -31,7 +31,7 @@ export function Compact({
                   </td>
 
                   <td className="text-right align-bottom">
-                    <div className="space-y-1 text-[9px] font-mono">
+                    <div className="space-y-1 font-mono text-[9px]">
                       <Contact icon={Mail}>
                         <a
                           href={`mailto:${personalInfo.email}`}
@@ -84,7 +84,7 @@ export function Compact({
         {/* Two-column body */}
         <tr>
           {/* Main */}
-          <td className="w-[68%] pr-5 pt-5 align-top">
+          <td className="w-[68%] pt-5 pr-5 align-top">
             <SectionTitle>Experience</SectionTitle>
 
             <table className="mt-3 w-full">
@@ -103,7 +103,7 @@ export function Compact({
                           </p>
                         </div>
 
-                        <span className="text-[9px] font-mono">
+                        <span className="font-mono text-[9px]">
                           {experience.duration}
                         </span>
                       </div>
@@ -160,7 +160,7 @@ export function Compact({
           </td>
 
           {/* Supporting */}
-          <td className="w-[32%] pl-5 pt-5 align-top">
+          <td className="w-[32%] pt-5 pl-5 align-top">
             <SectionTitle>Skills</SectionTitle>
 
             <div className="mt-3 flex flex-wrap gap-1">
@@ -186,12 +186,12 @@ export function Compact({
 
                           <p className="text-[9px]">{education.institute}</p>
 
-                          <p className="mt-1 text-[9px] font-mono">
+                          <p className="mt-1 font-mono text-[9px]">
                             {education.duration}
                           </p>
 
                           {education.grade && (
-                            <p className="text-[9px] font-mono">
+                            <p className="font-mono text-[9px]">
                               {education.grade}
                             </p>
                           )}

@@ -1,6 +1,6 @@
-import type { Resume } from "@/lib/model/resume";
-import useServices from "./useServices";
-import type { ResumePopulate } from "@/lib/model/resume";
+import type { Resume } from '@/lib/model/resume';
+import useServices from './useServices';
+import type { ResumePopulate } from '@/lib/model/resume';
 
 export default function useCreateResume() {
   const { services } = useServices();
@@ -11,15 +11,15 @@ export default function useCreateResume() {
   ): Promise<ResumePopulate | undefined> {
     const payload: Resume = {
       personalInfo: {
-        name: "",
-        email: "",
-        role: "",
-        linkedin: "",
-        address: "",
-        contactNo: "",
-        github: "",
+        name: '',
+        email: '',
+        role: '',
+        linkedin: '',
+        address: '',
+        contactNo: '',
+        github: '',
       },
-      aboutMe: "",
+      aboutMe: '',
       experiences: [],
       skills: [],
       projects: [],

@@ -1,10 +1,10 @@
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-import { Flex, FlexColumn } from "../common/layout";
-import useCreateResume from "@/hooks/useCreateResume";
-import { useResumeActions } from "@/store";
-import { useLocation } from "wouter";
-import { Plus } from "lucide-react";
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Flex, FlexColumn } from '../common/layout';
+import useCreateResume from '@/hooks/useCreateResume';
+import { useResumeActions } from '@/store';
+import { useLocation } from 'wouter';
+import { Plus } from 'lucide-react';
 
 function AddNewResumeCard() {
   const createNewResume = useCreateResume();
@@ -20,16 +20,16 @@ function AddNewResumeCard() {
       }
       console.log(newResume);
     } catch (err) {
-      console.log("Failed create new resume: ", err);
+      console.log('Failed create new resume: ', err);
     }
   }
 
   return (
-    <Card className="w-full rounded-sm border-border bg-emerald-900/20 shadow-none">
-      <CardContent className="flex flex-col px-4 gap-6 items-center h-full justify-center">
+    <Card className="border-border w-full rounded-sm bg-emerald-900/20 shadow-none">
+      <CardContent className="flex h-full flex-col items-center justify-center gap-6 px-4">
         <FlexColumn className="gap-2">
-          <div className="text-lg font-semibold text-center">Create new CV</div>
-          <p className="text-center justify-center text-Color-Neutral-8E9192 text-xs font-normal leading-5 max-w-64">
+          <div className="text-center text-lg font-semibold">Create new CV</div>
+          <p className="text-Color-Neutral-8E9192 max-w-64 justify-center text-center text-xs leading-5 font-normal">
             Start from scratch or choose from 6 ATS-optimized developer
             templates.
           </p>

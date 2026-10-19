@@ -1,15 +1,15 @@
-import AddNewResumeCard from "@/components/cards/AddNewResumeCard";
-import { FlexColumn } from "@/components/common/layout";
-import Toolbar from "./components/Toolbar";
-import { useCommonActions, useResumeState } from "@/store";
-import useDeleteResume from "@/hooks/useDeleteResume";
-import usePrintResume from "@/hooks/usePrintResume";
-import { useMemo } from "react";
-import GridView from "./components/GridView";
-import ListView from "./components/ListView";
-import { useDashboardDataView } from "@/store/common";
+import AddNewResumeCard from '@/components/cards/AddNewResumeCard';
+import { FlexColumn } from '@/components/common/layout';
+import Toolbar from './components/Toolbar';
+import { useCommonActions, useResumeState } from '@/store';
+import useDeleteResume from '@/hooks/useDeleteResume';
+import usePrintResume from '@/hooks/usePrintResume';
+import { useMemo } from 'react';
+import GridView from './components/GridView';
+import ListView from './components/ListView';
+import { useDashboardDataView } from '@/store/common';
 
-export type ViewMode = "grid" | "list";
+export type ViewMode = 'grid' | 'list';
 
 export default function Dashbord() {
   const { resumes } = useResumeState();
@@ -70,17 +70,17 @@ export default function Dashbord() {
   const resumeCount = sortedResumes?.length;
 
   return (
-    <div className="w-full lg:px-12 pb-4 inline-flex flex-col justify-start items-start gap-4 h-full max-h-[100svh-40px] overflow-y-auto scrollbar-thin">
-      <div className="sticky top-0 bg-neutral-0E0E0E w-full py-2 shadow-lg px-4">
+    <div className="inline-flex h-full max-h-[100svh-40px] w-full scrollbar-thin flex-col items-start justify-start gap-4 overflow-y-auto pb-4 lg:px-12">
+      <div className="bg-neutral-0E0E0E sticky top-0 w-full px-4 py-2 shadow-lg">
         <Toolbar
           viewMode={dataView}
           onViewChange={handleChangeViewMode}
           resumeCount={resumeCount}
         />
       </div>
-      <div className="px-4 w-full">
+      <div className="w-full px-4">
         {sortedResumes?.length > 0 &&
-          (dataView === "grid" ? (
+          (dataView === 'grid' ? (
             <GridView
               resumes={sortedResumes}
               onDelete={handleDeleteResume}

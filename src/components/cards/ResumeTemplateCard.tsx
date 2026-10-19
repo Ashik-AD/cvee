@@ -4,21 +4,21 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { ArrowUpRight, FileCode2 } from "lucide-react";
+} from '@/components/ui/card';
+import { ArrowUpRight, FileCode2 } from 'lucide-react';
 
 export default function ResumeTemplateCard() {
   return (
-    <Card className="w-96 gap-0 rounded-sm border-border bg-card p-2 shadow-none">
+    <Card className="border-border bg-card w-96 gap-0 rounded-sm p-2 shadow-none">
       <CardHeader className="gap-0 p-0">
         <div className="flex items-start justify-between">
           {/* File icon */}
-          <div className="flex size-8 items-center justify-center rounded-sm bg-muted">
-            <FileCode2 className="size-4 text-foreground" />
+          <div className="bg-muted flex size-8 items-center justify-center rounded-sm">
+            <FileCode2 className="text-foreground size-4" />
           </div>
 
           {/* Filename */}
-          <span className="font-mono text-xs leading-4 text-muted-foreground">
+          <span className="text-muted-foreground font-mono text-xs leading-4">
             academic_cv.tex
           </span>
         </div>
@@ -30,21 +30,21 @@ export default function ResumeTemplateCard() {
             Academic &amp; Research
           </CardTitle>
 
-          <p className="text-xs leading-5 text-muted-foreground">
+          <p className="text-muted-foreground text-xs leading-5">
             Sections tailored for peer-reviewed papers, citations, patents, and
             grant history.
           </p>
         </div>
       </CardContent>
 
-      <CardFooter className="mt-2 flex justify-between border-t border-border px-0 pt-1.5 pb-0">
-        <span className="font-mono text-xs leading-4 text-muted-foreground">
+      <CardFooter className="border-border mt-2 flex justify-between border-t px-0 pt-1.5 pb-0">
+        <span className="text-muted-foreground font-mono text-xs leading-4">
           BibTeX Friendly
         </span>
 
         <button
           type="button"
-          className="flex items-center gap-1 text-xs leading-4 font-medium text-foreground hover:text-primary"
+          className="text-foreground hover:text-primary flex items-center gap-1 text-xs leading-4 font-medium"
         >
           Clone Preset
           <ArrowUpRight className="size-2.5" />

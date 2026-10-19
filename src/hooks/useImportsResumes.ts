@@ -1,10 +1,10 @@
-import { useState, type ChangeEvent } from "react";
-import useServices from "./useServices";
-import ImportWorker from "@/lib/worker/validateAndNormalizeJSON?worker";
-import { AppError, DatabaseError } from "@/utils/error";
-import { getAllocatedStorageSize } from "@/utils/getAllocatedStorageSize";
-import type { ResumePopulate } from "@/lib/model/resume";
-import type { JSONDataPayload, JSONResult } from "@/lib/worker/type";
+import { useState, type ChangeEvent } from 'react';
+import useServices from './useServices';
+import ImportWorker from '@/lib/worker/validateAndNormalizeJSON?worker';
+import { AppError, DatabaseError } from '@/utils/error';
+import { getAllocatedStorageSize } from '@/utils/getAllocatedStorageSize';
+import type { ResumePopulate } from '@/lib/model/resume';
+import type { JSONDataPayload, JSONResult } from '@/lib/worker/type';
 
 export function useImportResumes() {
   const [importedResumes, setImportedResumes] = useState<
@@ -33,12 +33,12 @@ export function useImportResumes() {
     if (file.size > availableStorageSize) {
       throw new DatabaseError(
         `File content is out of storage space`,
-        "STORAGE_FULL",
+        'STORAGE_FULL',
       );
     }
 
     const type = file.type;
-    if (type !== "json" && type !== "application/json") {
+    if (type !== 'json' && type !== 'application/json') {
       throw new AppError(
         `Unsupported file type "${type}". Try to upload "JSON" file.`,
       );
@@ -48,7 +48,7 @@ export function useImportResumes() {
     reader.readAsText(file);
 
     reader.onload = async () => {
-      if (reader.result && typeof reader.result === "string") {
+      if (reader.result && typeof reader.result === 'string') {
         const res = JSON.parse(reader.result) as ResumePopulate[];
         // convert non-array collection into array
         const resumes = Array.isArray(res) ? res : [res];
@@ -63,14 +63,14 @@ export function useImportResumes() {
           worker.postMessage({
             taskID: idx?.toString(),
             payload: resume,
-            status: "PROCESS_PAYLOAD",
-            type: "IMPORT",
+            status: 'PROCESS_PAYLOAD',
+            type: 'IMPORT',
           } satisfies JSONDataPayload<ResumePopulate>);
         });
 
         worker.postMessage({
-          status: "END_BATCH",
-          type: "IMPORT",
+          status: 'END_BATCH',
+          type: 'IMPORT',
         } satisfies JSONDataPayload<ResumePopulate>);
 
         worker.onmessage = (
@@ -80,9 +80,9 @@ export function useImportResumes() {
 
           // Ignore worker error for now, since it is not used yet
           // in the future, show log while parsing the JSON
-          if (type === "TASK_FAIL") return;
+          if (type === 'TASK_FAIL') return;
 
-          if (type === "RESULT") {
+          if (type === 'RESULT') {
             const resume = result;
             // if resume not found do nothing
             if (!resume) return;
@@ -91,7 +91,7 @@ export function useImportResumes() {
             parsedResume.set(resume.id, resume);
           }
 
-          if (type === "DONE") {
+          if (type === 'DONE') {
             const conflictedIDs = new Map();
             resumes?.forEach((resume) => {
               const match = resumesName?.find(
@@ -122,7 +122,7 @@ export function useImportResumes() {
     };
 
     reader.onerror = () => {
-      throw new AppError(reader.error?.message || "Failed to read file");
+      throw new AppError(reader.error?.message || 'Failed to read file');
     };
   }
 
@@ -147,7 +147,7 @@ export function useImportResumes() {
       }) ?? [],
     );
 
-    const getFailedResumes = results.filter((res) => res.status === "rejected");
+    const getFailedResumes = results.filter((res) => res.status === 'rejected');
     if (getFailedResumes.length) {
       setFailedImports(() => {
         // Reverse key mapping for failed resumes.

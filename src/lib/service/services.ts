@@ -1,5 +1,5 @@
-import { Repositories } from "../repository/repositories";
-import { ResumeService } from "./resume";
+import { Repositories } from '../repository/repositories';
+import { ResumeService } from './resume';
 
 interface ServiceList {
   resumeSrv: ResumeService;

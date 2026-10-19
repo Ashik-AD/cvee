@@ -1,12 +1,12 @@
-import { Flex, FlexColumn } from "@/components/common/layout";
-import type { ResumePopulate } from "@/lib/model/resume";
-import { getResumeStatus } from "@/utils/getResumeStatus";
-import { FileText } from "lucide-react";
-import { resumeStatusStyles } from "../constant";
-import { cn } from "cn";
-import { getLastModifiedTime } from "@/utils/getLastModifiedTime";
-import ResumeDropdownMenu from "./ResumeDropdownMenu";
-import { Link } from "wouter";
+import { Flex, FlexColumn } from '@/components/common/layout';
+import type { ResumePopulate } from '@/lib/model/resume';
+import { getResumeStatus } from '@/utils/getResumeStatus';
+import { FileText } from 'lucide-react';
+import { resumeStatusStyles } from '../constant';
+import { cn } from 'cn';
+import { getLastModifiedTime } from '@/utils/getLastModifiedTime';
+import ResumeDropdownMenu from './ResumeDropdownMenu';
+import { Link } from 'wouter';
 
 type ListViewProps = {
   resumes: ResumePopulate[];
@@ -23,16 +23,16 @@ function ListView({ resumes, onDelete, onPrint, onPreview }: ListViewProps) {
         const resumeStatus = getResumeStatus(resume);
         const mapStatus = resumeStatusStyles[resumeStatus];
         const lastModified = getLastModifiedTime(
-          resume.meta.updatedAt ?? resume.meta.createdAt ?? "",
+          resume.meta.updatedAt ?? resume.meta.createdAt ?? '',
         );
 
         return (
           <Flex
             key={id}
-            className="bg-neutral-171717 p-3 border-b border-neutral-000000/20 hover:bg-neutral-131313 transition duration-300 hover:shadow-lg justify-between gap-5"
+            className="bg-neutral-171717 border-neutral-000000/20 hover:bg-neutral-131313 justify-between gap-5 border-b p-3 transition duration-300 hover:shadow-lg"
           >
-            <Flex className="gap-2 items-center truncate">
-              <span className={cn(mapStatus.className, "p-1 rounded-sm h-fit")}>
+            <Flex className="items-center gap-2 truncate">
+              <span className={cn(mapStatus.className, 'p-1 rounded-sm h-fit')}>
                 <FileText size={20} />
               </span>
               <div className="space-y-1 truncate">
@@ -40,26 +40,26 @@ function ListView({ resumes, onDelete, onPrint, onPreview }: ListViewProps) {
                   href={`/editor?id=${id}`}
                   className={cn(
                     mapStatus.label,
-                    "text-gray-300 text-sm hover:underline truncate",
+                    'text-gray-300 text-sm hover:underline truncate',
                   )}
                 >
                   {resume.meta?.title}
                 </Link>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   {resume.meta?.description}
                 </p>
               </div>
             </Flex>
-            <Flex className="gap-4 items-center">
+            <Flex className="items-center gap-4">
               <span
                 className={cn(
-                  "text-xs text-muted-foreground py-0.5 px-1.5 rounded-xl",
+                  'text-xs text-muted-foreground py-0.5 px-1.5 rounded-xl',
                   mapStatus.className,
                 )}
               >
                 {mapStatus.label}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 {lastModified}
               </span>
 

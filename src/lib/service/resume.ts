@@ -1,7 +1,7 @@
-import { AppError } from "@/utils/error";
-import type { ResumeRepository } from "../repository/resume";
-import type { ResumePopulate } from "../model/resume";
-import type { Resume } from "../model/resume";
+import { AppError } from '@/utils/error';
+import type { ResumeRepository } from '../repository/resume';
+import type { ResumePopulate } from '../model/resume';
+import type { Resume } from '../model/resume';
 
 interface ResumeSrv {
   resumeRepo: ResumeRepository;
@@ -18,10 +18,10 @@ export class ResumeService implements ResumeSrv {
    * */
   async createNewResume(
     resume: Resume,
-    metaDetail?: Partial<ResumePopulate["meta"] & { id: string }>,
+    metaDetail?: Partial<ResumePopulate['meta'] & { id: string }>,
   ) {
     if (!resume) {
-      throw new AppError("Resume data is missing", "NOT_FOUND");
+      throw new AppError('Resume data is missing', 'NOT_FOUND');
     }
 
     const res = await this.resumeRepo.createNewResume(resume, metaDetail);
@@ -38,12 +38,12 @@ export class ResumeService implements ResumeSrv {
 
   async getResumeById(id: string): Promise<ResumePopulate> {
     if (!id) {
-      throw new AppError("Resume id is not provided");
+      throw new AppError('Resume id is not provided');
     }
 
     const resume = await this.resumeRepo.getResumeById(id);
     if (!resume) {
-      throw new AppError("Resume not found", "NOT_FOUND");
+      throw new AppError('Resume not found', 'NOT_FOUND');
     }
     return resume;
   }
@@ -53,13 +53,13 @@ export class ResumeService implements ResumeSrv {
    * */
   async updateResume(id: string, resume: Partial<ResumePopulate>) {
     if (!id?.trim()) {
-      throw new AppError("Resume id is missing");
+      throw new AppError('Resume id is missing');
     }
     if (!resume) return;
 
     let existingResume = await this.resumeRepo.getResumeById(id);
     if (!existingResume) {
-      throw new AppError("Resume not found", "NOT_FOUND");
+      throw new AppError('Resume not found', 'NOT_FOUND');
     }
 
     // Make sure meta such title, description, template always fallback
@@ -72,7 +72,7 @@ export class ResumeService implements ResumeSrv {
       template: resume.meta?.template || existingResume?.meta?.template,
       updatedAt: existingResume.meta.updatedAt,
       createdAt: existingResume.meta.createdAt,
-    } satisfies ResumePopulate["meta"];
+    } satisfies ResumePopulate['meta'];
     resume.meta = meta;
 
     return await this.resumeRepo.updateResume(id, resume);
@@ -91,11 +91,11 @@ export class ResumeService implements ResumeSrv {
 
   async deleteResume(id: string) {
     if (!id?.trim()) {
-      throw new AppError("Resume id is not provided", "NOT_FOUND");
+      throw new AppError('Resume id is not provided', 'NOT_FOUND');
     }
     const checkResumeExist = await this.resumeRepo.getResumeById(id);
     if (!checkResumeExist) {
-      throw new AppError("Resume not found", "NOT_FOUND");
+      throw new AppError('Resume not found', 'NOT_FOUND');
     }
 
     await this.resumeRepo.deleteResume(id);

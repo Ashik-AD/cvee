@@ -1,16 +1,16 @@
-import { cn } from "cn";
-import type { ComponentPropsWithRef } from "react";
+import { cn } from 'cn';
+import type { ComponentPropsWithRef } from 'react';
 
-export function Flex({ className, ...rest }: ComponentPropsWithRef<"div">) {
-  return <div className={cn("flex", className)} {...rest} />;
+export function Flex({ className, ...rest }: ComponentPropsWithRef<'div'>) {
+  return <div className={cn('flex', className)} {...rest} />;
 }
 export function FlexCenter({
   className,
   ...rest
-}: ComponentPropsWithRef<"div">) {
+}: ComponentPropsWithRef<'div'>) {
   return (
     <div
-      className={cn("flex items-center justify-center", className)}
+      className={cn('flex items-center justify-center', className)}
       {...rest}
     />
   );
@@ -19,10 +19,10 @@ export function FlexCenter({
 export function FlexColumn({
   className,
   ...rest
-}: ComponentPropsWithRef<"div">) {
-  return <div className={cn("flex flex-col", className)} {...rest} />;
+}: ComponentPropsWithRef<'div'>) {
+  return <div className={cn('flex flex-col', className)} {...rest} />;
 }
 
-export function Grid({ className, ...rest }: ComponentPropsWithRef<"div">) {
-  return <div className={cn("grid", className)} {...rest} />;
+export function Grid({ className, ...rest }: ComponentPropsWithRef<'div'>) {
+  return <div className={cn('grid', className)} {...rest} />;
 }

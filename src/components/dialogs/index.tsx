@@ -1,5 +1,5 @@
-import { useAlertDialogState } from "@/store/alert-dialog";
-import { alertDialogContent } from "@/constants/alertDialogContent";
+import { useAlertDialogState } from '@/store/alert-dialog';
+import { alertDialogContent } from '@/constants/alertDialogContent';
 
 function AlertDialogsRender() {
   const { isOpen, alertName, alertProps } = useAlertDialogState();

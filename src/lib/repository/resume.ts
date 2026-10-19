@@ -1,7 +1,7 @@
-import type { Resume, ResumePopulate } from "@/lib/model/resume";
-import { DatabaseError } from "@/utils/error";
+import type { Resume, ResumePopulate } from '@/lib/model/resume';
+import { DatabaseError } from '@/utils/error';
 
-const STORE_NAME = "resumes";
+const STORE_NAME = 'resumes';
 
 export class ResumeRepository {
   private db: IDBDatabase;
@@ -9,25 +9,25 @@ export class ResumeRepository {
   static createSchemaV1(db: IDBDatabase) {
     // Initialize object store
     const objectStore = db.createObjectStore(STORE_NAME, {
-      keyPath: "id",
+      keyPath: 'id',
     });
 
     // Create an index to search by name
-    objectStore.createIndex("name", "personalInfo.name", {
+    objectStore.createIndex('name', 'personalInfo.name', {
       unique: false,
     });
 
     // Create an index to search by email
-    objectStore.createIndex("email", "personalInfo.email", {
+    objectStore.createIndex('email', 'personalInfo.email', {
       unique: false,
     });
     // Create an index to search by role
-    objectStore.createIndex("role", "personalInfo.role", {
+    objectStore.createIndex('role', 'personalInfo.role', {
       unique: false,
     });
 
     // Create an index to search by skills
-    objectStore.createIndex("skills", "skills", {
+    objectStore.createIndex('skills', 'skills', {
       unique: false,
     });
   }
@@ -38,10 +38,10 @@ export class ResumeRepository {
 
   async createNewResume(
     resume: Resume,
-    metaDetail?: Partial<ResumePopulate["meta"] & { id: string }>,
+    metaDetail?: Partial<ResumePopulate['meta'] & { id: string }>,
   ) {
     return new Promise<ResumePopulate>((resolve, reject) => {
-      const trn = this.db.transaction([STORE_NAME], "readwrite");
+      const trn = this.db.transaction([STORE_NAME], 'readwrite');
 
       // Generate id for resume
       const id = crypto.randomUUID();
@@ -54,9 +54,9 @@ export class ResumeRepository {
         createdAt: now,
         updatedAt: now,
         title: resumeName,
-        description: metaDetail?.description || "",
+        description: metaDetail?.description || '',
         template: metaDetail?.template || undefined,
-      } satisfies ResumePopulate["meta"];
+      } satisfies ResumePopulate['meta'];
 
       const payload = {
         ...resume,
@@ -69,7 +69,7 @@ export class ResumeRepository {
       trn.onerror = () => {
         reject(
           new DatabaseError(
-            trn.error?.message || "Failed to create resume",
+            trn.error?.message || 'Failed to create resume',
             undefined,
             { cause: trn.error },
             { ...payload, id: metaDetail?.id ?? payload.id },
@@ -86,8 +86,8 @@ export class ResumeRepository {
         if (trn.error?.QUOTA_EXCEEDED_ERR) {
           reject(
             new DatabaseError(
-              "Browser storage is full. Free up space and try again.",
-              "STORAGE_FULL",
+              'Browser storage is full. Free up space and try again.',
+              'STORAGE_FULL',
               { cause: trn.error },
               { ...payload, id: metaDetail?.id ?? payload.id },
             ),
@@ -97,7 +97,7 @@ export class ResumeRepository {
 
         reject(
           new DatabaseError(
-            trn.error?.message || "Resume creation was aborted",
+            trn.error?.message || 'Resume creation was aborted',
             undefined,
             { cause: trn.error },
             { ...payload, id: metaDetail?.id ?? payload.id },
@@ -114,7 +114,7 @@ export class ResumeRepository {
 
       request.onerror = () => {
         reject(
-          new DatabaseError(trn.error?.message || "Failed to get resumes"),
+          new DatabaseError(trn.error?.message || 'Failed to get resumes'),
         );
       };
 
@@ -126,7 +126,7 @@ export class ResumeRepository {
       trn.onabort = () => {
         reject(
           new DatabaseError(
-            trn.error?.message || "Resumes retrieve was aborted",
+            trn.error?.message || 'Resumes retrieve was aborted',
             undefined,
             { cause: trn.error },
           ),
@@ -137,13 +137,13 @@ export class ResumeRepository {
 
   async getResumeById(id: string): Promise<ResumePopulate> {
     return new Promise((resolve, reject) => {
-      const trn = this.db.transaction([STORE_NAME], "readonly");
+      const trn = this.db.transaction([STORE_NAME], 'readonly');
       const request = trn.objectStore(STORE_NAME).get(id);
 
       trn.onerror = () => {
         reject(
           new DatabaseError(
-            trn.error?.message || "Failed to retrieve resume",
+            trn.error?.message || 'Failed to retrieve resume',
             undefined,
             { cause: trn.error },
             id,
@@ -159,7 +159,7 @@ export class ResumeRepository {
       trn.onabort = () => {
         reject(
           new DatabaseError(
-            trn.error?.message || "Resume retrieve was aborted",
+            trn.error?.message || 'Resume retrieve was aborted',
             undefined,
             { cause: trn.error },
             id,
@@ -171,15 +171,15 @@ export class ResumeRepository {
 
   async updateResume(id: string, resume: Partial<ResumePopulate>) {
     return new Promise<ResumePopulate>((resolve, reject) => {
-      const trn = this.db.transaction([STORE_NAME], "readwrite");
+      const trn = this.db.transaction([STORE_NAME], 'readwrite');
 
       const payload: Partial<ResumePopulate> = {
         ...resume,
         id,
         meta: {
-          title: resume.meta?.title || "",
+          title: resume.meta?.title || '',
           createdAt: resume.meta?.createdAt || null,
-          description: resume?.meta?.description || "",
+          description: resume?.meta?.description || '',
           updatedAt: new Date().toISOString(),
           template: resume?.meta?.template,
         },
@@ -190,7 +190,7 @@ export class ResumeRepository {
       trn.onerror = () => {
         reject(
           new DatabaseError(
-            trn.error?.message || "Failed to update resume",
+            trn.error?.message || 'Failed to update resume',
             undefined,
             { cause: trn.error },
             payload,
@@ -206,8 +206,8 @@ export class ResumeRepository {
         if (trn.error?.QUOTA_EXCEEDED_ERR) {
           reject(
             new DatabaseError(
-              "Browser storage is full. Free up space and try again.",
-              "STORAGE_FULL",
+              'Browser storage is full. Free up space and try again.',
+              'STORAGE_FULL',
               { cause: trn.error },
               { ...payload, id: resume?.id ?? payload.id },
             ),
@@ -217,7 +217,7 @@ export class ResumeRepository {
 
         reject(
           new DatabaseError(
-            trn.error?.message || "Resume update was aborted",
+            trn.error?.message || 'Resume update was aborted',
             undefined,
             { cause: trn.error },
             payload,
@@ -230,19 +230,19 @@ export class ResumeRepository {
   async resumeLookup() {
     return new Promise<Array<{ label: string; id: string }>>(
       (resolve, reject) => {
-        const trn = this.db.transaction([STORE_NAME], "readonly");
+        const trn = this.db.transaction([STORE_NAME], 'readonly');
         const request = trn.objectStore(STORE_NAME).getAll();
 
         trn.onerror = () => {
           reject(
-            new DatabaseError(trn.error?.message || "Resumes lookup failed"),
+            new DatabaseError(trn.error?.message || 'Resumes lookup failed'),
           );
         };
 
         trn.oncomplete = () => {
           const result = request.result;
           const resumes = result?.map((resume: ResumePopulate) => ({
-            label: resume?.meta?.title ?? "",
+            label: resume?.meta?.title ?? '',
             id: resume.id,
           }));
           resolve(resumes);
@@ -251,7 +251,7 @@ export class ResumeRepository {
         trn.onabort = () => {
           reject(
             new DatabaseError(
-              trn.error?.message || "Resume lookup was aborted",
+              trn.error?.message || 'Resume lookup was aborted',
             ),
           );
         };
@@ -261,12 +261,12 @@ export class ResumeRepository {
 
   async deleteResume(id: string) {
     return new Promise<void>((resolve, reject) => {
-      const trn = this.db.transaction([STORE_NAME], "readwrite");
+      const trn = this.db.transaction([STORE_NAME], 'readwrite');
       trn.objectStore(STORE_NAME).delete(id);
 
       trn.onerror = () => {
         reject(
-          new DatabaseError(trn.error?.message || "Failed to delete resume"),
+          new DatabaseError(trn.error?.message || 'Failed to delete resume'),
         );
       };
 
@@ -277,7 +277,7 @@ export class ResumeRepository {
       trn.onabort = () => {
         reject(
           new DatabaseError(
-            trn.error?.message || "Resume deletion was aborted",
+            trn.error?.message || 'Resume deletion was aborted',
           ),
         );
       };

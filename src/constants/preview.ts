@@ -1,3 +1,3 @@
-import type { CVTemplates } from "@/components/templates";
+import type { CVTemplates } from '@/components/templates';
 
-export const DEFAULT_TEMPLATE: CVTemplates = "obsidian";
+export const DEFAULT_TEMPLATE: CVTemplates = 'obsidian';

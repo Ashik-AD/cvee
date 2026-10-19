@@ -10,15 +10,15 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "@/components/ui/toast";
-import { menu, type ActionKey } from "@/constants/menubar";
-import useMapMenuAactionStatus from "@/hooks/useMapMenuActionStatus";
-import useMenu from "@/hooks/useMenu";
-import useMenuActions from "@/hooks/useMenuActions";
-import { getErrorMessage } from "@/utils/error";
-import { AlignRight, Check } from "lucide-react";
-import type { MouseEvent } from "react";
+} from '@/components/ui/dropdown-menu';
+import { toast } from '@/components/ui/toast';
+import { menu, type ActionKey } from '@/constants/menubar';
+import useMapMenuAactionStatus from '@/hooks/useMapMenuActionStatus';
+import useMenu from '@/hooks/useMenu';
+import useMenuActions from '@/hooks/useMenuActions';
+import { getErrorMessage } from '@/utils/error';
+import { AlignRight, Check } from 'lucide-react';
+import type { MouseEvent } from 'react';
 
 function MobileMenu() {
   const { isMenuActionEnabled } = useMenu();
@@ -33,7 +33,7 @@ function MobileMenu() {
       await execMenuAction(key);
     } catch (error) {
       toast.add({
-        type: "error",
+        type: 'error',
         title: getErrorMessage(error),
       });
     }
@@ -56,7 +56,7 @@ function MobileMenu() {
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent>
                     {mn.actions?.map((action) => {
-                      if (action.type === "separator")
+                      if (action.type === 'separator')
                         return <DropdownMenuSeparator />;
 
                       const disabled = !isMenuActionEnabled(action.key);
@@ -67,9 +67,9 @@ function MobileMenu() {
                           disabled={disabled}
                           data-key={action.key}
                           onClick={handleMenuClick}
-                          className="gap-3 justify-between items-center-safe"
+                          className="items-center-safe justify-between gap-3"
                         >
-                          <span className="flex gap-1.5 items-center-safe">
+                          <span className="flex items-center-safe gap-1.5">
                             {action.icon && <action.icon />}
                             {action.label}
                           </span>

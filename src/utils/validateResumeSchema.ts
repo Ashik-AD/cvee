@@ -1,18 +1,18 @@
-import type { ResumePopulate } from "@/lib/model/resume";
-import { getErrorMessage } from "./error";
+import type { ResumePopulate } from '@/lib/model/resume';
+import { getErrorMessage } from './error';
 
 /**
  * Validate Resume basic structure & values type
  * @param json ResumePopulate
  * */
 export function validateResumeSchema(json: ResumePopulate) {
-  const requireds = ["aboutMe", "personalInfo", "projects", "skills"];
+  const requireds = ['aboutMe', 'personalInfo', 'projects', 'skills'];
   // Not everyone have real world experience and educations
-  const optionals = ["experiences", "educations", "additional"];
+  const optionals = ['experiences', 'educations', 'additional'];
   const keys = Object.keys(json ?? {});
 
   if (keys.length === 0) {
-    throw new Error("CV is empty");
+    throw new Error('CV is empty');
   }
 
   const missingKeys = new Set<string>();
@@ -42,43 +42,43 @@ export function validateResumeSchema(json: ResumePopulate) {
   for (const key in json.personalInfo) {
     const value = json?.personalInfo?.[key as keyof typeof json.personalInfo];
     // Skip null or undefined key
-    if (value && typeof value !== "string") {
+    if (value && typeof value !== 'string') {
       throw new Error(`Invalid type: ${key}`);
     }
   }
-  if (json.aboutMe && typeof json.aboutMe !== "string") {
+  if (json.aboutMe && typeof json.aboutMe !== 'string') {
     throw new Error(`Invalid value 'aboutMe': ${json.aboutMe}`);
   }
 
   // Skills
   json.skills?.forEach((skill) => {
-    if (typeof skill !== "string") {
+    if (typeof skill !== 'string') {
       throw new Error(`Invalid skill: ${skill}`);
     }
   });
 
   // Experiences
   validateComplexDetail(json.experiences, [
-    "companyName",
-    "duration",
-    "role",
-    "description",
+    'companyName',
+    'duration',
+    'role',
+    'description',
   ]);
 
   // Projects
   validateComplexDetail(json.projects, [
-    "name",
-    "link",
-    "repoLink",
-    "description",
+    'name',
+    'link',
+    'repoLink',
+    'description',
   ]);
 
   // Educations
   validateComplexDetail(json.educations, [
-    "institute",
-    "duration",
-    "grade",
-    "course",
+    'institute',
+    'duration',
+    'grade',
+    'course',
   ]);
   return json;
 }
@@ -115,7 +115,7 @@ function validateComplexDetail<T>(value: Array<T>, objKeys: Array<keyof T>) {
       if (!hasKey) throw new Error(`Unknown key: ${key}`);
 
       const val = value?.[key as keyof typeof value];
-      if (val && typeof val !== "string") {
+      if (val && typeof val !== 'string') {
         throw new Error(`Invalid type value: ${key}: ${typeof val}`);
       }
     });

@@ -1,7 +1,7 @@
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Textarea } from "@/components/ui/textarea";
-import { useEditorAboutMe, useEditorActions } from "../../store";
-import type { ChangeEvent } from "react";
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Textarea } from '@/components/ui/textarea';
+import { useEditorAboutMe, useEditorActions } from '../../store';
+import type { ChangeEvent } from 'react';
 
 function Summary() {
   const { setAboutMe } = useEditorActions();

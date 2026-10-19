@@ -1,12 +1,12 @@
-import Preview from "@/features/editor/components/Preview";
-import { Flex } from "./layout";
-import { Button } from "../ui/button";
-import { Pencil, Printer, X } from "lucide-react";
-import useGetResume from "@/hooks/useGetResume";
-import { useCommonActions, useResumePreviewState } from "@/store";
-import { Activity } from "react";
-import usePrintResume from "@/hooks/usePrintResume";
-import { DEFAULT_TEMPLATE } from "@/constants/preview";
+import Preview from '@/features/editor/components/Preview';
+import { Flex } from './layout';
+import { Button } from '../ui/button';
+import { Pencil, Printer, X } from 'lucide-react';
+import useGetResume from '@/hooks/useGetResume';
+import { useCommonActions, useResumePreviewState } from '@/store';
+import { Activity } from 'react';
+import usePrintResume from '@/hooks/usePrintResume';
+import { DEFAULT_TEMPLATE } from '@/constants/preview';
 
 function PreviewContent({ previewId }: { previewId: string | null }) {
   const { resume } = useGetResume(previewId);
@@ -33,7 +33,7 @@ function PreviewContent({ previewId }: { previewId: string | null }) {
         template={resumeTemplate}
       />
 
-      <Flex className="absolute bottom-1 bg-neutral-111111 rounded-full shadow-lg overflow-hidden shadow-emerald-700 p-1 hidden-on-print">
+      <Flex className="bg-neutral-111111 hidden-on-print absolute bottom-1 overflow-hidden rounded-full p-1 shadow-lg shadow-emerald-700">
         <Button type="button" variant="ghost" onClick={handlePrint}>
           <Printer />
           Print
@@ -54,8 +54,8 @@ function PreviewContent({ previewId }: { previewId: string | null }) {
 function ResumePreview() {
   const { previewId, isShowPreview } = useResumePreviewState();
   return (
-    <Activity mode={isShowPreview ? "visible" : "hidden"}>
-      <Flex className="fixed bg-document-foreground min-h-screen w-screen items-center justify-center inset-0 overflow-y-auto scrollbar-none">
+    <Activity mode={isShowPreview ? 'visible' : 'hidden'}>
+      <Flex className="bg-document-foreground fixed inset-0 min-h-screen w-screen scrollbar-none items-center justify-center overflow-y-auto">
         <PreviewContent previewId={previewId} />
       </Flex>
     </Activity>

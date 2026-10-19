@@ -1,29 +1,29 @@
-import type { ActionKey } from "./menubar";
+import type { ActionKey } from './menubar';
 
 export const KeyboardShortcutGroups: {
   label: string;
   actions: ActionKey[];
 }[] = [
   {
-    label: "General",
+    label: 'General',
     actions: [
-      "save",
-      "command-palette",
-      "keyboard-shortcuts",
-      "import-all-json",
-      "export-all-json",
+      'save',
+      'command-palette',
+      'keyboard-shortcuts',
+      'import-all-json',
+      'export-all-json',
     ],
   },
 
   {
-    label: "CV",
+    label: 'CV',
     actions: [
-      "new-cv",
-      "duplicate-cv",
-      "rename-cv",
-      "delete-cv",
-      "import-json",
-      "export-json",
+      'new-cv',
+      'duplicate-cv',
+      'rename-cv',
+      'delete-cv',
+      'import-json',
+      'export-json',
     ],
   },
 
@@ -41,17 +41,17 @@ export const KeyboardShortcutGroups: {
   // },
 
   {
-    label: "View",
-    actions: ["view-editor", "view-preview", "view-split"],
+    label: 'View',
+    actions: ['view-editor', 'view-preview', 'view-split'],
   },
 
   {
-    label: "Print",
-    actions: ["print-cv", "print-preview"],
+    label: 'Print',
+    actions: ['print-cv', 'print-preview'],
   },
 
   {
-    label: "Help",
-    actions: ["getting-started", "about", "feedback"],
+    label: 'Help',
+    actions: ['getting-started', 'about', 'feedback'],
   },
 ];

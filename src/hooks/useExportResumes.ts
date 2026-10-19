@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import useServices from "./useServices";
-import type { ResumePopulate } from "@/lib/model/resume";
-import { AppError, getErrorMessage } from "@/utils/error";
+import { useEffect, useRef, useState } from 'react';
+import useServices from './useServices';
+import type { ResumePopulate } from '@/lib/model/resume';
+import { AppError, getErrorMessage } from '@/utils/error';
 
-import ExportWorker from "../lib/worker/validateAndNormalizeJSON?worker";
-import { downloadAsFile } from "@/utils/downloadAsFile";
-import type { JSONDataPayload, JSONResult } from "@/lib/worker/type";
+import ExportWorker from '../lib/worker/validateAndNormalizeJSON?worker';
+import { downloadAsFile } from '@/utils/downloadAsFile';
+import type { JSONDataPayload, JSONResult } from '@/lib/worker/type';
 
 export default function useExportResumes() {
   const [jsonConut, setJsonCount] = useState(0);
@@ -30,7 +30,7 @@ export default function useExportResumes() {
   async function exportAllResumeJSON() {
     const resumes = await services?.resumeSrv.getResumes();
     if (!resumes || resumes?.length === 0) {
-      throw new AppError("No resume found to export");
+      throw new AppError('No resume found to export');
     }
     setJsonCount(resumes.length);
 
@@ -51,9 +51,9 @@ export default function useExportResumes() {
       resumes.forEach((resume, idx) => {
         worker.postMessage({
           taskID: idx.toString(),
-          type: "EXPORT",
+          type: 'EXPORT',
           payload: resume,
-          status: "PROCESS_PAYLOAD",
+          status: 'PROCESS_PAYLOAD',
         } satisfies JSONDataPayload<ResumePopulate>);
         setParsedJsonCount((prev) => prev + 1);
       });
@@ -61,8 +61,8 @@ export default function useExportResumes() {
 
     // send worker to no more task to execute
     worker.postMessage({
-      type: "EXPORT",
-      status: "END_BATCH",
+      type: 'EXPORT',
+      status: 'END_BATCH',
     } satisfies JSONDataPayload<ResumePopulate>);
 
     worker.onmessage = (event: MessageEvent<JSONResult<ResumePopulate>>) => {
@@ -72,7 +72,7 @@ export default function useExportResumes() {
 
       const data = event.data;
       // collect errors
-      if (data.type === "TASK_FAIL") {
+      if (data.type === 'TASK_FAIL') {
         setFailedJSONS((prev) => {
           const newFailedJsons = prev?.splice(0) ?? [];
           newFailedJsons?.push({
@@ -83,29 +83,29 @@ export default function useExportResumes() {
         });
       }
 
-      if (data.type === "RESULT") {
+      if (data.type === 'RESULT') {
         const resume = data.result;
         parsedResumes.set(resume.id, resume);
       }
 
       // call download function, this will
       // not download until all the JSON is parsed
-      if (data.type === "DONE") {
+      if (data.type === 'DONE') {
         downloadParsedJSONS();
         worker.terminate();
       }
     };
 
     worker.onerror = (err) => {
-      setError(getErrorMessage(err, "Failed to parse resume"));
+      setError(getErrorMessage(err, 'Failed to parse resume'));
       worker.terminate();
     };
 
     function downloadParsedJSONS() {
       downloadAsFile(
         Array.from(parsedResumes.values()),
-        "resumes.json",
-        "application/json",
+        'resumes.json',
+        'application/json',
       );
     }
   }

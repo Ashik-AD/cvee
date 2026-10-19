@@ -1,4 +1,4 @@
-import { Copy, Eye, MoreHorizontal, Printer, Trash2 } from "lucide-react";
+import { Copy, Eye, MoreHorizontal, Printer, Trash2 } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -6,9 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "cn";
-import { buttonVariants } from "@/components/ui/button";
+} from '@/components/ui/dropdown-menu';
+import { cn } from 'cn';
+import { buttonVariants } from '@/components/ui/button';
 
 type ResumeDropdownMenuProps = {
   id: string;
@@ -27,8 +27,8 @@ function ResumeDropdownMenu({
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          buttonVariants({ variant: "ghost", size: "icon" }),
-          "size-7 rounded-xs text-muted-foreground hover:bg-muted hover:text-foreground",
+          buttonVariants({ variant: 'ghost', size: 'icon' }),
+          'size-7 rounded-xs text-muted-foreground hover:bg-muted hover:text-foreground',
         )}
       >
         <MoreHorizontal className="size-4" />

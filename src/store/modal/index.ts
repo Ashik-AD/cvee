@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { immer } from "zustand/middleware/immer";
-import { useShallow } from "zustand/shallow";
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
+import { useShallow } from 'zustand/shallow';
 
 type State = {
   modalName: string;
@@ -16,7 +16,7 @@ type State = {
 export const useModalStore = create<State>()(
   devtools(
     immer((set, _, store) => ({
-      modalName: "",
+      modalName: '',
       isOpen: false,
       modalProps: null,
       actions: {
@@ -34,7 +34,7 @@ export const useModalStore = create<State>()(
       },
     })),
     {
-      name: "modalStore",
+      name: 'modalStore',
     },
   ),
 );

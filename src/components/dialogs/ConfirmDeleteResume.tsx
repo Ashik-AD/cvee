@@ -1,9 +1,9 @@
-import { useAlertDialogActions } from "@/store/alert-dialog";
-import { ActionInteruptDialog } from "../common/ActionInteruptDialog";
-import useDeleteResume from "@/hooks/useDeleteResume";
-import { useEditorActions } from "@/features/editor/store";
-import { useLocation } from "wouter";
-import { useState } from "react";
+import { useAlertDialogActions } from '@/store/alert-dialog';
+import { ActionInteruptDialog } from '../common/ActionInteruptDialog';
+import useDeleteResume from '@/hooks/useDeleteResume';
+import { useEditorActions } from '@/features/editor/store';
+import { useLocation } from 'wouter';
+import { useState } from 'react';
 
 function ConfirmDeleteResume({ id }: { id: string }) {
   const deleteResume = useDeleteResume();
@@ -20,7 +20,7 @@ function ConfirmDeleteResume({ id }: { id: string }) {
         // Reset editor
         resetEditor();
         // Redirect to dashboard
-        navigate("/");
+        navigate('/');
       } catch (error) {
       } finally {
         setIsLoading(false);

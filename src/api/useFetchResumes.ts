@@ -1,7 +1,7 @@
-import useServices from "@/hooks/useServices";
-import type { ResumePopulate } from "@/lib/model/resume";
-import { getErrorMessage } from "@/utils/error";
-import { useEffect, useState } from "react";
+import useServices from '@/hooks/useServices';
+import type { ResumePopulate } from '@/lib/model/resume';
+import { getErrorMessage } from '@/utils/error';
+import { useEffect, useState } from 'react';
 
 export function useFetchResumes() {
   const [resumes, setResumes] = useState<ResumePopulate[] | null>([]);

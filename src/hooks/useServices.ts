@@ -1,5 +1,5 @@
-import { ServicesContext } from "@/context/Services";
-import { useContext } from "react";
+import { ServicesContext } from '@/context/Services';
+import { useContext } from 'react';
 
 export default function useServices() {
   const ctx = useContext(ServicesContext);

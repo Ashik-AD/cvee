@@ -1,5 +1,5 @@
-type AppErrorCodes = "NOT_FOUND" | "UNKNOWN_ERROR";
-type DatabaseErrorCode = "STORAGE_FULL";
+type AppErrorCodes = 'NOT_FOUND' | 'UNKNOWN_ERROR';
+type DatabaseErrorCode = 'STORAGE_FULL';
 
 export type ErrorCodes = AppErrorCodes | DatabaseErrorCode;
 
@@ -18,7 +18,7 @@ export class BaseError extends Error {
     this.code = code;
     this.status = status;
     this.attachment = attachment;
-    this.name = "BaseError";
+    this.name = 'BaseError';
   }
 }
 
@@ -31,7 +31,7 @@ export class AppError extends BaseError {
     attachment?: unknown,
   ) {
     super(message, code, status, options, attachment);
-    this.name = "AppError";
+    this.name = 'AppError';
   }
 }
 
@@ -43,7 +43,7 @@ export class DatabaseError extends BaseError {
     attachment?: unknown,
   ) {
     super(message, code, undefined, options, attachment);
-    this.name = "DatabaseError";
+    this.name = 'DatabaseError';
   }
 }
 
@@ -51,5 +51,5 @@ export function getErrorMessage(error: unknown, fallbackMsg?: string) {
   if (error instanceof Error) {
     return error.message;
   }
-  return fallbackMsg ?? "Unknown error. Please try again.";
+  return fallbackMsg ?? 'Unknown error. Please try again.';
 }

@@ -1,12 +1,12 @@
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { useEditorActions, useEditorEducations } from "../../store";
-import type { Education } from "@/lib/model/resume";
-import type { ChangeEvent } from "react";
-import { Button } from "@/components/ui/button";
-import { FlexColumn } from "@/components/common/layout";
-import { Plus } from "lucide-react";
-import SectionItemActions from "./SectionItemActions";
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { useEditorActions, useEditorEducations } from '../../store';
+import type { Education } from '@/lib/model/resume';
+import type { ChangeEvent } from 'react';
+import { Button } from '@/components/ui/button';
+import { FlexColumn } from '@/components/common/layout';
+import { Plus } from 'lucide-react';
+import SectionItemActions from './SectionItemActions';
 
 interface EducationFieldProps extends Education {
   onChange: (values: Partial<Education>) => void;
@@ -29,7 +29,7 @@ function EducationField({
   }
 
   return (
-    <FieldGroup className="grid sm:grid-cols-2 bg-neutral-0E0E0E border border-neutral-2A2A2A rounded-xs p-2">
+    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A grid rounded-xs border p-2 sm:grid-cols-2">
       {/*Institute field */}
       <Field>
         <FieldLabel htmlFor="institute">School/University</FieldLabel>
@@ -105,10 +105,10 @@ function EducationSection() {
 
   function handleAddNewEducation() {
     addNewEducation({
-      grade: "",
-      duration: "",
-      institute: "",
-      course: "",
+      grade: '',
+      duration: '',
+      institute: '',
+      course: '',
     });
   }
 

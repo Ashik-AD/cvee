@@ -1,5 +1,5 @@
-import { useResumeActions } from "@/store";
-import useServices from "./useServices";
+import { useResumeActions } from '@/store';
+import useServices from './useServices';
 
 export default function useDeleteResume() {
   const { services } = useServices();

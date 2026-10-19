@@ -1,13 +1,13 @@
-import { AppError, getErrorMessage } from "@/utils/error";
-import useServices from "./useServices";
-import { useResumeActions } from "@/store";
+import { AppError, getErrorMessage } from '@/utils/error';
+import useServices from './useServices';
+import { useResumeActions } from '@/store';
 
 function generateNewName(
   oldName: string | null,
   oldNames: (string | null | undefined)[],
 ) {
   // if no name, provide default name
-  if (!oldName?.trim()) return "New resume";
+  if (!oldName?.trim()) return 'New resume';
 
   const matchingNames = oldNames.filter((name) => name?.startsWith(oldName));
 
@@ -28,7 +28,7 @@ function generateNewName(
   }
 
   // start with number that is missing
-  let fileName: string = "";
+  let fileName: string = '';
   const greatest = fileNameNumber.pop() ?? 0;
   for (let i = 1; i <= greatest; i++) {
     const isExist = fileNameNumber.some((n) => n === i);
@@ -61,7 +61,7 @@ export default function useCreateDuplicateResume(id: string | null) {
       const getResumeNames = await services?.resumeSrv.getResumesName();
       const resumeNames =
         getResumeNames?.map((resume: any) => resume?.name) ?? [];
-      const newName = generateNewName(resume.meta?.title ?? "", resumeNames);
+      const newName = generateNewName(resume.meta?.title ?? '', resumeNames);
 
       const res = await services?.resumeSrv.createNewResume(resume, {
         ...resume.meta,
@@ -78,7 +78,7 @@ export default function useCreateDuplicateResume(id: string | null) {
 
       const msg = getErrorMessage(
         error,
-        "Failed to duplicate resume. Please try again.",
+        'Failed to duplicate resume. Please try again.',
       );
       throw new AppError(msg);
     }

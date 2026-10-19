@@ -1,10 +1,10 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
-import { devtools, persist } from "zustand/middleware";
-import type { Resume } from "@/lib/model/resume";
-import type { ResumePopulate } from "@/lib/model/resume";
-import { useShallow } from "zustand/shallow";
-import { DEFAULT_TEMPLATE } from "@/constants/preview";
+import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
+import { devtools, persist } from 'zustand/middleware';
+import type { Resume } from '@/lib/model/resume';
+import type { ResumePopulate } from '@/lib/model/resume';
+import { useShallow } from 'zustand/shallow';
+import { DEFAULT_TEMPLATE } from '@/constants/preview';
 
 type EditorSettings = {
   zoomLevel: number;
@@ -18,42 +18,42 @@ interface State extends ResumePopulate {
 
   actions: {
     setEditor: (payload: ResumePopulate) => void;
-    setPersonalInfo: (payload: Partial<Resume["personalInfo"]>) => void;
+    setPersonalInfo: (payload: Partial<Resume['personalInfo']>) => void;
     updatePersonalInfo: (
-      key: keyof Resume["personalInfo"],
+      key: keyof Resume['personalInfo'],
       payload: any,
     ) => void;
-    setAboutMe: (payload: Resume["aboutMe"]) => void;
-    setExperiences: (payload: Resume["experiences"]) => void;
-    addNewExperience: (payload: Resume["experiences"][0]) => void;
+    setAboutMe: (payload: Resume['aboutMe']) => void;
+    setExperiences: (payload: Resume['experiences']) => void;
+    addNewExperience: (payload: Resume['experiences'][0]) => void;
     updateExperience: (
       index: number,
-      payload: Partial<Resume["experiences"][0]>,
+      payload: Partial<Resume['experiences'][0]>,
     ) => void;
     deleteExperiences: (index: number) => void;
-    setSkills: (payload: Resume["skills"]) => void;
+    setSkills: (payload: Resume['skills']) => void;
     deleteSkills: (index: number) => void;
-    setProjects: (payload: Resume["projects"]) => void;
-    addNewProject: (payload: Resume["projects"][0]) => void;
+    setProjects: (payload: Resume['projects']) => void;
+    addNewProject: (payload: Resume['projects'][0]) => void;
     updateProject: (
       index: number,
-      payload: Partial<Resume["projects"][0]>,
+      payload: Partial<Resume['projects'][0]>,
     ) => void;
     deleteProjects: (index: number) => void;
-    setEducations: (payload: Resume["educations"]) => void;
-    addNewEducation: (payload: Resume["educations"][0]) => void;
+    setEducations: (payload: Resume['educations']) => void;
+    addNewEducation: (payload: Resume['educations'][0]) => void;
     updateEducation: (
       index: number,
-      payload: Partial<Resume["educations"][0]>,
+      payload: Partial<Resume['educations'][0]>,
     ) => void;
     deleteEducations: (index: number) => void;
-    setAddons: (payload: Resume["addons"]) => void;
-    addNewAddon: (payload: Resume["addons"][0]) => void;
+    setAddons: (payload: Resume['addons']) => void;
+    addNewAddon: (payload: Resume['addons'][0]) => void;
     updateAddons: (
-      key: keyof State["addons"],
-      payload: Partial<Resume["addons"]>,
+      key: keyof State['addons'],
+      payload: Partial<Resume['addons']>,
     ) => void;
-    deleteAddons: (key: keyof State["addons"]) => void;
+    deleteAddons: (key: keyof State['addons']) => void;
 
     updateMeta: (payload: Partial<Record<string, unknown>>) => void;
 
@@ -70,49 +70,49 @@ const useEditorStore = create<State>()(
     persist(
       immer((set, _, store) => ({
         personalInfo: {
-          name: "",
-          email: "",
-          contactNo: "",
-          address: "",
-          github: "",
-          linkedin: "",
-          role: "",
+          name: '',
+          email: '',
+          contactNo: '',
+          address: '',
+          github: '',
+          linkedin: '',
+          role: '',
         },
-        aboutMe: "",
+        aboutMe: '',
         experiences: [
           {
-            companyName: "",
-            role: "",
-            duration: "",
-            description: [""],
+            companyName: '',
+            role: '',
+            duration: '',
+            description: [''],
           },
         ],
         skills: [],
         projects: [
           {
-            name: "",
-            link: "",
-            repoLink: "",
-            description: [""],
+            name: '',
+            link: '',
+            repoLink: '',
+            description: [''],
           },
         ],
         educations: [
           {
-            institute: "",
-            course: "",
-            duration: "",
-            grade: "",
+            institute: '',
+            course: '',
+            duration: '',
+            grade: '',
           },
         ],
         addons: {},
         meta: {
-          title: "",
-          createdAt: "",
-          updatedAt: "",
-          description: "",
+          title: '',
+          createdAt: '',
+          updatedAt: '',
+          description: '',
           template: DEFAULT_TEMPLATE,
         },
-        id: "",
+        id: '',
         settings: {
           zoomLevel: 100,
           showTemplatePicker: false,
@@ -269,7 +269,7 @@ const useEditorStore = create<State>()(
         },
       })),
       {
-        name: "editor",
+        name: 'editor',
         partialize: (state) => ({
           aboutMe: state.aboutMe,
           personalInfo: state.personalInfo,
@@ -281,7 +281,7 @@ const useEditorStore = create<State>()(
       },
     ),
     {
-      name: "editorStore",
+      name: 'editorStore',
     },
   ),
 );

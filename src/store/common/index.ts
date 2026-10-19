@@ -1,9 +1,9 @@
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
-import { immer } from "zustand/middleware/immer";
-import { useShallow } from "zustand/shallow";
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
+import { useShallow } from 'zustand/shallow';
 
-type DashboardDataView = "grid" | "list";
+type DashboardDataView = 'grid' | 'list';
 type State = {
   lastOpendId: string | null;
   previewId: string | null;
@@ -33,7 +33,7 @@ export const useCommonStore = create<State>()(
         showPreview: false,
         renameResume: false,
         showCommandCenter: false,
-        dashboardDataView: "grid",
+        dashboardDataView: 'grid',
 
         actions: {
           setLastOpendId: (id) => {
@@ -80,7 +80,7 @@ export const useCommonStore = create<State>()(
         },
       })),
       {
-        name: "cvee-storage",
+        name: 'cvee-storage',
         partialize: (state) => ({
           lastOpendId: state.lastOpendId,
           dashboardDataView: state.dashboardDataView,
@@ -88,7 +88,7 @@ export const useCommonStore = create<State>()(
       },
     ),
     {
-      name: "commonStore",
+      name: 'commonStore',
     },
   ),
 );

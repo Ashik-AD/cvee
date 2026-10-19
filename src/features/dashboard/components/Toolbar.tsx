@@ -1,19 +1,19 @@
-import { Flex } from "@/components/common/layout";
-import { Button } from "@/components/ui/button";
-import { cn } from "cn";
-import { LayoutGrid, List } from "lucide-react";
-import type { ViewMode } from "..";
+import { Flex } from '@/components/common/layout';
+import { Button } from '@/components/ui/button';
+import { cn } from 'cn';
+import { LayoutGrid, List } from 'lucide-react';
+import type { ViewMode } from '..';
 
 const viewList = [
   {
-    label: "Grid",
+    label: 'Grid',
     icon: LayoutGrid,
-    key: "grid",
+    key: 'grid',
   },
   {
-    label: "List",
+    label: 'List',
     icon: List,
-    key: "list",
+    key: 'list',
   },
 ];
 
@@ -27,21 +27,22 @@ function Toolbar({
   resumeCount: number;
 }) {
   return (
-    <Flex className="gap-4 items-center justify-between">
+    <Flex className="items-center justify-between gap-4">
       <span>
-        All Resume <small className="text-muted-foreground">({resumeCount})</small>
+        All Resume{' '}
+        <small className="text-muted-foreground">({resumeCount})</small>
       </span>
 
-      <Flex className="gap-4 items-center">
-        <Flex className="rounded-md overflow-hidden p-0 border">
+      <Flex className="items-center gap-4">
+        <Flex className="overflow-hidden rounded-md border p-0">
           {viewList.map((view) => {
             const Icon = view.icon;
             return (
               <Button
                 variant="ghost"
                 className={cn(
-                  "rounded-r-sm border",
-                  viewMode === view.key && "bg-muted-foreground/20",
+                  'rounded-r-sm border',
+                  viewMode === view.key && 'bg-muted-foreground/20',
                 )}
                 onClick={() => onViewChange(view.key as ViewMode)}
                 type="button"

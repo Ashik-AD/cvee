@@ -1,6 +1,6 @@
-import useServices from "@/hooks/useServices";
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "wouter";
+import useServices from '@/hooks/useServices';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'wouter';
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 function ResumeLookup({
   onChange,
@@ -23,7 +23,7 @@ function ResumeLookup({
   const { services } = useServices();
   const [params] = useSearchParams();
 
-  const id = params.get("id");
+  const id = params.get('id');
 
   useEffect(() => {
     services?.resumeSrv
@@ -51,7 +51,7 @@ function ResumeLookup({
       defaultValue={defaultSelected?.value}
       onValueChange={(val) => onChange(val)}
     >
-      <SelectTrigger className="w-full max-w-48 bg-neutral-0E0E0E">
+      <SelectTrigger className="bg-neutral-0E0E0E w-full max-w-48">
         <SelectValue placeholder="Select resume" />
       </SelectTrigger>
       <SelectContent>
@@ -60,9 +60,9 @@ function ResumeLookup({
           {transformLookup.map((item) => (
             <SelectItem key={item.value} value={item.value}>
               {item.label?.length > 12
-                ? item.label?.slice(0, 12).concat("...")
-                : item.label}{" "}
-              {id === item.value && "(Active)"}
+                ? item.label?.slice(0, 12).concat('...')
+                : item.label}{' '}
+              {id === item.value && '(Active)'}
             </SelectItem>
           ))}
         </SelectGroup>
