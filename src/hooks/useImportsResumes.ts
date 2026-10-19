@@ -142,6 +142,7 @@ export function useImportResumes() {
           : services?.resumeSrv.createNewResume(resume, {
               title: resume.meta?.title,
               id: resume.id,
+              template: resume.meta?.template,
             });
       }) ?? [],
     );

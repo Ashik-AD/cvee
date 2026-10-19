@@ -18,7 +18,7 @@ export class ResumeService implements ResumeSrv {
    * */
   async createNewResume(
     resume: Resume,
-    metaDetail?: Partial<ResumePopulate["meta"] & {id: string}>,
+    metaDetail?: Partial<ResumePopulate["meta"] & { id: string }>,
   ) {
     if (!resume) {
       throw new AppError("Resume data is missing", "NOT_FOUND");
@@ -57,10 +57,23 @@ export class ResumeService implements ResumeSrv {
     }
     if (!resume) return;
 
-    const checkResumeExist = await this.resumeRepo.getResumeById(id);
-    if (!checkResumeExist) {
+    let existingResume = await this.resumeRepo.getResumeById(id);
+    if (!existingResume) {
       throw new AppError("Resume not found", "NOT_FOUND");
     }
+
+    // Make sure meta such title, description, template always fallback
+    // to saved in the database, if not provided
+    const meta = {
+      ...resume.meta,
+      title: resume.meta?.title || existingResume?.meta?.title,
+      description:
+        resume.meta?.description || existingResume?.meta?.description,
+      template: resume.meta?.template || existingResume?.meta?.template,
+      updatedAt: existingResume.meta.updatedAt,
+      createdAt: existingResume.meta.createdAt,
+    } satisfies ResumePopulate["meta"];
+    resume.meta = meta;
 
     return await this.resumeRepo.updateResume(id, resume);
   }

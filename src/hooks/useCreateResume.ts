@@ -6,7 +6,7 @@ export default function useCreateResume() {
   const { services } = useServices();
 
   return async function handleCreateNew(
-    resume?: Partial<Resume>,
+    resume?: Partial<ResumePopulate>,
     title?: string,
   ): Promise<ResumePopulate | undefined> {
     const payload: Resume = {
@@ -27,7 +27,10 @@ export default function useCreateResume() {
       addons: {},
       ...resume,
     };
-    const res = await services?.resumeSrv.createNewResume(payload, { title });
+    const res = await services?.resumeSrv.createNewResume(payload, {
+      ...resume?.meta,
+      title,
+    });
     return res;
   };
 }

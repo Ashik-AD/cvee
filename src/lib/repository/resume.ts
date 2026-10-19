@@ -49,14 +49,13 @@ export class ResumeRepository {
 
       let resumeName =
         metaDetail?.title ?? `Untitled - ${new Date().toLocaleString()}`;
-
       // Set default meta data
       const meta = {
         createdAt: now,
         updatedAt: now,
         title: resumeName,
-        description: metaDetail?.description ?? "",
-        template: metaDetail?.template ?? undefined,
+        description: metaDetail?.description || "",
+        template: metaDetail?.template || undefined,
       } satisfies ResumePopulate["meta"];
 
       const payload = {
@@ -178,9 +177,9 @@ export class ResumeRepository {
         ...resume,
         id,
         meta: {
-          title: resume.meta?.title ?? "",
-          createdAt: resume.meta?.createdAt ?? null,
-          description: resume?.meta?.description ?? resume.meta?.title ?? "",
+          title: resume.meta?.title || "",
+          createdAt: resume.meta?.createdAt || null,
+          description: resume?.meta?.description || "",
           updatedAt: new Date().toISOString(),
           template: resume?.meta?.template,
         },
