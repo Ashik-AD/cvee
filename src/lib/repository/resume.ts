@@ -260,7 +260,7 @@ export class ResumeRepository {
   }
 
   async deleteResume(id: string) {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
       const trn = this.db.transaction([STORE_NAME], 'readwrite');
       trn.objectStore(STORE_NAME).delete(id);
 
@@ -271,7 +271,7 @@ export class ResumeRepository {
       };
 
       trn.oncomplete = () => {
-        resolve();
+        resolve(true);
       };
 
       trn.onabort = () => {
