@@ -7,11 +7,9 @@ export async function initDB() {
   return new Promise<IDBDatabase>((resolve, reject) => {
     request.onupgradeneeded = () => {
       ResumeRepository.createSchemaV1(request.result);
-      console.log('Schema setup successful');
     };
     request.onsuccess = () => {
       resolve(request.result);
-      console.log('Database setup done');
     };
 
     request.onerror = () => {
