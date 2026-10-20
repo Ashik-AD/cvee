@@ -45,9 +45,9 @@ export interface ResumePopulate extends Resume {
   id: string;
   meta: {
     title: string | null;
-    description: string | null;
-    createdAt: string | null;
-    updatedAt: string | null;
+    description?: string | null;
+    createdAt?: string | null;
+    updatedAt?: string | null;
     template?: CVTemplates | null;
   };
 }
