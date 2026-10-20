@@ -13,8 +13,8 @@ import { getLastModifiedTime } from '@/utils/getLastModifiedTime';
 type ResumeCardProps = {
   title: string;
   description: string;
-  createdAt: string | null;
-  updatedAt: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
   id: string;
   onDelete: (id: string) => void;
   onPreview: (id: string) => void;
