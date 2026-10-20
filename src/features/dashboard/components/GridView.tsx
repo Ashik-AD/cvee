@@ -24,8 +24,8 @@ function GridView({ resumes, onDelete, onPrint, onPreview }: GridViewProps) {
             id={id}
             title={resume.meta.title ?? ''}
             description={resume.meta.description ?? ''}
-            createdAt={resume.meta.createdAt}
-            updatedAt={resume.meta.updatedAt}
+            createdAt={resume.meta?.createdAt}
+            updatedAt={resume.meta?.updatedAt}
             onDelete={() => onDelete(id)}
             onPreview={() => onPreview(id)}
             onPrint={() => onPrint(id)}

@@ -2,6 +2,7 @@ import { AppError } from '@/utils/error';
 import type { ResumeRepository } from '../repository/resume';
 import type { ResumePopulate } from '../model/resume';
 import type { Resume } from '../model/resume';
+import { objIsEmpty } from '@/utils/objIsEmpty';
 
 interface ResumeSrv {
   resumeRepo: ResumeRepository;
@@ -20,7 +21,7 @@ export class ResumeService implements ResumeSrv {
     resume: Resume,
     metaDetail?: Partial<ResumePopulate['meta'] & { id: string }>,
   ) {
-    if (!resume) {
+    if (!resume || objIsEmpty(resume)) {
       throw new AppError('Resume data is missing', 'NOT_FOUND');
     }
 
@@ -55,7 +56,9 @@ export class ResumeService implements ResumeSrv {
     if (!id?.trim()) {
       throw new AppError('Resume id is missing');
     }
-    if (!resume) return;
+    if (!resume || objIsEmpty(resume)) {
+      throw new AppError('Resume details is required', 'NOT_FOUND');
+    }
 
     let existingResume = await this.resumeRepo.getResumeById(id);
     if (!existingResume) {
