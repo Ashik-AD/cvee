@@ -165,7 +165,7 @@ export function useImportResumes() {
 
             const importedResumeId =
               originalIDsArr.find(
-                ([_, val]) => val === attachment?.id,
+                ([, val]) => val === attachment?.id,
               )?.[0] /* imported_resume id */ ?? attachment?.id; // whatever id found in the error attachemnt
             if (importedResumeId) {
               map.set(importedResumeId, res.reason.message);

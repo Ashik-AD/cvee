@@ -85,7 +85,6 @@ describe('resume repository', () => {
 
   // No need to update each fields, just really essentials (not all)
   test('update resume details', async () => {
-
     const newResume = await resumeRepo.createNewResume(resume, resumeMeta);
 
     const data: Partial<ResumePopulate> = {

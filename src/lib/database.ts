@@ -34,8 +34,6 @@ export class Database {
       };
 
       dbReq.onerror = (e) => {
-        console.error('Database initialized failed. Error: ', e);
-
         this.error = {
           message: 'Failed initialize database',
           info: e,
@@ -43,8 +41,9 @@ export class Database {
         reject(this.error);
       };
 
-      dbReq.onsuccess = (e) => {
-        console.info('Database connection initialized: ', e.type);
+      dbReq.onsuccess = () => {
+        // eslint-disable-next-line no-console expose error in prod. for debug
+        console.info('Database connection initialized: ', dbReq.error);
         this.db = dbReq.result;
         resolve(this.db);
       };

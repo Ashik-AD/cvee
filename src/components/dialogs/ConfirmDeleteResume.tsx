@@ -4,6 +4,7 @@ import useDeleteResume from '@/hooks/useDeleteResume';
 import { useEditorActions } from '@/features/editor/store';
 import { useLocation } from 'wouter';
 import { useState } from 'react';
+import { toast } from '../ui/toast';
 
 function ConfirmDeleteResume({ id }: { id: string }) {
   const deleteResume = useDeleteResume();
@@ -22,6 +23,10 @@ function ConfirmDeleteResume({ id }: { id: string }) {
         // Redirect to dashboard
         navigate('/');
       } catch (error) {
+        toast.add({
+          type: 'error',
+          title: (error as Error).message || 'Failed to delete resume.',
+        });
       } finally {
         setIsLoading(false);
         closeAlertDialog();

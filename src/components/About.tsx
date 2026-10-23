@@ -73,7 +73,7 @@ export function About() {
             const Icon = feature.icon;
 
             return (
-              <div key={feature.title} className="p-5 border-0">
+              <div key={feature.title} className="border-0 p-5">
                 <FlexCenter className="mb-3 size-8 rounded-md border border-emerald-800 bg-emerald-800/20">
                   <Icon className="size-4 text-emerald-500" />
                 </FlexCenter>

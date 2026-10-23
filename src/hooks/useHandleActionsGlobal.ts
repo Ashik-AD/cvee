@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 import { useCommonActions } from '@/store';
 import { useLocation, useSearchParams } from 'wouter';
 import useMenuActions from './useMenuActions';
@@ -21,7 +21,7 @@ export default function useHandleActionsGlobal() {
     location.startsWith('/editor') && resumeId,
   );
 
-  async function handleKeyboard(e: KeyboardEvent) {
+  const handleKeyboard = useEffectEvent(async (e: KeyboardEvent) => {
     const key = e.key?.toLowerCase();
 
     try {
@@ -122,7 +122,7 @@ export default function useHandleActionsGlobal() {
       e.preventDefault();
       e.stopPropagation();
     }
-  }
+  });
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyboard);

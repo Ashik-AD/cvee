@@ -22,12 +22,11 @@ export default function ServicesProvider({
 
   // initialize DB & Services
   useEffect(() => {
-    if (isInitializing) return;
-    setInitializing(true);
-    const initDB = new Database(DB_NAME);
-    initDB
-      .connect()
-      .then((conn) => {
+    async function initServices() {
+      try {
+        setInitializing(true);
+        const initDB = new Database(DB_NAME);
+        const conn = await initDB.connect();
         // Initialize repositories
         const repositories = new Repositories(conn);
 
@@ -35,17 +34,19 @@ export default function ServicesProvider({
         const srv = new Services(repositories);
 
         setServices(srv);
+      } catch (error) {
+        // eslint-disable-next-line no-console expose error in prod. for debug
+        console.error('Failed initialize db: ', error);
+      } finally {
         setInitializing(false);
-      })
-      .catch((err) => {
-        console.error('Failed initialize db: ', err);
-        setInitializing(false);
-      });
+      }
+    }
+    void initServices();
   }, []);
 
   return (
     <ServicesContext.Provider value={{ services }}>
-      {children}
+      {isInitializing ? `loading...` : children}
     </ServicesContext.Provider>
   );
 }

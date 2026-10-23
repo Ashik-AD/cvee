@@ -23,12 +23,14 @@ export default function Editor() {
   const { services } = useServices();
   const { resetEditor, setEditor } = useEditorActions();
 
+  const resumeService = services?.resumeSrv;
+
   // fetch opened resume from database
   // and populate editor store
   useEffect(() => {
     if (resumeId) {
-      services?.resumeSrv
-        .getResumeById(resumeId)
+      resumeService
+        ?.getResumeById(resumeId)
         .then((resume: any) => {
           // Populate resume in the editor
           if (resume) {
@@ -47,14 +49,14 @@ export default function Editor() {
           });
         });
     }
-  }, [resumeId]);
+  }, [resumeId, resumeService, setEditor]);
 
   // Rest editor state on unmount
   useEffect(() => {
     return () => {
       resetEditor();
     };
-  }, []);
+  }, [resetEditor]);
 
   return (
     <FlexColumn>
@@ -134,7 +136,7 @@ function QuickActions() {
     } else {
       execMenuAction('view-split');
     }
-  }, [isMediumScreen]);
+  }, [isMediumScreen, execMenuAction]);
 
   return (
     <Activity mode={isMediumScreen ? 'visible' : 'hidden'}>

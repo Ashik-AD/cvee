@@ -46,7 +46,11 @@ export default function Dashbord() {
     try {
       await deleteResume(id);
     } catch (error) {
-      console.error(error);
+      toast.add({
+        type: 'error',
+        title:
+          (error as Error).message || 'Failed to delete. Please try again.',
+      });
     }
   }
 

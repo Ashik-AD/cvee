@@ -5,6 +5,7 @@ import useCreateResume from '@/hooks/useCreateResume';
 import { useResumeActions } from '@/store';
 import { useLocation } from 'wouter';
 import { Plus } from 'lucide-react';
+import { toast } from '../ui/toast';
 
 function AddNewResumeCard() {
   const createNewResume = useCreateResume();
@@ -18,9 +19,14 @@ function AddNewResumeCard() {
         addResume(newResume);
         navigate(`/editor?id=${newResume.id}`);
       }
-      console.log(newResume);
     } catch (err) {
-      console.log('Failed create new resume: ', err);
+      let title =
+        (err as Error).message ||
+        'Failed to create new resume. Please try again.';
+      toast.add({
+        type: 'error',
+        title,
+      });
     }
   }
 

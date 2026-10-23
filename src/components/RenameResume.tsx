@@ -131,7 +131,6 @@ function RenameResume({ id }: RenameResumeProps) {
       setError({
         title: error?.name,
       });
-      console.log(error);
     }
   }
 

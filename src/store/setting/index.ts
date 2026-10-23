@@ -39,8 +39,7 @@ export const useSettingStore = create<State>()(
       {
         name: 'settings',
         partialize: (state) => {
-          const { actions, ...rest } = state;
-          return rest;
+          return { editorMode: state.editorMode, editorView: state.editorView };
         },
       },
     ),

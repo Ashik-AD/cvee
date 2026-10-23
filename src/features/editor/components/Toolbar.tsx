@@ -79,7 +79,9 @@ function Toolbar() {
         {meta.title && (
           <Flex className="items-center gap-1">
             <FileText size={16} className="text-muted-foreground shrink-0" />
-            <span className="text-xs line-clamp-2" title={meta.title}>{meta.title}</span>
+            <span className="line-clamp-2 text-xs" title={meta.title}>
+              {meta.title}
+            </span>
           </Flex>
         )}
       </Flex>

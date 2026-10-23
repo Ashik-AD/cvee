@@ -19,11 +19,12 @@ import {
   SquareTerminal,
   Target,
 } from 'lucide-react';
+import { toast } from '@/components/ui/toast';
 
 /**
  * Timeout for saving after change of form values
  */
-const SAVE_TIME = 1000;
+const SAVE_TIME = 500;
 
 function EditorForm() {
   const timerRef = useRef<number | null>(null);
@@ -37,8 +38,12 @@ function EditorForm() {
     if (resumeId) {
       try {
         await services?.resumeSrv.updateResume(resumeId, editorState);
-        console.log('Saved data', editorState);
       } catch (error) {
+        toast.add({
+          type: 'error',
+          title: 'failed to save resume.',
+        });
+        // eslint-disable-next-line no-console expose error for debug in prod.
         console.error('Failed save resume', error);
       }
     }

@@ -1,5 +1,5 @@
 import { useCommandCenterState, useCommonActions } from '@/store/common';
-import { Activity, useEffect, type MouseEvent } from 'react';
+import { Activity, useEffect, useEffectEvent, type MouseEvent } from 'react';
 import { Flex, FlexCenter, FlexColumn, Grid } from './layout';
 import Searchbar from './Searchbar';
 import { Separator } from '../ui/separator';
@@ -45,9 +45,9 @@ function CommandCenterContent() {
   const { toggleCommandCenter } = useCommonActions();
   const { result, onSearch, searchTerm } = useSearchApp();
 
-  function handleEcapeKey(e: KeyboardEvent) {
+  const handleEcapeKey = useEffectEvent((e: KeyboardEvent) => {
     if (e.key === 'Escape') toggleCommandCenter();
-  }
+  });
 
   useEffect(() => {
     window.addEventListener('keyup', handleEcapeKey);
