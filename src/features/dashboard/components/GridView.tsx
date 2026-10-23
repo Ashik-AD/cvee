@@ -9,9 +9,18 @@ type GridViewProps = {
   onDelete: (id: string) => void;
   onPreview: (id: string) => void;
   onPrint: (id: string) => void;
+  onDuplicate: (id: string) => void;
+  exportAsJSON: (id: string) => void;
 };
 
-function GridView({ resumes, onDelete, onPrint, onPreview }: GridViewProps) {
+function GridView({
+  resumes,
+  onDelete,
+  onPrint,
+  onPreview,
+  onDuplicate,
+  exportAsJSON,
+}: GridViewProps) {
   return (
     <Grid className="gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
       <AddNewResumeCard />
@@ -29,6 +38,8 @@ function GridView({ resumes, onDelete, onPrint, onPreview }: GridViewProps) {
             onDelete={() => onDelete(id)}
             onPreview={() => onPreview(id)}
             onPrint={() => onPrint(id)}
+            onDuplicate={onDuplicate}
+            exportAsJSON={exportAsJSON}
             status={resumeStatus}
           />
         );

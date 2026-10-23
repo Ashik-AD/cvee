@@ -8,6 +8,10 @@ import { useMemo } from 'react';
 import GridView from './components/GridView';
 import ListView from './components/ListView';
 import { useDashboardDataView } from '@/store/common';
+import { useExportResume } from '@/hooks/useExportResume';
+import useCreateDuplicateResume from '@/hooks/useCreateDuplicateResume';
+import { toast } from '@/components/ui/toast';
+import ImportResumeJSONCrard from '@/components/cards/ImportResumeJSONCard';
 
 export type ViewMode = 'grid' | 'list';
 
@@ -18,6 +22,8 @@ export default function Dashbord() {
   const { setDashboardDataView } = useCommonActions();
   const deleteResume = useDeleteResume();
   const print = usePrintResume();
+  const { exportResume } = useExportResume();
+  const createDuplicateResume = useCreateDuplicateResume();
 
   // sort resume by last modified newest --> oldest
   const sortedResumes = useMemo(() => {
@@ -40,7 +46,11 @@ export default function Dashbord() {
     try {
       await deleteResume(id);
     } catch (error) {
-      console.error(error);
+      toast.add({
+        type: 'error',
+        title:
+          (error as Error).message || 'Failed to delete. Please try again.',
+      });
     }
   }
 
@@ -58,11 +68,26 @@ export default function Dashbord() {
     setDashboardDataView(mode);
   }
 
+  async function handleCreateDuplicateResume(id: string) {
+    try {
+      await createDuplicateResume(id);
+    } catch (error) {
+      let err = error as Error;
+      let msg = err.message || 'Failed to create duplicate. Please try again.';
+      toast.add({
+        type: 'error',
+        title: msg,
+      });
+    }
+  }
+
   if (resumes && resumes?.length === 0) {
     return (
       <FlexColumn className="h-full w-full items-center justify-center pt-16">
-        <FlexColumn>
+        <FlexColumn className="gap-2">
           <AddNewResumeCard />
+          <div className="text-muted-foreground text-center font-bold">OR</div>
+          <ImportResumeJSONCrard />
         </FlexColumn>
       </FlexColumn>
     );
@@ -86,6 +111,8 @@ export default function Dashbord() {
               onDelete={handleDeleteResume}
               onPrint={handlePrint}
               onPreview={handlePreviewResume}
+              exportAsJSON={exportResume}
+              onDuplicate={handleCreateDuplicateResume}
             />
           ) : (
             <ListView
@@ -93,6 +120,8 @@ export default function Dashbord() {
               onDelete={handleDeleteResume}
               onPrint={handlePrint}
               onPreview={handlePreviewResume}
+              exportAsJSON={exportResume}
+              onDuplicate={handleCreateDuplicateResume}
             />
           ))}
       </div>

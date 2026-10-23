@@ -437,3 +437,49 @@ p {
     transform: scale(1) !important;
   }
 }
+
+@keyframes boot-progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(260%);
+  }
+}
+
+@keyframes boot-message {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes boot-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+.boot-progress {
+  animation: boot-progress 1.5s ease-in-out infinite alternate;
+}
+
+.boot-message {
+  animation: boot-message 250ms ease-out both;
+}
+
+.boot-cursor {
+  animation: boot-cursor 1s steps(2, start) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-progress,
+  .boot-message,
+  .boot-cursor {
+    animation: none;
+  }
+}

@@ -31,7 +31,7 @@ export function Obsidian({
                   </td>
 
                   <td className="text-right align-bottom">
-                    <div className="space-y-1 font-mono text-[9px]">
+                    <div className="font-mono text-[9px]">
                       <Contact icon={Mail}>
                         <a
                           href={`mailto:${personalInfo.email}`}

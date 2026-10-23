@@ -1,7 +1,7 @@
 import { Flex, Grid } from '@/components/common/layout';
 import { Button } from '@/components/ui/button';
 import usePrintResume from '@/hooks/usePrintResume';
-import { Check, ChevronDown, FileUser, Printer } from 'lucide-react';
+import { Check, ChevronDown, FileText, Printer } from 'lucide-react';
 import { useEditorActions, useEditorMeta, useEditorSettings } from '../store';
 import {
   Select,
@@ -78,8 +78,10 @@ function Toolbar() {
       <Flex>
         {meta.title && (
           <Flex className="items-center gap-1">
-            <FileUser size={18} className="text-neutral-C4C7C8" />
-            <span className="text-sm">{meta.title}</span>
+            <FileText size={16} className="text-muted-foreground shrink-0" />
+            <span className="line-clamp-2 text-xs" title={meta.title}>
+              {meta.title}
+            </span>
           </Flex>
         )}
       </Flex>

@@ -56,7 +56,7 @@ function ExperienceField({
             id="role"
             name="role"
             value={role}
-            placeholder="Senior Software Engineer"
+            placeholder="Software developer"
             onChange={handleFieldChange}
             className="bg-neutral-1C1B1B"
           />
@@ -82,7 +82,7 @@ function ExperienceField({
           name="description"
           rows={4}
           value={description}
-          placeholder="- lazy"
+          placeholder="- write about the work you've done"
           onChange={handleFieldChange}
           className="bg-neutral-1C1B1B"
         />

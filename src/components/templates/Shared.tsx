@@ -18,7 +18,7 @@ export const Contact = ({
 
   return (
     <span className="inline-flex items-center gap-1">
-      <Icon className="size-2.5" />
+      <Icon className="size-2" />
       {children}
     </span>
   );

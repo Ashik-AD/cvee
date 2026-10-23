@@ -13,7 +13,6 @@ export async function initDB() {
     };
 
     request.onerror = () => {
-      console.error(request.error?.message);
       reject(request.error);
     };
   });

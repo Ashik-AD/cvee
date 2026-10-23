@@ -2,5 +2,4 @@
 
 Create, customize, preview, and print your CV with a clean editing experience. No unnecessary bullsh*t just your information, your layout, and a resume that's yours.
 
-
-<video src="https://github.com/Ashik-AD/statics/blob/4d2349dd8131e3fe68b9da2ac36430d4d8db8cd2/video/2026-10-23_15-12-07.mp4" height="360" controls></video>
+<video src="https://private-user-images.githubusercontent.com/43263257/682600253-f11186f0-6658-4bac-8f97-73111b5bd123.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3OTI3NTA0NDEsIm5iZiI6MTc5Mjc1MDE0MSwicGF0aCI6Ii80MzI2MzI1Ny82ODI2MDAyNTMtZjExMTg2ZjAtNjY1OC00YmFjLThmOTctNzMxMTFiNWJkMTIzLm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjEwMjMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYxMDIzVDEwMDkwMVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI2YTYyMmQyMWM1MjkzZGE3YjJhODBiY2FkODY2OWI3OTlhZDliZDJhYzU2ZjhjNTRkZWE3NDNkMmUxZmQxODImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT12aWRlbyUyRm1wNCJ9.k10KTIJUhAP4FTZhn03GnjXWuRMrOv_xExicYZA4p0A" style="width:100%;" height="360" controls></video>

@@ -13,9 +13,18 @@ type ListViewProps = {
   onDelete: (id: string) => void;
   onPreview: (id: string) => void;
   onPrint: (id: string) => void;
+  onDuplicate: (id: string) => void;
+  exportAsJSON: (id: string) => void;
 };
 
-function ListView({ resumes, onDelete, onPrint, onPreview }: ListViewProps) {
+function ListView({
+  resumes,
+  onDelete,
+  onPrint,
+  onPreview,
+  onDuplicate,
+  exportAsJSON,
+}: ListViewProps) {
   return (
     <FlexColumn className="w-full">
       {resumes?.map((resume) => {
@@ -49,8 +58,6 @@ function ListView({ resumes, onDelete, onPrint, onPreview }: ListViewProps) {
                   {resume.meta?.description}
                 </p>
               </div>
-            </Flex>
-            <Flex className="items-center gap-4">
               <span
                 className={cn(
                   'text-xs text-muted-foreground py-0.5 px-1.5 rounded-xl',
@@ -59,6 +66,8 @@ function ListView({ resumes, onDelete, onPrint, onPreview }: ListViewProps) {
               >
                 {mapStatus.label}
               </span>
+            </Flex>
+            <Flex className="items-center gap-4">
               <span className="text-muted-foreground text-xs">
                 {lastModified}
               </span>
@@ -68,6 +77,8 @@ function ListView({ resumes, onDelete, onPrint, onPreview }: ListViewProps) {
                 onPreview={onPreview}
                 onPrint={onPrint}
                 onDelete={onDelete}
+                onDuplicate={onDuplicate}
+                exportAsJSON={exportAsJSON}
               />
             </Flex>
           </Flex>

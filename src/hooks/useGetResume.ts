@@ -9,22 +9,46 @@ export default function useGetResume(resumeId: string | null) {
   const [error, setError] = useState<string | null>(null);
   const { services } = useServices();
 
-  useEffect(() => {
-    if (loading || !resumeId) return;
+  const resumeService = services?.resumeSrv;
 
-    setLoading(true);
-    services?.resumeSrv
-      .getResumeById(resumeId)
-      .then((result: any) => {
-        setResume(result);
-      })
-      .catch((error) => {
-        setError(getErrorMessage(error));
-      })
-      .finally(() => {
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchResume() {
+      if (!resumeId || !resumeService) {
+        setResume(null);
+        setError(null);
         setLoading(false);
-      });
-  }, [resumeId]);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+      setResume(null);
+
+      try {
+        const result = await resumeService.getResumeById(resumeId);
+
+        if (!cancelled) {
+          setResume(result);
+        }
+      } catch (error: unknown) {
+        if (!cancelled) {
+          setError(getErrorMessage(error));
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void fetchResume();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [resumeId, resumeService]);
 
   return { resume, isLoading: loading, error } as const;
 }

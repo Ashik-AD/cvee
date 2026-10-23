@@ -5,24 +5,30 @@ export function useResizeObserver(
 ) {
   const [resizeWidth, setResizeWidth] = useState<number | null>(null);
   const resizeEleRef = useRef<HTMLElement | null>(null);
+  const cbRef = useRef(onResize);
 
   useEffect(() => {
+    cbRef.current = onResize;
+  }, [onResize]);
+
+  useEffect(() => {
+    let eleRef = resizeEleRef.current;
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.contentBoxSize) {
           setResizeWidth(entry.contentBoxSize[0].inlineSize);
         }
       }
-      onResize && onResize(entries);
+      cbRef.current?.(entries);
     });
 
-    if (resizeEleRef.current) {
-      observer.observe(resizeEleRef.current);
+    if (eleRef) {
+      observer.observe(eleRef);
     }
 
     return () => {
-      if (resizeEleRef.current) {
-        observer.unobserve(resizeEleRef.current);
+      if (eleRef) {
+        observer.disconnect();
       }
     };
   }, []);

@@ -46,17 +46,22 @@ function generateNewName(
   return fileName;
 }
 
-export default function useCreateDuplicateResume(id: string | null) {
+export default function useCreateDuplicateResume(
+  defaultProvidedID?: string | null,
+) {
   const { services } = useServices();
   const { addResume } = useResumeActions();
 
-  return async function onCreate() {
-    if (!id?.trim()) return;
+  return async function onCreate(id?: string | null) {
+    if (!id?.trim() && !defaultProvidedID?.trim())
+      throw new AppError('ID is required.');
 
     try {
-      const resume = await services?.resumeSrv.getResumeById(id);
+      const resume = await services?.resumeSrv.getResumeById(
+        id || defaultProvidedID!,
+      );
       if (!resume) {
-        return;
+        throw new AppError('Resume not found', 'NOT_FOUND');
       }
       const getResumeNames = await services?.resumeSrv.getResumesName();
       const resumeNames =

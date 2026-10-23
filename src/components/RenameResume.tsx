@@ -47,13 +47,13 @@ function RenameResume({ id }: RenameResumeProps) {
     if (!id || isLoading) return;
     if (resume?.meta?.title) {
       if (inputRef.current) {
-        inputRef.current.value = resume.meta.title ?? '';
+        inputRef.current.value = resume.meta.title || '';
       }
       if (descRef.current) {
-        descRef.current.value = resume.meta.description ?? '';
+        descRef.current.value = resume.meta.description || '';
       }
     }
-  }, [id, isLoading, resume?.meta?.title]);
+  }, [id, isLoading, resume]);
 
   // Handle `Escape` key press
   const handleKeyUp = useEffectEvent((e: KeyboardEvent) => {
@@ -73,8 +73,8 @@ function RenameResume({ id }: RenameResumeProps) {
     eve.stopPropagation();
 
     const formData = new FormData(eve.target);
-    const resumeName = formData.get('resumeName')?.toString();
-    const resumeDesc = formData.get('resumeDescription')?.toString();
+    const resumeName = formData.get('resumeName')?.toString()?.trim();
+    const resumeDesc = formData.get('resumeDescription')?.toString()?.trim();
 
     if (!id || !resumeName || !resumeName?.trim()) return;
 
@@ -100,14 +100,14 @@ function RenameResume({ id }: RenameResumeProps) {
           return;
         }
 
-        if (resumeDesc?.trim()) {
-          resume.meta.description = resumeDesc;
-        }
-
         // Update db
         const updatedResume = await services?.resumeSrv.updateResume(id, {
           ...resume,
-          meta: { ...resume.meta, title: resumeName || resume.meta.title },
+          meta: {
+            ...resume.meta,
+            title: resumeName || resume.meta.title,
+            description: resumeDesc || resume.meta.description,
+          },
         });
         if (!updatedResume) {
           setError({
@@ -131,7 +131,6 @@ function RenameResume({ id }: RenameResumeProps) {
       setError({
         title: error?.name,
       });
-      console.log(error);
     }
   }
 
