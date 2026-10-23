@@ -45,7 +45,7 @@ export default function ServicesProvider({
 
   return (
     <ServicesContext.Provider value={{ services }}>
-      {isInitializing ? `loading...` : children}
+      {children}
     </ServicesContext.Provider>
   );
 }
