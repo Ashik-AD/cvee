@@ -95,14 +95,20 @@ function CommandCenterContent() {
             <p className="text-muted-foreground text-sm font-semibold">
               Quick Actions
             </p>
-            <QuickActions />
+            <QuickActions closeModal={toggleCommandCenter} />
           </FlexColumn>
 
           {result?.resumes && result?.resumes.length > 0 && (
-            <ResumeResults resumes={result.resumes} />
+            <ResumeResults
+              resumes={result.resumes}
+              closeModal={toggleCommandCenter}
+            />
           )}
           {result?.actions && result?.actions.length > 0 && (
-            <MenuActionResult actions={result.actions} />
+            <MenuActionResult
+              actions={result.actions}
+              closeModal={toggleCommandCenter}
+            />
           )}
         </FlexColumn>
       </FlexColumn>
@@ -110,7 +116,13 @@ function CommandCenterContent() {
   );
 }
 
-function ResumeResults({ resumes }: { resumes: ResumePopulate[] }) {
+function ResumeResults({
+  resumes,
+  closeModal,
+}: {
+  resumes: ResumePopulate[];
+  closeModal: () => void;
+}) {
   return (
     <FlexColumn className="gap-4">
       <p className="text-muted-foreground text-sm font-semibold">Resume</p>
@@ -122,6 +134,7 @@ function ResumeResults({ resumes }: { resumes: ResumePopulate[] }) {
               href={`/editor?id=${resume.id}`}
               className="bg-neutral-171717 hover:bg-neutral-1C1917 flex gap-2 rounded-sm p-2 hover:shadow-md"
               key={resume.id}
+              onClick={closeModal}
             >
               <FileText size={18} className="text-emerald-600" />
               <span className="flex flex-col gap-1">
@@ -140,7 +153,28 @@ function ResumeResults({ resumes }: { resumes: ResumePopulate[] }) {
   );
 }
 
-function MenuActionResult({ actions }: { actions: MenuAction[] }) {
+function MenuActionResult({
+  actions,
+  closeModal,
+}: {
+  actions: MenuAction[];
+  closeModal: () => void;
+}) {
+  const { execMenuAction } = useMenuActions();
+
+  async function handleExecAction(event: MouseEvent<HTMLButtonElement>) {
+    try {
+      const actionKey = event.currentTarget.dataset.key as ActionKey;
+      await execMenuAction(actionKey);
+      closeModal?.();
+    } catch (error) {
+      toast.add({
+        type: 'error',
+        title: getErrorMessage(error),
+      });
+    }
+  }
+
   return (
     <FlexColumn className="gap-4">
       <p className="text-muted-foreground text-sm font-semibold">
@@ -153,6 +187,8 @@ function MenuActionResult({ actions }: { actions: MenuAction[] }) {
               className="flex h-auto flex-col gap-1 rounded-sm p-2 text-xs! hover:shadow-md"
               variant="secondary"
               key={action.key}
+              data-key={action.key}
+              onClick={handleExecAction}
             >
               <action.icon />
               {action.label}
@@ -201,15 +237,14 @@ const QUICK_ACTIONS: Array<QuickAction> = [
   },
 ];
 
-function QuickActions() {
+function QuickActions({ closeModal }: { closeModal: () => void }) {
   const { execMenuAction } = useMenuActions();
-  const { toggleCommandCenter } = useCommonActions();
 
   async function handleExecAction(event: MouseEvent<HTMLButtonElement>) {
     try {
       const actionKey = event.currentTarget.dataset.key as ActionKey;
       await execMenuAction(actionKey);
-      toggleCommandCenter();
+      closeModal?.();
     } catch (error) {
       toast.add({
         type: 'error',
