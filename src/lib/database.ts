@@ -4,7 +4,6 @@ export class Database {
   private name: string;
   private version: number;
   private db: IDBDatabase | null = null;
-  private error: { message: string; info: Event } | null = null;
 
   constructor(name: string, version?: number) {
     this.name = name;
@@ -33,17 +32,11 @@ export class Database {
         }
       };
 
-      dbReq.onerror = (e) => {
-        this.error = {
-          message: 'Failed initialize database',
-          info: e,
-        };
-        reject(this.error);
+      dbReq.onerror = () => {
+        reject(dbReq.error);
       };
 
       dbReq.onsuccess = () => {
-        // eslint-disable-next-line no-console expose error in prod. for debug
-        console.info('Database connection initialized: ', dbReq.error);
         this.db = dbReq.result;
         resolve(this.db);
       };
