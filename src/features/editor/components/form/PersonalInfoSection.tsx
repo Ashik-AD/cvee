@@ -23,7 +23,7 @@ function PersonalInfoSection() {
           value={info?.name}
           name="name"
           type="text"
-          placeholder="John Doe"
+          placeholder="Ashik Dhimal"
           onChange={handleChangePersonalFields}
           className="bg-neutral-0E0E0E"
         />
@@ -96,7 +96,7 @@ function PersonalInfoSection() {
             type="text"
             value={info?.github}
             onChange={handleChangePersonalFields}
-            placeholder="@ashik-ad"
+            placeholder="ashik-ad"
             className="bg-neutral-0E0E0E"
           />
         </Field>

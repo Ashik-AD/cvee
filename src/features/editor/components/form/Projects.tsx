@@ -38,7 +38,6 @@ function ProjectField({
             name="name"
             value={name}
             onChange={handleFieldChange}
-            placeholder="Galactico"
             className="bg-neutral-1C1B1B"
           />
         </Field>
@@ -50,7 +49,7 @@ function ProjectField({
             name="link"
             value={link}
             onChange={handleFieldChange}
-            placeholder="Galactico"
+            placeholder="https://my-awesome.app"
             className="bg-neutral-1C1B1B"
           />
         </Field>
@@ -62,7 +61,7 @@ function ProjectField({
             name="repoLink"
             value={repoLink}
             onChange={handleFieldChange}
-            placeholder=""
+            placeholder="https://github.com/ashik-ad/cvee"
             className="bg-neutral-1C1B1B"
           />
         </Field>
@@ -76,7 +75,7 @@ function ProjectField({
           rows={4}
           value={description}
           onChange={handleFieldChange}
-          placeholder="- lazy"
+          placeholder="- write something about project"
           className="bg-neutral-1C1B1B"
         />
       </Field>
