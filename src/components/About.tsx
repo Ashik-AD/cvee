@@ -66,14 +66,14 @@ export function About() {
         </Button>
       </header>
 
-      <div className="px-6">
+      <div className="max-h-160 scrollbar-thin overflow-y-auto px-6">
         {/* Features */}
-        <section className="grid grid-cols-2 divide-x divide-y border-b">
+        <section className="grid divide-x divide-y border-b sm:grid-cols-2">
           {features.map((feature) => {
             const Icon = feature.icon;
 
             return (
-              <div key={feature.title} className="p-5 first:border-l-0">
+              <div key={feature.title} className="p-5 border-0">
                 <FlexCenter className="mb-3 size-8 rounded-md border border-emerald-800 bg-emerald-800/20">
                   <Icon className="size-4 text-emerald-500" />
                 </FlexCenter>
