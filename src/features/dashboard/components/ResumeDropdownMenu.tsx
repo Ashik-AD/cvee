@@ -1,4 +1,11 @@
-import { Copy, Eye, MoreHorizontal, Printer, Trash2 } from 'lucide-react';
+import {
+  Copy,
+  Download,
+  Eye,
+  MoreHorizontal,
+  Printer,
+  Trash2,
+} from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -15,6 +22,8 @@ type ResumeDropdownMenuProps = {
   onDelete: (id: string) => void;
   onPreview: (id: string) => void;
   onPrint: (id: string) => void;
+  exportAsJSON: (id: string) => void;
+  onDuplicate: (id: string) => void;
 };
 
 function ResumeDropdownMenu({
@@ -22,6 +31,8 @@ function ResumeDropdownMenu({
   onDelete,
   onPrint,
   onPreview,
+  exportAsJSON,
+  onDuplicate,
 }: ResumeDropdownMenuProps) {
   return (
     <DropdownMenu>
@@ -43,9 +54,14 @@ function ResumeDropdownMenu({
           <Printer className="mr-2 size-4" />
           Print
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onDuplicate(id)}>
           <Copy className="mr-2 size-4" />
           Duplicate
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => exportAsJSON(id)}>
+          <Download className="mr-2 size-4" />
+          Export as JSON
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={() => onDelete(id)}>

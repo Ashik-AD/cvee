@@ -19,6 +19,8 @@ type ResumeCardProps = {
   onDelete: (id: string) => void;
   onPreview: (id: string) => void;
   onPrint: (id: string) => void;
+  onDuplicate: (id: string) => void;
+  exportAsJSON: (id: string) => void;
   status: 'draft' | 'inProgress' | 'complete';
 };
 
@@ -31,6 +33,8 @@ export function ResumeCard({
   onDelete,
   onPreview,
   onPrint,
+  onDuplicate,
+  exportAsJSON,
   status,
 }: ResumeCardProps) {
   const mapStatus = resumeStatusStyles?.[status];
@@ -61,6 +65,8 @@ export function ResumeCard({
               onPreview={onPreview}
               onPrint={onPrint}
               onDelete={onDelete}
+              onDuplicate={onDuplicate}
+              exportAsJSON={exportAsJSON}
             />
           </div>
         </div>
