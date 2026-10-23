@@ -59,7 +59,7 @@ function MobileQuickActions() {
         }
       >
         {mode === 'editor' ? <Eye size={18} /> : <Keyboard size={18} />}
-        <span className="text-sm">
+        <span className="hidden text-sm min-[26rem]:inline-flex">
           {mode === 'editor' ? 'Preview' : 'Editor'}
         </span>
       </button>
@@ -71,8 +71,10 @@ function MobileQuickActions() {
             className="hover:bg-neutral-0E0E0E flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full p-2 focus-visible:ring"
             onClick={() => handleQuickAction(action.actionKey)}
           >
-            <action.icon size={18} className="hidden min-[26rem]:inline-flex" />
-            <span className="text-sm">{action.label}</span>
+            <action.icon size={18} />
+            <span className="hidden text-sm min-[26rem]:inline-flex">
+              {action.label}
+            </span>
           </button>
         );
       })}
