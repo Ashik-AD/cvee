@@ -2,6 +2,7 @@ import { createContext, useEffect, useState, type ReactNode } from 'react';
 import { Database } from '@/lib/database';
 import { Repositories } from '@/lib/repository/repositories';
 import { Services } from '@/lib/service/services';
+import AppLoading from '@/components/common/loading';
 
 const DB_NAME = 'cvee';
 
@@ -38,7 +39,9 @@ export default function ServicesProvider({
         // eslint-disable-next-line no-console expose error in prod. for debug
         console.error('Failed initialize db: ', error);
       } finally {
-        setInitializing(false);
+        setTimeout(() => {
+          setInitializing(false);
+        }, 500);
       }
     }
     void initServices();
@@ -46,7 +49,7 @@ export default function ServicesProvider({
 
   return (
     <ServicesContext.Provider value={{ services }}>
-      {isInitializing ? `loading...` : children}
+      {isInitializing ? <AppLoading /> : children}
     </ServicesContext.Provider>
   );
 }
