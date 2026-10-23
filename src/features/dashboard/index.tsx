@@ -11,6 +11,7 @@ import { useDashboardDataView } from '@/store/common';
 import { useExportResume } from '@/hooks/useExportResume';
 import useCreateDuplicateResume from '@/hooks/useCreateDuplicateResume';
 import { toast } from '@/components/ui/toast';
+import ImportResumeJSONCrard from '@/components/cards/ImportResumeJSONCard';
 
 export type ViewMode = 'grid' | 'list';
 
@@ -79,8 +80,10 @@ export default function Dashbord() {
   if (resumes && resumes?.length === 0) {
     return (
       <FlexColumn className="h-full w-full items-center justify-center pt-16">
-        <FlexColumn>
+        <FlexColumn className="gap-2">
           <AddNewResumeCard />
+          <div className="text-muted-foreground text-center font-bold">OR</div>
+          <ImportResumeJSONCrard />
         </FlexColumn>
       </FlexColumn>
     );
