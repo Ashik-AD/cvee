@@ -17,7 +17,7 @@ export function Obsidian({
         {/* Header */}
         <tr>
           <td className="pb-5">
-            <table className="w-full">
+            <table className="w-full" id="personal-info">
               <tbody>
                 <tr>
                   <td>
@@ -76,7 +76,9 @@ export function Obsidian({
         {aboutMe && (
           <tr>
             <td className="border-y border-neutral-300 py-4">
-              <p className="text-[10px] leading-5">{aboutMe}</p>
+              <p className="text-[10px] leading-5" id="about-me">
+                {aboutMe}
+              </p>
             </td>
           </tr>
         )}
@@ -86,11 +88,12 @@ export function Obsidian({
           <td className="pt-5">
             <SectionTitle>Experience</SectionTitle>
 
-            <table className="mt-3 w-full">
+            <table className="mt-3 w-full" id="experiences">
               <tbody>
                 {experiences?.map((experience, index) => (
                   <tr
                     key={`${experience.duration}_${experience.companyName}_${index}`}
+                    className="experience-item"
                   >
                     <td className="pb-4 align-top">
                       <div className="flex justify-between">
@@ -131,10 +134,10 @@ export function Obsidian({
           <td className="pt-2">
             <SectionTitle>Projects</SectionTitle>
 
-            <table className="mt-3 w-full">
+            <table className="mt-3 w-full" id="projects">
               <tbody>
                 {projects?.map((project, index) => (
-                  <tr key={index}>
+                  <tr key={index} className="project-item">
                     <td className="pb-4">
                       <div className="flex items-center justify-between">
                         <h3 className="text-xs font-bold">{project.name}</h3>
@@ -169,7 +172,7 @@ export function Obsidian({
           <td className="pt-2">
             <SectionTitle>Skills</SectionTitle>
 
-            <div className="mt-3 flex flex-wrap gap-1">
+            <div className="mt-3 flex flex-wrap gap-1" id="skills">
               {skills?.map((skill) => (
                 <span key={skill} className="px-0.5 py-0.5 text-[8px]">
                   {skill}
@@ -185,10 +188,10 @@ export function Obsidian({
             <td className="pt-5">
               <SectionTitle>Education</SectionTitle>
 
-              <table className="mt-3 w-full">
+              <table className="mt-3 w-full" id="educations">
                 <tbody>
                   {educations?.map((education, index) => (
-                    <tr key={index}>
+                    <tr key={index} className="education-item">
                       <td>
                         <div className="flex justify-between">
                           <div>
@@ -200,7 +203,7 @@ export function Obsidian({
                           </div>
 
                           <div className="text-right font-mono text-[9px]">
-                            {education.duration}
+                            <div>{education.duration}</div>
 
                             {education.grade && <div>{education.grade}</div>}
                           </div>

@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import type { Experience } from '@/lib/model/resume';
 import { useEditorActions, useEditorExperiences } from '../../store';
 import { Button } from '@/components/ui/button';
-import type { ChangeEvent } from 'react';
+import { useId, type ChangeEvent } from 'react';
 import { Plus } from 'lucide-react';
 import SectionItemActions from './SectionItemActions';
 
@@ -28,14 +28,15 @@ function ExperienceField({
     const { name, value } = event.target;
     onChange?.({ [name]: value });
   }
+  const id = useId();
 
   return (
-    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A rounded-xs border p-2">
+    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A experience-field rounded-xs border p-2">
       <Flex className="gap-4">
         <Field>
-          <FieldLabel htmlFor="companyName">Company Name</FieldLabel>
+          <FieldLabel htmlFor={`companyName_${id}`}>Company Name</FieldLabel>
           <Input
-            id="companyName"
+            id={`companyName_${id}`}
             name="companyName"
             value={companyName}
             placeholder="Galactico"
@@ -51,9 +52,9 @@ function ExperienceField({
 
       <Grid className="grid-cols-1 gap-2 sm:grid-cols-2">
         <Field>
-          <FieldLabel htmlFor="role">Role</FieldLabel>
+          <FieldLabel htmlFor={`role_${id}`}>Role</FieldLabel>
           <Input
-            id="role"
+            id={`role_${id}`}
             name="role"
             value={role}
             placeholder="Software developer"
@@ -63,9 +64,9 @@ function ExperienceField({
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="duration">Period</FieldLabel>
+          <FieldLabel htmlFor={`duration_${id}`}>Period</FieldLabel>
           <Input
-            id="duration"
+            id={`duration_${id}`}
             name="duration"
             value={duration}
             placeholder="2025 - Present"
@@ -76,9 +77,9 @@ function ExperienceField({
       </Grid>
 
       <Field>
-        <FieldLabel htmlFor="description">Accomplishments</FieldLabel>
+        <FieldLabel htmlFor={`description_${id}`}>Accomplishments</FieldLabel>
         <Textarea
-          id="description"
+          id={`description_${id}`}
           name="description"
           rows={4}
           value={description}

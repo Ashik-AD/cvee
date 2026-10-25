@@ -65,7 +65,7 @@ interface State extends ResumePopulate {
   };
 }
 
-const useEditorStore = create<State>()(
+export const useEditorStore = create<State>()(
   devtools(
     persist(
       immer((set, _, store) => ({

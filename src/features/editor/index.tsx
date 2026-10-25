@@ -31,7 +31,7 @@ export default function Editor() {
     if (resumeId) {
       resumeService
         ?.getResumeById(resumeId)
-        .then((resume: any) => {
+        .then((resume) => {
           // Populate resume in the editor
           if (resume) {
             setEditor(resume);

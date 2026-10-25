@@ -38,7 +38,7 @@ function Skills() {
 
   return (
     <Field>
-      <FieldLabel>Technical Stack</FieldLabel>
+      <FieldLabel htmlFor="skills">Tech Stack</FieldLabel>
       <Flex className="flex-wrap gap-2">
         {skills?.map((skill, idx) => {
           return (
@@ -53,6 +53,7 @@ function Skills() {
                 onClick={() => deleteSkills(idx)}
               >
                 <X className="size-4" />
+                <span className="sr-only">Remove</span>
               </button>
             </Badge>
           );
@@ -61,6 +62,7 @@ function Skills() {
       <Flex className="gap-1">
         <Input
           ref={inputRef}
+          id="skills"
           name="skills"
           placeholder="Type skill tag and press enter..."
           onKeyUp={(e) => {

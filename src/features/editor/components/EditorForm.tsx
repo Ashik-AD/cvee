@@ -53,6 +53,7 @@ function EditorForm() {
   useEffect(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
 
     if (resumeId) {
@@ -62,6 +63,7 @@ function EditorForm() {
     return () => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
+        timerRef.current = null;
       }
     };
   }, [resumeId, editorState]);

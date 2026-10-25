@@ -16,7 +16,7 @@ export function Classic({
       <tbody>
         {/* Header */}
         <tr>
-          <td className="pb-5 text-center">
+          <td className="pb-5 text-center" id="personal-info">
             <h1 className="text-3xl font-bold tracking-tight">
               {personalInfo.name}
             </h1>
@@ -61,7 +61,9 @@ export function Classic({
         {aboutMe && (
           <tr>
             <td className="border-y border-neutral-300 py-4">
-              <p className="text-[10px] leading-5">{aboutMe}</p>
+              <p className="text-[10px] leading-5" id="about-me">
+                {aboutMe}
+              </p>
             </td>
           </tr>
         )}
@@ -71,10 +73,10 @@ export function Classic({
           <td className="pt-5">
             <SectionTitle>Experience</SectionTitle>
 
-            <table className="mt-3 w-full">
+            <table className="mt-3 w-full" id="experiences">
               <tbody>
                 {experiences?.map((experience, index) => (
-                  <tr key={index}>
+                  <tr key={index} className="experience-item">
                     <td className="pb-4">
                       <table className="w-full">
                         <tbody>
@@ -117,7 +119,7 @@ export function Classic({
           <td className="pt-2">
             <SectionTitle>Skills</SectionTitle>
 
-            <div className="mt-3 flex flex-wrap gap-1">
+            <div className="mt-3 flex flex-wrap gap-1" id="skills">
               {skills?.map((skill) => (
                 <span key={skill} className="px-0.5 py-0.5 text-[8px]">
                   {skill}
@@ -131,10 +133,10 @@ export function Classic({
           <td className="pt-2">
             <SectionTitle>Projects</SectionTitle>
 
-            <table className="mt-3 w-full">
+            <table className="mt-3 w-full" id="projects">
               <tbody>
                 {projects?.map((project, index) => (
-                  <tr key={index}>
+                  <tr key={index} className="project-item">
                     <td className="pb-4">
                       <div className="flex items-center justify-between">
                         <h3 className="text-xs font-bold">{project.name}</h3>
@@ -169,10 +171,10 @@ export function Classic({
             <td className="pt-2">
               <SectionTitle>Education</SectionTitle>
 
-              <table className="mt-3 w-full">
+              <table className="mt-3 w-full" id="educations">
                 <tbody>
                   {educations?.map((education, index) => (
-                    <tr key={index}>
+                    <tr key={index} className="education-item">
                       <td className="pb-3">
                         <div className="flex justify-between">
                           <div>
@@ -184,7 +186,7 @@ export function Classic({
                           </div>
 
                           <div className="text-right font-mono text-[9px]">
-                            {education.duration}
+                            <div>{education.duration}</div>
 
                             {education.grade && <div>{education.grade}</div>}
                           </div>
