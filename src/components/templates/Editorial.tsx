@@ -16,7 +16,7 @@ export function Editorial({
       <tbody>
         {/* Header */}
         <tr>
-          <td className="pb-5">
+          <td className="pb-5" id="personal-info">
             <h1 className="text-3xl font-bold tracking-tight">
               {personalInfo.name}
             </h1>
@@ -69,7 +69,9 @@ export function Editorial({
                     </td>
 
                     <td className="pl-5 align-top">
-                      <p className="text-[10px] leading-5">{aboutMe}</p>
+                      <p className="text-[10px] leading-5" id="about-me">
+                        {aboutMe}
+                      </p>
                     </td>
                   </tr>
                 </tbody>
@@ -89,10 +91,10 @@ export function Editorial({
                   </td>
 
                   <td className="align-top">
-                    <table className="w-full">
+                    <table className="w-full" id="experiences">
                       <tbody>
                         {experiences?.map((experience, index) => (
-                          <tr key={index}>
+                          <tr key={index} className="experience-item">
                             <td className="pb-4">
                               <div className="flex justify-between">
                                 <div>
@@ -142,10 +144,10 @@ export function Editorial({
                   </td>
 
                   <td>
-                    <table className="w-full">
+                    <table className="w-full" id="projects">
                       <tbody>
                         {projects?.map((project, index) => (
-                          <tr key={index}>
+                          <tr key={index} className="project-item">
                             <td className="pb-4">
                               <div className="flex items-center justify-between">
                                 <h3 className="text-xs font-bold">
@@ -192,7 +194,7 @@ export function Editorial({
                   </td>
 
                   <td>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1" id="skills">
                       {skills?.map((skill) => (
                         <span key={skill} className="px-0.5 py-0.5 text-[8px]">
                           {skill}
@@ -218,10 +220,10 @@ export function Editorial({
                     </td>
 
                     <td>
-                      <table className="w-full">
+                      <table className="w-full" id="educations">
                         <tbody>
                           {educations.map((education, index) => (
-                            <tr key={index}>
+                            <tr key={index} className="education-item">
                               <td className="pb-3">
                                 <div className="flex justify-between">
                                   <div>
@@ -235,7 +237,7 @@ export function Editorial({
                                   </div>
 
                                   <div className="text-right font-mono text-[9px]">
-                                    {education.duration}
+                                    <div>{education.duration}</div>
 
                                     {education.grade && (
                                       <div>{education.grade}</div>

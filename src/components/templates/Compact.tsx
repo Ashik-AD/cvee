@@ -17,7 +17,7 @@ export function Compact({
         {/* Header */}
         <tr>
           <td colSpan={2} className="pb-5">
-            <table className="w-full">
+            <table className="w-full" id="personal-info">
               <tbody>
                 <tr>
                   <td>
@@ -76,7 +76,9 @@ export function Compact({
         {aboutMe && (
           <tr>
             <td colSpan={2} className="border-y border-neutral-300 py-4">
-              <p className="text-[10px] leading-5">{aboutMe}</p>
+              <p className="text-[10px] leading-5" id="about-me">
+                {aboutMe}
+              </p>
             </td>
           </tr>
         )}
@@ -87,10 +89,10 @@ export function Compact({
           <td className="w-[68%] pt-5 pr-5 align-top">
             <SectionTitle>Experience</SectionTitle>
 
-            <table className="mt-3 w-full">
+            <table className="mt-3 w-full" id="experiences">
               <tbody>
                 {experiences?.map((experience, index) => (
-                  <tr key={index}>
+                  <tr key={index} className="experience-item">
                     <td className="pb-4">
                       <div className="flex justify-between">
                         <div>
@@ -126,10 +128,10 @@ export function Compact({
             <div className="pt-2">
               <SectionTitle>Projects</SectionTitle>
 
-              <table className="mt-3 w-full">
+              <table className="mt-3 w-full" id="projects">
                 <tbody>
                   {projects?.map((project, index) => (
-                    <tr key={index}>
+                    <tr key={index} className="project-item">
                       <td className="pb-4">
                         <div className="flex items-center justify-between">
                           <h3 className="text-xs font-bold">{project.name}</h3>
@@ -163,7 +165,7 @@ export function Compact({
           <td className="w-[32%] pt-5 pl-5 align-top">
             <SectionTitle>Skills</SectionTitle>
 
-            <div className="mt-3 flex flex-wrap gap-1">
+            <div className="mt-3 flex flex-wrap gap-1" id="skills">
               {skills?.map((skill) => (
                 <span key={skill} className="px-0.5 py-0.5 text-[8px]">
                   {skill}
@@ -175,10 +177,10 @@ export function Compact({
               <div className="mt-6">
                 <SectionTitle>Education</SectionTitle>
 
-                <table className="mt-3 w-full">
+                <table className="mt-3 w-full" id="educations">
                   <tbody>
                     {educations.map((education, index) => (
-                      <tr key={index}>
+                      <tr key={index} className="education-item">
                         <td className="pb-4">
                           <h3 className="text-xs font-bold">
                             {education.course}

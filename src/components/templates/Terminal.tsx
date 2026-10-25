@@ -17,7 +17,7 @@ export function Terminal({
         {/* Header */}
         <tr>
           <td className="pb-5">
-            <table className="w-full">
+            <table className="w-full" id="personal-info">
               <tbody>
                 <tr>
                   <td>
@@ -90,7 +90,9 @@ export function Terminal({
                     </td>
 
                     <td>
-                      <p className="text-[10px] leading-5">{aboutMe}</p>
+                      <p className="text-[10px] leading-5" id="about-me">
+                        {aboutMe}
+                      </p>
                     </td>
                   </tr>
                 </tbody>
@@ -111,10 +113,10 @@ export function Terminal({
                       $ git log --experience
                     </span>
 
-                    <table className="mt-3 w-full">
+                    <table className="mt-3 w-full" id="experiences">
                       <tbody>
                         {experiences?.map((experience, index) => (
-                          <tr key={index}>
+                          <tr key={index} className="experience-item">
                             <td className="pb-5">
                               <div className="flex justify-between">
                                 <div>
@@ -154,10 +156,10 @@ export function Terminal({
                       $ ls ./projects
                     </span>
 
-                    <table className="mt-3 w-full">
+                    <table className="mt-3 w-full" id="projects">
                       <tbody>
                         {projects?.map((project, index) => (
-                          <tr key={index}>
+                          <tr key={index} className="project-item">
                             <td className="pb-5">
                               <div className="flex flex-col justify-between">
                                 <h3 className="text-xs font-bold">
@@ -195,7 +197,7 @@ export function Terminal({
                   <td className="border-r border-neutral-300 pt-3 pr-5 align-top">
                     <span className="font-mono text-[9px]">$ echo $SKILLS</span>
 
-                    <div className="mt-3 flex flex-wrap gap-1">
+                    <div className="mt-3 flex flex-wrap gap-1" id="skills">
                       {skills?.map((skill) => (
                         <span key={skill} className="px-0.5 py-0.5 text-[8px]">
                           {skill}
@@ -211,10 +213,10 @@ export function Terminal({
                     </span>
 
                     {educations && educations.length > 0 && (
-                      <table className="mt-3 w-full">
+                      <table className="mt-3 w-full" id="educations">
                         <tbody>
                           {educations.map((education, index) => (
-                            <tr key={index}>
+                            <tr key={index} className="education-item">
                               <td className="pb-4">
                                 <h3 className="text-xs font-bold">
                                   {education.course}
