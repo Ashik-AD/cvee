@@ -2,7 +2,7 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { useEditorActions, useEditorEducations } from '../../store';
 import type { Education } from '@/lib/model/resume';
-import type { ChangeEvent } from 'react';
+import { useId, type ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { FlexColumn } from '@/components/common/layout';
 import { Plus } from 'lucide-react';
@@ -21,6 +21,8 @@ function EducationField({
   onChange,
   onDelete,
 }: EducationFieldProps) {
+  const id = useId();
+
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
@@ -29,12 +31,12 @@ function EducationField({
   }
 
   return (
-    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A grid rounded-xs border p-2 sm:grid-cols-2">
+    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A education-field grid rounded-xs border p-2 sm:grid-cols-2">
       {/*Institute field */}
       <Field>
-        <FieldLabel htmlFor="institute">School/University</FieldLabel>
+        <FieldLabel htmlFor={`institute_${id}`}>School/University</FieldLabel>
         <Input
-          id="institute"
+          id={`institute_${id}`}
           name="institute"
           type="text"
           value={institute}
@@ -46,9 +48,9 @@ function EducationField({
 
       {/* Degree field */}
       <Field>
-        <FieldLabel htmlFor="course">Degree</FieldLabel>
+        <FieldLabel htmlFor={`course_${id}`}>Degree</FieldLabel>
         <Input
-          id="course"
+          id={`course_${id}`}
           name="course"
           type="text"
           value={course}
@@ -60,9 +62,9 @@ function EducationField({
 
       {/* Graduation period field */}
       <Field>
-        <FieldLabel htmlFor="duration">Graduation Period</FieldLabel>
+        <FieldLabel htmlFor={`duration_${id}`}>Graduation Period</FieldLabel>
         <Input
-          id="duration"
+          id={`duration_${id}`}
           name="duration"
           type="text"
           value={duration}
@@ -74,9 +76,11 @@ function EducationField({
 
       {/* Grade field */}
       <Field>
-        <FieldLabel htmlFor="grade">Grade / Honers (Optional)</FieldLabel>
+        <FieldLabel htmlFor={`grade_${id}`}>
+          Grade / Honers (Optional)
+        </FieldLabel>
         <Input
-          id="grade"
+          id={`grade_${id}`}
           name="grade"
           type="number"
           value={grade}
@@ -122,7 +126,7 @@ function EducationSection() {
             duration={education.duration}
             grade={education.grade}
             onChange={(newExperience) => handleChange(idx, newExperience)}
-            key={`${education.institute}${education.duration}_${idx}`}
+            key={idx}
             onDelete={() => deleteEducations(idx)}
           />
         );

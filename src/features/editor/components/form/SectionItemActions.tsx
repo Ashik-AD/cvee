@@ -14,6 +14,7 @@ function SectionItemActions({ onDelete }: SectionItemActionsProps) {
         variant="destructive"
         size="icon-sm"
         onClick={onDelete}
+        name="btn-remove"
       >
         <Trash />
         <span className="sr-only">Remove</span>

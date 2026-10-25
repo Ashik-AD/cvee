@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { Project } from '@/lib/model/resume';
 import { useEditorActions, useEditorProjects } from '../../store';
-import type { ChangeEvent } from 'react';
+import { useId, type ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import SectionItemActions from './SectionItemActions';
@@ -22,6 +22,7 @@ function ProjectField({
   onChange,
   onDelete,
 }: ProjectFieldProps) {
+  const id = useId();
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
@@ -29,12 +30,12 @@ function ProjectField({
     onChange?.({ [name]: value });
   }
   return (
-    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A rounded-xs border p-2">
+    <FieldGroup className="bg-neutral-0E0E0E border-neutral-2A2A2A project-field rounded-xs border p-2">
       <Grid className="grid-cols-1 gap-2 sm:grid-cols-2">
         <Field>
-          <FieldLabel htmlFor="name">Project Name</FieldLabel>
+          <FieldLabel htmlFor={`name_${id}`}>Project Name</FieldLabel>
           <Input
-            id="name"
+            id={`name_${id}`}
             name="name"
             value={name}
             onChange={handleFieldChange}
@@ -43,9 +44,9 @@ function ProjectField({
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="link">Link</FieldLabel>
+          <FieldLabel htmlFor={`link_${id}`}>Preview Link</FieldLabel>
           <Input
-            id="link"
+            id={`link_${id}`}
             name="link"
             value={link}
             onChange={handleFieldChange}
@@ -55,9 +56,9 @@ function ProjectField({
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="repoLink">Repo. Link</FieldLabel>
+          <FieldLabel htmlFor={`repoLink_${id}`}>Repo. Link</FieldLabel>
           <Input
-            id="repoLink"
+            id={`repoLink_${id}`}
             name="repoLink"
             value={repoLink}
             onChange={handleFieldChange}
@@ -68,9 +69,9 @@ function ProjectField({
       </Grid>
 
       <Field>
-        <FieldLabel htmlFor="description">Accomplishments</FieldLabel>
+        <FieldLabel htmlFor={`description_${id}`}>Accomplishments</FieldLabel>
         <Textarea
-          id="description"
+          id={`description_${id}`}
           name="description"
           rows={4}
           value={description}
