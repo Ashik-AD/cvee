@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { defineConfig } from 'vitest/config';
+import { defineConfig, configDefaults } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -9,5 +9,6 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    exclude: [...configDefaults.exclude, './e2e'],
   },
 });

@@ -6,7 +6,7 @@ import Menu from '@/features/dashboard/components/Menu';
 import { cn } from 'cn';
 import { ArrowLeft, Plus, Search } from 'lucide-react';
 import MobileMenu from '@/features/editor/components/MobileMenu';
-import { useCommonActions } from '@/store';
+import { useCommonActions, useResumeActions } from '@/store';
 import { Kbd } from '../ui/kbd';
 import useCreateResume from '@/hooks/useCreateResume';
 import { toast } from '../ui/toast';
@@ -18,11 +18,13 @@ function Navbar() {
   const { toggleCommandCenter } = useCommonActions();
   const createNewResume = useCreateResume();
   const [_, navigate] = useLocation();
+  const { addResume } = useResumeActions();
 
   async function handleCreateResume() {
     try {
       const res = await createNewResume();
       if (res) {
+        addResume(res);
         navigate(`/editor?id=${res.id}`);
       }
     } catch (error) {
